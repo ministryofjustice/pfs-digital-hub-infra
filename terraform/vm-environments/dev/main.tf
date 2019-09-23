@@ -8,13 +8,12 @@ terraform {
 }
 
 
-####Create specific resource group
 
+  resource "azurerm_resource_group" "hub-rg" {
+     name = "${var.rg-name}"
+     location = "${var.location}"
+  }
 
-resource "azurerm_resource_group" "rg-name" {
-  name     = "${var.rg-name}"
-  location = "${var.location}"
-}
 
 
 ##########################################################
@@ -25,7 +24,7 @@ module "vm" {
   source                 = "..\\modules\\vm"
   vm-count               = "${var.vm-count}"
   location               = "${var.location}"
-  rg-name                = "${var.rg-name}"
+  rg-name                = "${azurerm_resource_group.hub-rg.name}"    
   env                    = "${var.env}"
   environment            = "${var.environment}"
   nic                    = "${var.nic}"

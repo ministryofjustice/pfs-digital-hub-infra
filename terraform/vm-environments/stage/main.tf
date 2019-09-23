@@ -1,20 +1,19 @@
 
 terraform {
   backend "azurerm" {
-    storage_account_name  = "pfsbackendtfrgacctstage" #Needs to be centralised?
-    container_name        = "azstatelock-stage" # Dev test only? Could be a env variable TF_CONTAINER_NAME
-    key                   = "pfshubvm__tf_stage.tfstate" #Needs to be somewhow unique
+    storage_account_name  = "pfsbackendtfrgacctdev" #Needs to be centralised?
+    container_name        = "azstatelock-dev" # Dev test only? Could be a env variable TF_CONTAINER_NAME
+    key                   = "pfshubvm-test_tf_dev.tfstate" #Needs to be somewhow unique
   }
 }
 
 
-####Create specific resource group
 
+  resource "azurerm_resource_group" "hub-rg" {
+     name = "${var.rg-name}"
+     location = "${var.location}"
+  }
 
-resource "azurerm_resource_group" "rg-name" {
-  name     = "${var.rg-name}"
-  location = "${var.location}"
-}
 
 
 ##########################################################
@@ -25,7 +24,7 @@ module "vm" {
   source                 = "..\\modules\\vm"
   vm-count               = "${var.vm-count}"
   location               = "${var.location}"
-  rg-name                = "${var.rg-name}"
+  rg-name                = "${azurerm_resource_group.hub-rg.name}"    
   env                    = "${var.env}"
   environment            = "${var.environment}"
   nic                    = "${var.nic}"
