@@ -1,0 +1,26 @@
+---
+
+#Role used to call secure passwords from the vault
+- name: baseline
+  hosts: all
+  roles:
+    - azure
+#base line for the host
+- name: baseline
+  hosts: all
+  become: true
+  roles:
+    - base
+    - jnv.unattended-upgrades
+    - role: singleplatform-eng.users
+      tags:
+      - users
+    - provisioning # This will cause the intial run to fail due to deleting the hub user
+
+    #builds the docker and container config
+- hosts: all
+  roles:
+    - hub-containers
+  vars:
+      hub_frontend_host: pfs-dev-hub-1.uksouth.cloudapp.azure.com
+      hub_backend_host: drupal.pfs-dev-hub-1.uksouth.cloudapp.azure.com

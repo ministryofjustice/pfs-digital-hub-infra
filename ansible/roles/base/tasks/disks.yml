@@ -1,0 +1,26 @@
+---
+
+#- debug: # debug use only
+ #   msg: System {{ script_output.stdout }}
+
+- name: create mountpoints
+  file:
+    path: /data
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  with_items:
+    /data
+    /mnt/pfs-prod-digital-hub-content-share
+
+- name: Make persistent share
+  shell: mkdir -p /mnt/pfs-prod-digital-hub-content-share
+
+- name: Make persistent share for Azure
+  mount:
+    path: /mnt/pfs-prod-digital-hub-content-share
+    src: //pfsprodhubstorageacc.file.core.windows.net/pfs-prod-digital-hub-content-share
+    fstype: cifs
+    opts: vers=3.0,username=pfsprodhubstorageacc,password={{ script_output.stdout }},dir_mode=0777,file_mode=0777,serverino
+    state: present

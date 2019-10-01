@@ -1,6 +1,7 @@
 resource "random_password" "password" {
   length = 16
   special = true
+  override_special = "_%@"
 }
 #refer to a subnet
 data "azurerm_subnet" "hub_subnet" {
@@ -83,7 +84,7 @@ resource "azurerm_virtual_machine" "vm" {
     availability_set_id   = "${azurerm_availability_set.dev_digital_hub_availset.id}"
     location              = "${var.location}"
     resource_group_name   = "${var.rg-name}"
-    network_interface_ids = ["${element(azurerm_network_interface.nic.*.id, count.index + 1)}"]
+    network_interface_ids = ["${element(azurerm_network_interface.nic.*.id, count.index)}"]
     vm_size               = "Standard_DS1_v2"
 
     storage_os_disk {

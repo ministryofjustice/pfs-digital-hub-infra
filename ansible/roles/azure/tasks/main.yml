@@ -1,0 +1,12 @@
+---
+
+
+- local_action: shell {{ role_path }}/files/vault_password.sh
+  register: script_output
+- name: set_fact for blah
+  set_fact: 
+       fact_name: script_output.stdout
+
+#- debug:
+ #   msg: Echo the password called for debug purposes only {{ script_output.stdout }}
+
