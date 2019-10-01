@@ -1,0 +1,30 @@
+# #
+# Ansible managed
+#
+- name: Ansible create file if it doesn't exist example
+  become: true
+  file:
+    path: "/etc/ssh/revoked_keys"
+    owner: root
+    group: root
+    mode: 0644
+    state: touch
+
+- name: ensure revoked_keys file exists
+  file:
+    path: /etc/ssh/revoked_keys
+    owner: root
+    group: root
+    mode: 0644
+    state: file
+
+- name: configure sshd
+  become: true
+  template:
+    src: sshd.conf
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload sshd

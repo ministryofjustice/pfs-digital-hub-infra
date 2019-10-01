@@ -7,3 +7,23 @@
 
 # .tfvars files
 *.tfvars
+
+
+ansible/roles/hub-containers/db/dump/hub.sql
+docker/selfseigned.pfx
+ansible/roles/letsencrypt
+ansible/roles/nginx/private.rsa
+ansible/roles/nginx/public.crt
+Gemfile.lock
+Ansiblefile.lock
+.librarian
+librarian_roles/
+tmp/
+*.retry
+.vagrant/
+hosts
+stage.old
+Vagrantfile.old
+./jenkins
+./letsencrypt
+

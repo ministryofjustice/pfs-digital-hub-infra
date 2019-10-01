@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  hub-be:
+    restart: "always"
+    environment:
+      HUB_EXT_FILE_URL: {{ hub_url }}
+    volumes:
+      - /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files:/var/www/html/sites/default/files
+
+  hub-db:
+    restart: "always"
+    volumes:
+      - /data/hub-db:/var/lib/mysql:rw
+
+  hub-matomo:
+    restart: "always"
+    volumes:
+      - /data/moj_dhub_matomo_config:/var/www/html/config:rw
+
+  hub-node:
+     restart: "always"
+     environment:
+      - "APP_NAME='HMP Staging'"
+      - "NODE_ENV=production"
+      - "DRUPAL_APP_URI={{ hub_url }}"
+      - "MATOMO_URL=foo.bar"
+      - "MATOMO_TOKEN=foobar"
+      - "MATOMO_API_URI=http://hub-matomo"
+      - "ENABLE_PRISON_SWITCH=true"
+      - "NOMIS_API_TOKEN= true"
+      - "NOMIS_API_ENDPOINT=Something"
+
+  hub-elasticsearch:
+    volumes:
+      - /data/esdata:/usr/share/elasticsearch/data      

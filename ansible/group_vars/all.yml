@@ -1,0 +1,122 @@
+unattended_automatic_reboot: true
+unattended_automatic_reboot_time: 02:00
+unattended_ignore_apps_require_restart: true
+unattended_mail: richard.dakin@digital.justice.gov.uk
+unattended_origins_patterns:
+  - 'origin=Ubuntu,archive=${distro_codename}-security'
+  - 'o=Ubuntu,a=${distro_codename}'
+  - 'o=Ubuntu,a=${distro_codename}-updates'
+
+
+
+groups_to_create:
+  - name: admin
+  - name: studio
+
+studio_users:
+  - username: gemmabarnes
+    name: "Gemma Barnes"
+    groups:
+      - studio
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCjLMKpXd1dxtLP98o24RGYMJONySsUQMr6D+I/8+5z4qjfw6ozlFJmKqzpOGQQp/q7SUfVMzjk7zp3lT547XhqHGDSBSXGbkUdlAiPvb2CEnV170ydprGy/CR6M4d1VAnkEhy8LgHDRJElJjDGqRRUpI5GkF4ELaVs4WUOfTXRokvotFZpRLYAb5Rt5eKxJ6EI9uNPexsNYBFMNIbL8YKSrIA9TkRjIV7XzSYyfn5+og37m8IfoNMwerr1xTZnH5thxSe189ycWWed0uRCZk1fPU1sqe/XWjYHTgWhbMQaYSSD7QnXvmc6aybbueL6gxfbanjK6PpJY7U+9AKJszu6MK8m1W5aXKLdGkVHymUJ7KOSfgpkHXBgJ9tCVf8S5OHeFF3PYVseNXYTgLRLjjaJYyUL/R+JcK7BJT5y8q0SSa/Tt+31D/Vsl+CmrkcmfK3/td+m8HgjbxOH3XeaL8J7xKj3APzIcdadZ0JUApJHZ4dkyw2coeIz0iTJ/YN2h1L6PZ+mjLdQlbz99ZkjOr4DtHCIsCIge76a6Lvy/z2pQHgcSEdezwH+26p7rCXt2aiF/GXzuQVagDOhbp865r/y9B4zja30q3m7julQ/0BGXdB5omzBceSyQJrLO/ScsMa4+Yo6nL4fBHJwEwKWLFHY7eaxDyk21w8/r2k39dexJw== gemmab83@gmail.com"
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: simonabraham
+    name: "Simon Abraham"
+    groups:
+      - studio
+      - admin
+      - docker
+    ssh_key:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINCqH23EG0eRNojwFizjP3yZyX3emtEV7FD6dXosKQcj sabe@sm.local"
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: chrisrichardson
+    name: "Christopher Richardson"
+    groups:
+      - studio
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZ38GGLupZZVR8oKOTArb7q9NXMsRST1AJ9cJNsoWZxmXVc6QEnsQgzkSvYQiGYGpNLjxzWTHWjWiRcjhV8YLHHVcDWERovENap7AdIEw/vx5OmgKi+KoVPq/y4TViZzgv6VMCbuhSL32zeRtNLl3U2sj31gMG2F5EhAc4T3AGo2tconhHZ3UDKZOpGKeKTuph4HIrZwTRtuTzSQ1pqLiOtWEFN+aNjdfV5wEv4GQCyECPzRKFzZciJDVvDGxxQrcVWWE9qWQnxatqf8LCt4AbgawwfYadXkcQoVr87+/7Q9jAGlnnzBuFeFOn88X3m2swDxrmZqftHh3HhegzoxnSU6lRnO/dD3nOSYiJsjLYtI9PKSxWV3Fx3TnHc/zdaV0bMJ1MoAkIMxg91y3C1SHJFIGloxWIhVHbKMrFbbTsFdGeCLL6o98TPeowyS3oNp2FG1/dsu7qu7vPzlusma43BZ6va4+QRL3RAwylM6YmPNO/8u5dxmXXqYjwgacDT3a6ibLLbkZSt4nqbTHkeL/Uuhpckh2qCMvtaQVvct85jk33PoRJ5Zj8PnxO4htSeVvU1OMCxSP7Jh/pc+nVJMjkYsnhR0DHH422k9hoGFRS8MPq+tUpCIhJTWByodJ+yQNz8fKH9LOannbD3cyANiFzk/gZNOf/KgAGx6YKM6q6WQ== christopher.richardson@digital.justice.gov.uk"
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: davidthomas
+    name: "David Thomas"
+    groups:
+      - studio
+      - admin
+    ssh_key:  
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDlcb5QjyO6KYKMs2rTqo2iSLUDagz7eTU5ws/bn3BkH+lDJsZosyJN30SII/guEK8F62NfsBFvkD/XbIkS5h1StVtjuOTW4qKiqgDAYlLwa59BVJat+wWW7ApjZbSVulJ8+i98EtMWmZrUf2pUNFF7mu9t30sgZJsqlSbZ/HaQ1Limhgm05yeFIeTkvZoW64hH7h8wEVFDlCCoZ8GAk1K3P0WS4hsqLOtsxUrXEsNwsXgVa7NQ3l47R8CShFodV+WFqKOw5tUlUr9VnqW0BzTSY3Krwq4n21OLAjRh2H+QrJxnJ0rH/oW/vc/65ZuMhoYD7Ze6fqKWGLgxGVDtoX18v3YlrUhBUR3E/hQN67BnrQlKcargEBblgYl6/VZomZAq9FSkhXbC3IUT5EDTklKJlgTDah8Hds/clw4AEA6cuMe1YsJ35KnnaqgcPzfNYieWNldTECxjgQJ/Zr0aspVaaQUthG74Y4J9PRigWs5aziph37+qWl6kTv8Og4VQQi1xb3kNtbIQEipqv4GV8HbTyGpnw/zwTSJI/tLAV1GngYMlx8IOWe+idgLmikiU6nviaE8LvMT5Z9IJ3WsFLsp34dVSPuB/tAcJNVb37DcTMljWm2xbIGy89BN7Gglo+nhlS8yaNnj8bLwRxrxiE8HDFJ6bcRtQMeqFFX8V3FFb0w== david.thomas1@digital.justice.gov.uk"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOSQpIaYJj4hkDZhwnewbAEYUZJ7hYMk0LQ7Zg/oh2wvkAyoxPuhJAH9pHOdFyBENuCHCprp0lvG/aRnELaGg0nNLOvOmPlZklBvxQlazkonM+Itg7kH5q64HZ+levKBcDL9RAiTUtrA24OtFMMWRBDRuZLCdcCnNC9NNt3Bb017uRT//e4h5yVJ2kbtBQWFuk6Pa6qarFvdnogATKMu6XKlwihqu39pCS798beHFimWhkEb7x27pVzySHStoFPLMOOiTQ1FH+BO0gRpMP4jU/SxLr/D3Khgp2y/4VhE/x8vrg4+nReUiwn5YGTFQn+GVchQRT3YzQxS3btyiVZowhlPyUrMT89XD2sCabFQmEmWP/OQy0L9V4D2+kabyTMrjkyhs1H3DQDmIHia/upx+3ej0wv99ZN2NRLV2lXQtOwt9y51mlZKh2HRuCJV5xXpDgrupxema4VjH4DJf41yXC0ksenb0nJdBTpq2UuIMsDwCsCvIaxjjFfWn3dhzObSUlTVVXntBaI+DOJ3l+hiIom4CUH72Qy78DEwUpvbrfg5KhIfcv6ok6OWqKP8qGK1ZCaSqkj8+uxJS2lyvg/6UXhI0oyocK/DhHXtXdkiR1sn/PKqtVkP5wOwBB0idVlxYX5+IDFSMSXpj5qGT5UXrxQeB93V9BkPgZKQErK0EMGw== david.thomas1@digital.justice.gov.uk" 
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCbj9IAhYCwODQ+yh/bKIZ2fmOZfA3GsVsrolYHOTKJlyyl+x3dcVUiJXdtt8MkUTRertb6Pr0haS7MXsjfz5+f5/spksG0MLLxADIHL+ynnWh/u4R1sb6FhU4tz+Lxo+As8mUziOGfF3iAIFbaJ1S2OnYS0Lq3bf5mbEAka9DyXN0eiPBT5v00oLLerv8P4Qk/21PKhXczCVd5edVKZYgs0Pyecj70YdIR0ygYrwMasXca0XDl/ScY67bgtC+rwNYRQ5nG0u9g9GFzM7se1VV4uPQpORkUkER9lHzkl9oeq35Gz747IGQ4TsuinVXS3COeH8avCvrLKvQmARFDbbpyvgeK+6da2Gzrs6iicLusE9CwRQAJMGvT/GxzLEfYhvOoBTwNm2ZYGEIpK8IQlfo1dqgiYkq12eERPua2hw4cOfLMX28cSZ6sYw6tqqD+Qk0cCQngKN/nsSEGNi+BaEdggyB801USwgeTje7tgwo7x0QKCiu7Qs4l1+xec7ribQAH6tEkEyyhP4LedrcAa6KD7k+mvIV3cUJ8MdNHxxDkKtghF241c5E7rBDm8flt/w0/Lqa7bfgEHJ/hsXy0bT5kG0BoXe/6o3gnAjJwGumiyIjz2BbWLptJtsv8kdYWip/zfK9SdWBc3ljFukZNzogOWGHKNap2iCZVXPR1UJ/pGw== david.thomas1@digital.juctice.gov.uk"   
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: lucascairns
+    name: "Lucas Cairns"
+    groups:
+      - studio
+      - admin
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCKESEcZSsl5oHiiby8dHKl8YhErSXy7Q5FTjWsrpa0w3xi2jsGvASrbNpGCytXz9Dkz270mJ0mZO99q3HI9zRfjYc01CZ45785JVxKAPG7FdayrxQ4CxGgCCJ/WE8574k2zvUZN1XIe8MSgOO+Y7MfFvuSVMMQXBKQzmxJjj4V5pAQazajckjrlxJpAeTaugRSqd8WRE5qVhgOZp1W0uuUbMvZbp07z3crevAvMAf4vFsKd1Aol7nwWjXIxf2nmdMLqDXBMOe26Oh704HiZdGQX/VtujxSwd9tdBLr38SvOyjp7r6nuueFux7Z86pC2E2hQOlx9vUTT+qKz9mIJFJGOj1o0rkGiB3qNCMG4GTUlme0Tt9gUFJyT3QcQyEr7tooyPe1Nrz98+TtJkt4dTokBp6ZFNYgpt7JBGNSP7vpSs978xSISZUWCVG96oD0DXFlgD9dzFlWIZ1r+fEdJz3zlEjI4Nq6RPv+YagCaoIdEcAGWRS/izKw51Eii+SVh+pf2mgH7NIWYVKHuxZut19NsNcwcGPTlD3k0RimeWYWxQdcTmsOVl3XtSy7+MTGnmBXCBvKK6QP0eZWosTXeoqyG3uB8WOOV5+MXennEaxBBKxM/nLVidz6Iz66/TXCqh4X25oJ96DUoxjnBlppsfsPNv17RVkhy6lyFzOFO1xJQ== lucas.cairns@gmail.com"
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: richdakin
+    name: "Richard Dakin"
+    groups:
+      - studio
+      - admin
+      - docker
+    ssh_key:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQO0sDpTl6VvR27XQRxvoLuhXf/WZCXhd9f0yndQWJU rich@DESKTOP-P53LC3C"
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: laurendarby
+    name: "Lauren Darby"
+    groups:
+      - studio
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC4QmWo5XJvGn+o3f3/yfLcabu6G0gJ3B7k5o3ZlhpzJ1HdGqALzOeGXFYAiDHXHACzCyh7qxVQxkw7sXUNz0PTDAPzldh/dxo7OLNhMfBB265BrIEpWOjgfc5yk0r+aXaOHWbQj/U0ksUp9JC0y7Krz/7sSFSQOgZxsKxiBx9fdodZgfNnkHkdC4sdboICA3vgcSGfmfwo+C3R90I678ko1hlgVEpoos5stdUUqcU73KMyh9k5udY+14CJccR3Aa6D2k9+opqkGvHCTe0egZcaB+wWOPD3XqhFFfHTV4cCwUW/+BwDafYffhN99cTszlBKFLnIre+A4hn8cVYexo0UpEM9xUpFCmRZylpqRZjDnloI24hZL5jIKMZTUHJ+4xOwt4xzL5mCmatCFordRcgfw/m9KPdBSvX3vsySuPg4SI3AmcZMJC5QNu/Da9ksr911/7amRY0RGs1EWuyUqnxCjP/8GQjMcN0vyuGUt1HzVtQU4RSJlVisEBamhlp1wI1+vmkJdhdf7PnRTvz4twuEBMGVpYCbz7f/yTe25NpQKVC5tfAjl0l9+bReXAe5fRcXcEE4EJzqOmkRIf/Z7xamCTLYrer5u+MyHaraFwfE8GH10c8CwCaHUjrHw4a4Vb5RWpdNg2CGSoUuk5UdYqxR9DEuZAX/nGvxtyCh7+e1FQ== lauren.darby@digital.justice.gov.uk"
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: jamiesabbatella
+    name: "Jamie Sabbatella"
+    groups:
+      - studio
+    ssh_key:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPLuxIqqgtMroXSqg0Oq/WuswNg/eera+KVMjxkzDXjI jamie@ABA-JS"
+    shell: /bin/bash
+    update_password: on_create
+
+  - username: johnmansell
+    name: "John Mansell"
+    groups:
+      - studio
+    ssh_key:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGP8v9hmjAw0SabuuTHE1ieA7cxLjRUjv9c98R+JLxnQ JoNo@BITS-JTM"
+    shell: /bin/bash
+    update_password: on_create
+
+users: "{{ studio_users }}"
+
+#users_deleted:
+
+
+hub_sites:
+  - upstream_name: hub_node
+    upstream_port: 10001
+    domain: "{{ hub_frontend_host }}"
+  - upstream_name: hub_fe
+    upstream_port: 10002
+    domain: "{{ hub_frontend_host }}"
+  - upstream_name: hub_be
+    upstream_port: 11001
+    domain: "{{ hub_backend_host }}"
+
+letsencrypt_domains: []

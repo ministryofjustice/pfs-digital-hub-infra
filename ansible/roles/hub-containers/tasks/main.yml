@@ -1,0 +1,152 @@
+---
+
+
+- name: Setup directory and permissions for content folder
+  become: true
+  file:
+      path: /etc/docker/db/dump
+      owner: root
+      group: docker
+      mode: 0755
+      state: directory
+
+- name: Copy database file into place for initial load. 
+  become: true
+  copy:
+    src: ../hub-containers/db/dump/hub.sql
+    dest: /etc/docker/db/dump/hub.sql
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+- name: Nginx config copy
+  become: true
+  copy:
+    src: ../docker/files/nginx/
+    dest: /etc/nginx/
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+    
+- name: Copy and template the nginx config
+  become: true
+  template:
+    src: ../docker/files/nginx/template/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+   
+- name: Copy and template the docker-compose-override file
+  become: true
+  template:
+    src: ../docker/files/docker-compose-override.yml.j2
+    dest: /etc/docker/docker-compose-override.yml
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+   
+- name: Copy docker-compose with owner and permission, using symbolic representation
+  become: true
+  copy:
+    src: ../docker/files/docker-compose.yml
+    dest: /etc/docker/docker-compose.yml
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+
+#- name: Copy staging with owner and permission, using symbolic representation
+ # become: true
+  #copy:
+   # src: ../docker/files/docker-compose-override.yml
+   # dest: /etc/docker/docker-compose-override.yml
+   # owner: root
+   # group: docker
+   # mode: u=rw,g=r,o=r
+
+
+
+- name: generate some local secrets
+  become: true
+  shell: |
+    tr -d -c "a-zA-Z0-9" < /dev/urandom | head -c 20 \
+      > /etc/docker-decomposed-secrets-{{ item }}
+  args:
+    creates: /etc/docker-decomposed-secrets-{{ item }}
+  with_items:
+    - MYSQL_ROOT_PASSWORD
+    - MYSQL_PASSWORD
+    - HUB_MATOMO_MYSQL_ROOT_PASSWORD
+    - HUB_MATOMO_MYSQL_USER_USERNAME
+    - HUB_MATOMO_MYSQL_USER_PASSWORD
+
+- name: keep secrets relatively secret
+  become: true
+  file:
+    path: /etc/docker-decomposed-secrets-{{ item }}
+    owner: root
+    group: docker
+    mode: 0400
+  with_items:
+    - MYSQL_ROOT_PASSWORD
+    - MYSQL_PASSWORD
+    - HUB_MATOMO_MYSQL_ROOT_PASSWORD
+    - HUB_MATOMO_MYSQL_USER_USERNAME
+    - HUB_MATOMO_MYSQL_USER_PASSWORD
+
+- name: setup secrets file for decomposed
+  become: true
+  copy:
+    content: |
+      export MYSQL_USER=hubdb_user
+      export MYSQL_ROOT_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_ROOT_PASSWORD)
+      export MYSQL_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_PASSWORD)
+      export HUB_MATOMO_MYSQL_ROOT_PASSWORD=$(cat /etc/docker-decomposed-secrets-HUB_MATOMO_MYSQL_ROOT_PASSWORD)
+      export HUB_MATOMO_MYSQL_USER_USERNAME=$(cat /etc/docker-decomposed-secrets-HUB_MATOMO_MYSQL_USER_USERNAME)
+      export HUB_MATOMO_MYSQL_USER_PASSWORD=$(cat /etc/docker-decomposed-secrets-HUB_MATOMO_MYSQL_USER_PASSWORD)
+      export PIWIK_URI=//{{ pikwik_url }}
+      export DRUPAL_URL=https://{{ hub_backend_host }}
+      export MATOMO_URL=//{{ matomo_url }}
+      export APP_NAME="HMP Berwyn"
+      docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d
+    dest: /etc/docker-decomposed-secrets.sh
+    mode: 0770
+    owner: root
+    group: docker
+
+
+- name: Run docker sh
+  shell: ./docker-decomposed-secrets.sh
+  register: compose
+  args:
+    chdir: /etc
+  become: True # because you're using sudo # Note Ansible dir
+
+  
+- name: Check docker status
+  become: True
+  command: docker ps
+  register: dockerstatus
+
+- name: Print status
+  debug:
+    msg: "docker status: {{ dockerstatus.stdout }}"
+
+- name: install docker-py to allow ansible to docker
+  become: true
+  apt:
+    name: python-docker
+
+- name: enable docker live-restore
+  become: true
+  copy:
+    content: |
+      {"live-restore": true}
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
+
