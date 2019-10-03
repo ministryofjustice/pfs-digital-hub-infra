@@ -4,7 +4,7 @@ services:
   hub-be:
     restart: "always"
     environment:
-      HUB_EXT_FILE_URL: {{ hub_url }}
+      HUB_EXT_FILE_URL: {{ drupal_url }}
     volumes:
       - /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files:/var/www/html/sites/default/files
 
@@ -23,7 +23,7 @@ services:
      environment:
       - "APP_NAME='HMP Staging'"
       - "NODE_ENV=production"
-      - "DRUPAL_APP_URI={{ hub_url }}"
+      - "DRUPAL_APP_URI={{ drupal_url }}"
       - "MATOMO_URL=foo.bar"
       - "MATOMO_TOKEN=foobar"
       - "MATOMO_API_URI=http://hub-matomo"

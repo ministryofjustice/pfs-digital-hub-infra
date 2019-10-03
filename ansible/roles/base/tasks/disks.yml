@@ -20,7 +20,7 @@
 - name: Make persistent share for Azure
   mount:
     path: /mnt/pfs-prod-digital-hub-content-share
-    src: //pfsprodhubstorageacc.file.core.windows.net/pfs-prod-digital-hub-content-share
+    src: //pfsprodhubstorageacc.file.core.windows.net/pfs-prod-digital-hub-content-share 
     fstype: cifs
     opts: vers=3.0,username=pfsprodhubstorageacc,password={{ script_output.stdout }},dir_mode=0777,file_mode=0777,serverino
-    state: present
+    state: mounted
