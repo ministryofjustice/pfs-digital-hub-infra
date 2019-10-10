@@ -85,7 +85,8 @@ resource "azurerm_virtual_machine" "vm" {
     location              = "${var.location}"
     resource_group_name   = "${var.rg-name}"
     network_interface_ids = ["${element(azurerm_network_interface.nic.*.id, count.index)}"]
-    vm_size               = "Standard_DS1_v2"
+    #vm_size               = "Standard_DS1_v2"
+    vm_size               =  "${var.vm_size}"
 
     storage_os_disk {
         name              = "${var.prefix}-digital-hub-osdisk-${1 + count.index}"

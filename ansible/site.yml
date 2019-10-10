@@ -21,6 +21,3 @@
 - hosts: all
   roles:
     - hub-containers
-  vars:
-      hub_frontend_host: pfs-dev-hub-1.uksouth.cloudapp.azure.com
-      hub_backend_host: drupal.pfs-dev-hub-1.uksouth.cloudapp.azure.com

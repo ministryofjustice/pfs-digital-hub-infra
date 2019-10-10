@@ -37,6 +37,13 @@ variable "nic" {
   
 }
 
+variable "vm_size" {
+  type = "string"
+  description = "size of the vm from t-shirts in Azure"
+  
+}
+
+
 variable "prefix" {
     type = "string"
     description = "prefix for environment"

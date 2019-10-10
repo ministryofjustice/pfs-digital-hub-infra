@@ -22,6 +22,13 @@ variable "rg-name" {
   default     = "pfs-prod-digital-hub-rg"
 }
 
+variable "vm_size" {
+  type = "string"
+  description = "size of the vm from t-shirts in Azure"
+  default = "Standard_DS2_v2"
+  
+}
+#
 variable "nic" {
   default = "pfs-prod-hub-vnic"
 }

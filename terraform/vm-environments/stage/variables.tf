@@ -31,6 +31,12 @@ variable "prefix" {
   
 }
 
+variable "vm_size" {
+  type = "string"
+  description = "size of the vm from t-shirts in Azure"
+  default = "Standard_DS2_v2"
+}
+
 variable "location" {
   default = "UK South"
 }

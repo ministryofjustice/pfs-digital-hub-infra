@@ -23,16 +23,6 @@ studio_users:
     shell: /bin/bash
     update_password: on_create
 
-  - username: simonabraham
-    name: "Simon Abraham"
-    groups:
-      - studio
-      - admin
-      - docker
-    ssh_key:
-      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINCqH23EG0eRNojwFizjP3yZyX3emtEV7FD6dXosKQcj sabe@sm.local"
-    shell: /bin/bash
-    update_password: on_create
 
   - username: chrisrichardson
     name: "Christopher Richardson"
@@ -94,29 +84,10 @@ studio_users:
     shell: /bin/bash
     update_password: on_create
 
-  - username: johnmansell
-    name: "John Mansell"
-    groups:
-      - studio
-    ssh_key:
-      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGP8v9hmjAw0SabuuTHE1ieA7cxLjRUjv9c98R+JLxnQ JoNo@BITS-JTM"
-    shell: /bin/bash
-    update_password: on_create
+  
 
 users: "{{ studio_users }}"
 
-#users_deleted:
-
-
-hub_sites:
-  - upstream_name: hub_node
-    upstream_port: 10001
-    domain: "{{ hub_frontend_host }}"
-  - upstream_name: hub_fe
-    upstream_port: 10002
-    domain: "{{ hub_frontend_host }}"
-  - upstream_name: hub_be
-    upstream_port: 11001
-    domain: "{{ hub_backend_host }}"
-
-letsencrypt_domains: []
+users_deleted:
+  - username: johnmansell
+  - username: simonabraham
