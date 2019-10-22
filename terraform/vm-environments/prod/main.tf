@@ -1,11 +1,13 @@
 
+
 terraform {
   backend "azurerm" {
-    storage_account_name  = "pfsbackendtfrgacctdev" #Needs to be centralised?
-    container_name        = "azstatelock-dev" # Dev test only? Could be a env variable TF_CONTAINER_NAME
-    key                   = "pfshubvm-test_tf_dev.tfstate" #Needs to be somewhow unique
+    storage_account_name  = "pfsbackendtfrgacctprod" #Needs to be centralised?
+    container_name        = "azstatelock-prod" # Dev test only? Could be a env variable TF_CONTAINER_NAME
+    key                   = "pfshubvm-prod-tf_state.tfsprod" #Needs to be somewhow unique
   }
 }
+
 
 
 
@@ -36,7 +38,7 @@ module "vm" {
   domainnamelabel        = "${var.domainnamelabel}"
   publicipname           = "${var.publicipname}"
   nic-name               = "${var.nic-name}"
-  bootdiagstorage        = "${var.bootdiagstorage}"
+  #bootdiagstorage        = "${var.bootdiagstorage}"
   vm_size                = "${var.vm_size}"
 }
 

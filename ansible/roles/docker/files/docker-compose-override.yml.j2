@@ -21,13 +21,13 @@ services:
   hub-node:
      restart: "always"
      environment:
-      - "APP_NAME='HMP Staging'"
+      - "APP_NAME={{ app_name }}"
       - "NODE_ENV=production"
       - "DRUPAL_APP_URI={{ drupal_url }}"
       - "MATOMO_URL=foo.bar"
       - "MATOMO_TOKEN=foobar"
       - "MATOMO_API_URI=http://hub-matomo"
-      - "ENABLE_PRISON_SWITCH=true"
+      - "ENABLE_PRISON_SWITCH={{ feature_switch }}"
       - "NOMIS_API_TOKEN= true"
       - "NOMIS_API_ENDPOINT=Something"
 

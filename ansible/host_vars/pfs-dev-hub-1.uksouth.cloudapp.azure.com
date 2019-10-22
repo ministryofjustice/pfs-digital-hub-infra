@@ -6,3 +6,7 @@ pikwik_url: examples.com
 #Used for compose override
 drupal_url: http://pfs-dev-hub-1.uksouth.cloudapp.azure.com:11001/sites/default/files
 hub_backend_host: drupal.pfs-dev-hub-1.uksouth.cloudapp.azure.com
+public_crt: ../docker/files/nginx/dev/berwyn/public.crt
+private_rsa: ../docker/files/nginx/dev/berwyn/private.rsa
+app_name: HMP Berwyn
+feature_switch: false
