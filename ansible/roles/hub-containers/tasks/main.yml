@@ -22,13 +22,23 @@
 - name: Nginx config copy
   become: true
   copy:
-    src: ../docker/files/nginx/
+    src: "{{ public_crt }}"
     dest: /etc/nginx/
     owner: root
     group: docker
     mode: u=rw,g=r,o=r
 
-    
+- name: Nginx config copy
+  become: true
+  copy:
+    src: "{{ private_rsa }}"
+    dest: /etc/nginx/
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+
+
 - name: Copy and template the nginx config
   become: true
   template:
@@ -110,7 +120,7 @@
       export PIWIK_URI=//{{ pikwik_url }}
       export DRUPAL_URL=https://{{ hub_backend_host }}
       export MATOMO_URL=//{{ matomo_url }}
-      export APP_NAME="HMP Berwyn"
+      export APP_NAME="{{ app_name }}"
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d
     dest: /etc/docker-decomposed-secrets.sh
     mode: 0770

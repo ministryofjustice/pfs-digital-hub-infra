@@ -10,9 +10,14 @@ data "azurerm_subnet" "hub_subnet" {
   resource_group_name  = "${var.network-rg}"
 }
 
+data "azurerm_storage_account" "bootdiagstorageact" {
+  name                = "bootdiagstorageact"
+  resource_group_name = "pfs-all-bootdiag-rg"
+}
 
 
-resource "azurerm_availability_set" "dev_digital_hub_availset" {
+
+resource "azurerm_availability_set" "digital_hub_availset" {
   name                         = "${var.prefix}-digital_hub-av"
   resource_group_name          = "${var.rg-name}"
   location                     = "${var.location}"
@@ -24,24 +29,6 @@ resource "azurerm_availability_set" "dev_digital_hub_availset" {
   }
   
 }
-
-resource "azurerm_storage_account" "pfsdighubbootdiagact" {
-  name                     = "${var.bootdiagstorage}"
-  resource_group_name      = "${var.rg-name}"
-  location                 = "${var.location}"
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-
-   tags = {
-      environment = "${var.env}"
-    }
-
-    network_rules {
-    default_action             = "Deny"
-
-  }
-}
-
 
 
 # create public IP address (Temp only)
@@ -81,7 +68,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_virtual_machine" "vm" {
     count                 = "${var.vm-count}"
     name                  = "${var.prefix}-digital-hub-${1 + count.index}"
-    availability_set_id   = "${azurerm_availability_set.dev_digital_hub_availset.id}"
+    availability_set_id   = "${azurerm_availability_set.digital_hub_availset.id}"
     location              = "${var.location}"
     resource_group_name   = "${var.rg-name}"
     network_interface_ids = ["${element(azurerm_network_interface.nic.*.id, count.index)}"]
@@ -114,7 +101,7 @@ resource "azurerm_virtual_machine" "vm" {
 
    boot_diagnostics {
     enabled     = true
-    storage_uri = "${azurerm_storage_account.pfsdighubbootdiagact.primary_blob_endpoint}"
+    storage_uri = "${data.azurerm_storage_account.bootdiagstorageact.primary_blob_endpoint}"
   }
 
 

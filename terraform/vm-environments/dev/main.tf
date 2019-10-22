@@ -36,7 +36,7 @@ module "vm" {
   domainnamelabel        = "${var.domainnamelabel}"
   publicipname           = "${var.publicipname}"
   nic-name               = "${var.nic-name}"
-  bootdiagstorage        = "${var.bootdiagstorage}"
+  #bootdiagstorage        = "${var.bootdiagstorage}"
   vm_size                = "${var.vm_size}"
 }
 

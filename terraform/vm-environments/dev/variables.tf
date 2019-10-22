@@ -81,6 +81,7 @@ variable "publicipname" {
   default = "digital-hub-publicip"
 }
 
+/*
 variable "bootdiagstorage" {
   default = "bootdiagstorageact"
 }

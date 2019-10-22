@@ -92,7 +92,7 @@ variable "nic-name" {
     type = "string"
   
 }
-
+/*
 variable "bootdiagstorage" {
     description = "boot diagnosis storage account"
     type = "string"
