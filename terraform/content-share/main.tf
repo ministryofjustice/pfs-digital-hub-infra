@@ -38,7 +38,7 @@ output "subnet_id_prod_app" {
 
 
 
-####Stage
+####Stage --- stage
 data "azurerm_subnet" "stage-app-sn" {
   name                 = "pfs-stage-app-sn"
   virtual_network_name = "pfs-stage-core-vn"
