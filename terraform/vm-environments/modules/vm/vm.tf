@@ -121,3 +121,4 @@ resource "azurerm_virtual_machine_extension" "network-watcher" {
   type_handler_version       = "1.4"
   auto_upgrade_minor_version = true
 }
+

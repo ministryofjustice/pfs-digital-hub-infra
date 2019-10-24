@@ -36,3 +36,7 @@
   - name: Modify permissions for elasticsearch
     become: true
     shell: chown 1000:1000 -R /data/esdata
+  
+  - name: Set memory for elastic
+    become: true
+    shell: sysctl -w vm.max_map_count=262144 
