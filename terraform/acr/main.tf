@@ -20,9 +20,10 @@ resource "azurerm_container_registry" "acr" {
   name                     = "pfsprodhubacr"
   resource_group_name      = "${azurerm_resource_group.rg.name}"
   location                 = "${azurerm_resource_group.rg.location}"
-  sku                      = "Premium"
+  sku                      = "basic"
   admin_enabled            = true
-  georeplication_locations = ["UK West"]
+  #georeplication_locations = ["UK West"]
+  network_rule_set = []
 
   tags = {
 
