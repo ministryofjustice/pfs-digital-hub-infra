@@ -3,7 +3,7 @@
 
 - local_action: shell {{ role_path }}/files/vault_password.sh
   register: script_output
-- name: set_fact for blah
+- name: set_fact for vault
   set_fact: 
        fact_name: script_output.stdout
 

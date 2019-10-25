@@ -21,3 +21,4 @@
 - hosts: all
   roles:
     - hub-containers
+  tags: containers

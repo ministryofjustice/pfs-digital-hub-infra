@@ -1,5 +1,16 @@
 ---
 
+- name: Remove goland package due to bug with login
+  become: true
+  apt:
+    name: golang-docker-credential-helpers
+    state: absent
+
+- local_action: shell {{ role_path }}/files/vault_pas_matomo.sh
+  register: script_output
+- name: set_fact for vault
+  set_fact: 
+       fact_name: script_output.stdout
 
 - name: Setup directory and permissions for content folder
   become: true
@@ -67,18 +78,6 @@
     group: docker
     mode: u=rw,g=r,o=r
 
-
-#- name: Copy staging with owner and permission, using symbolic representation
- # become: true
-  #copy:
-   # src: ../docker/files/docker-compose-override.yml
-   # dest: /etc/docker/docker-compose-override.yml
-   # owner: root
-   # group: docker
-   # mode: u=rw,g=r,o=r
-
-
-
 - name: generate some local secrets
   become: true
   shell: |
@@ -121,6 +120,9 @@
       export DRUPAL_URL=https://{{ hub_backend_host }}
       export MATOMO_URL=//{{ matomo_url }}
       export APP_NAME="{{ app_name }}"
+      export ACR_PASSWORD={{ script_output.stdout }}
+      echo "$ACR_PASSWORD" | docker login --username pfsprodhubacr --password-stdin pfsprodhubacr.azurecr.io
+      #docker login -u pfsprodhubacr -password_st$ACR_PASSWORD pfsprodhubacr.azurecr.io
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d
     dest: /etc/docker-decomposed-secrets.sh
     mode: 0770
@@ -138,7 +140,7 @@
   
 - name: Check docker status
   become: True
-  command: docker ps
+  command: docker ps -a
   register: dockerstatus
 
 - name: Print status
@@ -160,3 +162,9 @@
     group: root
     mode: 0644
 
+
+- name: add goland package again
+  become: true
+  apt:
+    name: golang-docker-credential-helpers
+    state: present
