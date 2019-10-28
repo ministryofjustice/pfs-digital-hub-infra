@@ -1,3 +1,6 @@
+locals {
+  name = "pfs-digital-hub-stage"
+  }
 
 
 #Define variables
@@ -24,6 +27,10 @@ variable "username" {
   default = "hubuser"
 }
 
+variable "recovery_vault_name" {
+  type = "string"
+  description = "recovery_vault_name"
+}
 
 variable "rg-name" {
     type = "string"

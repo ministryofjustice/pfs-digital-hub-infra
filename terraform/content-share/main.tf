@@ -125,7 +125,7 @@ terraform {
 resource "azurerm_resource_group" "pfs-prod-digital-hub-content-rg" {
   name     = "pfs-prod-digital-hub-content-share"
   location = "${var.location}"
-    lifecycle {
+  lifecycle {
     prevent_destroy = true
   }
     tags = {
@@ -137,11 +137,11 @@ resource "azurerm_storage_account" "pfs-prod-digital-hub-content-acct" {
   name                     = "pfsprodhubstorageacc"
   resource_group_name      = "${azurerm_resource_group.pfs-prod-digital-hub-content-rg.name}"
   location                 = "${var.location}"
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-    lifecycle {
+  account_tier             = "Premium"
+  account_replication_type = "LRS"
+  account_kind             =  "FileStorage"
+  lifecycle {
     prevent_destroy = true
-    
   }
    tags = {
       environment = "prod"
@@ -157,13 +157,21 @@ resource "azurerm_storage_account" "pfs-prod-digital-hub-content-acct" {
 
 resource "azurerm_storage_share" "pfs-prod-hub-content-share" {
   name = "pfs-prod-digital-hub-content-share"
-
   resource_group_name  = "${azurerm_resource_group.pfs-prod-digital-hub-content-rg.name}"
   storage_account_name = "${azurerm_storage_account.pfs-prod-digital-hub-content-acct.name}"
 
   quota = 250
-    lifecycle {
+  lifecycle {
     prevent_destroy = true
   }
+   acl {
+        id = "drupal"
+
+          access_policy {
+          permissions = "rcwdl"
+          start = "${timestamp()}"
+          expiry = "${timeadd(timestamp(),"2629746m")}"
+            }
+        }
 
 }

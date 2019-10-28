@@ -10,11 +10,16 @@ data "azurerm_subnet" "hub_subnet" {
   resource_group_name  = "${var.network-rg}"
 }
 
+data "azurerm_recovery_services_protection_policy_vm" "backup_policy" {
+  recovery_vault_name = "pfs-hub-prod-recovery-vault"
+  name                = "pfs-hub-prod-content-bkp-policy"
+  resource_group_name = "pfs-prod-hub-content-backup-services"
+}
+
 data "azurerm_storage_account" "bootdiagstorageact" {
   name                = "bootdiagstorageact"
   resource_group_name = "pfs-all-bootdiag-rg"
 }
-
 
 
 resource "azurerm_availability_set" "digital_hub_availset" {
@@ -27,9 +32,7 @@ resource "azurerm_availability_set" "digital_hub_availset" {
   tags = {
     environment = "${var.env}"
   }
-  
 }
-
 
 # create public IP address (Temp only)
 resource "azurerm_public_ip" "publicip" {
@@ -79,8 +82,10 @@ resource "azurerm_virtual_machine" "vm" {
         name              = "${var.prefix}-digital-hub-osdisk-${1 + count.index}"
         caching           = "ReadWrite"
         create_option     = "FromImage"
-        managed_disk_type = "Standard_LRS"
+        managed_disk_type = "Premium_LRS"
+        disk_size_gb      = "500"
     }
+  
 
     storage_image_reference {
         publisher = "Canonical"
@@ -120,5 +125,45 @@ resource "azurerm_virtual_machine_extension" "network-watcher" {
   type                       = "NetworkWatcherAgentLinux"
   type_handler_version       = "1.4"
   auto_upgrade_minor_version = true
+}
+/*
+resource "azurerm_virtual_machine_extension" "anti-malware" {
+  count                = "${var.vm-count}"
+  name                 = "IaaSAntimalware"
+  location             = "${var.location}"
+  resource_group_name  = "${var.rg-name}"
+  virtual_machine_name = "${azurerm_virtual_machine.vm.*.name[count.index]}"
+  publisher            = "Microsoft.Azure.Security"
+  type                 = "IaaSAntimalware"
+  type_handler_version = "1.3"
+
+  settings = <<SETTINGS
+    {
+      "AntimalwareEnabled": "true",
+      "RealtimeProtectionEnabled": "true",
+      "ScheduledScanSettings": {
+        "isEnabled": "true",
+        "day": "7",
+        "time": "120",
+        "scanType": "Quick"
+      },
+      "Exclusions": {
+        "Extensions": "",
+        "Paths": "",
+        "Processes": ""
+      }
+    }
+  SETTINGS
+}
+*/
+
+/*##module.vm.azurerm_recovery_services_protected_vm.vm1 - Due to a bug in the terraform destroy you need to skip this */
+
+resource "azurerm_recovery_services_protected_vm" "vm1" {
+  count               = "${var.vm-count}"
+  resource_group_name = "pfs-prod-hub-content-backup-services"
+  recovery_vault_name = "${var.recovery_vault_name}"
+  source_vm_id        = "${azurerm_virtual_machine.vm.*.id[count.index]}"
+  backup_policy_id    = "${data.azurerm_recovery_services_protection_policy_vm.backup_policy.id}"
 }
 

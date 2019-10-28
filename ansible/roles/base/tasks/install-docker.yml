@@ -8,6 +8,7 @@
      - ca-certificates
      - curl
      - software-properties-common
+     
   - name:    Add Docker GPG key
     become: true
     apt_key: url=https://download.docker.com/linux/ubuntu/gpg

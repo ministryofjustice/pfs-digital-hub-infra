@@ -78,10 +78,13 @@ services:
       - MATOMO_GENERAL_ENABLE_INTERNET_FEATURES=0
       - MATOMO_GENERAL_ENABLE_MARKETPLACE=0
       - MATOMO_GENERAL_ENABLE_PLUGIN_UPLOAD=1
+      - MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK=0
     ports:
       - 12001:80
     links:
       - hub-matomo-db
+    volumes:
+      - /data/moj_dhub_matomo_config:/var/www/html/config:rw
 
   hub-matomo-db:
     container_name: hub-matomo-db
@@ -91,6 +94,8 @@ services:
       - MYSQL_DATABASE=matomo
       - MYSQL_USER=${HUB_MATOMO_MYSQL_USER_USERNAME}
       - MYSQL_PASSWORD=${HUB_MATOMO_MYSQL_USER_PASSWORD}
+    volumes:
+      - /data/moj_dhub_matomo_db/var/lib/mysql/:/var/lib/mysql/
 
   nginx: 
     image: nginx:latest

@@ -161,10 +161,3 @@
     owner: root
     group: root
     mode: 0644
-
-
-- name: add goland package again
-  become: true
-  apt:
-    name: golang-docker-credential-helpers
-    state: present

@@ -84,3 +84,8 @@ variable "publicipname" {
 variable "bootdiagstorage" {
   default = "bootdiagstorageact"
 }
+
+variable "recovery_vault_name" {
+  description = "recovery_vault_name"
+  default = "pfs-hub-prod-recovery-vault"
+}

@@ -40,6 +40,7 @@ module "vm" {
   nic-name               = "${var.nic-name}"
   #bootdiagstorage        = "${var.bootdiagstorage}"
   vm_size                = "${var.vm_size}"
+  recovery_vault_name    = "${var.recovery_vault_name}"
 }
 
 

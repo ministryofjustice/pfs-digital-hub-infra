@@ -81,6 +81,12 @@ variable "publicipname" {
   default = "digital-hub-publicip"
 }
 
+variable "backup-rg" {
+  description = "the name of the backup resource group"
+  default = "value"
+}
+
+
 /*
 variable "bootdiagstorage" {
   default = "bootdiagstorageact"

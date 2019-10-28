@@ -1,12 +1,13 @@
 ---
 
-hub_url: pfs-prod-hub-2.uksouth.cloudapp.azure.com
-matomo_url: matomo.pfs-prod-hub-2.uksouth.cloudapp.azure.com:12001
-pikwik_url: examples.com
+hub_url: digital-hub-bwi.dpn.gov.uk
+matomo_url: analytics.digital-hub-bwi.dpn.gov.uk
+pikwik_url: https://analytics.digital-hub-bwi.dpn.gov.uk
 #Used for compose override
-drupal_url: http://pfs-prod-hub-2.uksouth.cloudapp.azure.com:11001/sites/default/files
-hub_backend_host: drupal.pfs-prod-hub-2.uksouth.cloudapp.azure.com
+drupal_url: https://content.digital-hub-bwi.dpn.gov.uk/sites/default/files
+hub_backend_host: content.digital-hub-bwi.dpn.gov.uk
 public_crt: ../docker/files/nginx/prod/Berwyn/public.crt
 private_rsa: ../docker/files/nginx/prod/Berwyn/private.rsa
 app_name: HMP Berwyn
 feature_switch: false
+
