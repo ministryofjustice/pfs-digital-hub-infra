@@ -60,7 +60,7 @@ resource "azurerm_network_interface" "nic" {
   ip_configuration {
     name                          = "nic"
     subnet_id                     = "${data.azurerm_subnet.hub_subnet.id}"
-    private_ip_address_allocation = "dynamic"
+    private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = "${azurerm_public_ip.publicip.*.id[count.index]}"
   }
   tags = {

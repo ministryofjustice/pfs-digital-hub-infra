@@ -18,6 +18,7 @@ http {
     }
 
   server {
+    listen 443 ssl http2;
     server_name {{ hub_url }}; ##temp
 
     location /sites/default/files/ {
@@ -43,11 +44,10 @@ http {
       proxy_set_header Connection "";
       proxy_cache one;
       }
-
-    listen 443 ssl http2;
-
-    ssl_certificate /etc/letsencrypt/live/localhost/public.crt;
-    ssl_certificate_key /etc/letsencrypt/live/localhost/private.rsa;
+  }
+    
+    ssl_certificate /etc/letsencrypt/live/localhost/san.digital-hub.crt;
+    ssl_certificate_key /etc/letsencrypt/live/localhost/san.digital-hub.rsa;
     ssl_session_timeout 1d;
     ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
     ssl_session_tickets off;
@@ -56,5 +56,4 @@ http {
     ssl_prefer_server_ciphers off;
     # HSTS (ngx_http_headers_module is required) (63072000 seconds)
     add_header Strict-Transport-Security "max-age=63072000" always;
-  }
 }

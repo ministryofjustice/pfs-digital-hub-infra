@@ -69,7 +69,7 @@ variable "existing-vnet-name" {
                                                                                                                                                                                                                                 
 
 variable "ipallocation" {
-  default = "dynamic"
+  default = "static"
 }
 
 
