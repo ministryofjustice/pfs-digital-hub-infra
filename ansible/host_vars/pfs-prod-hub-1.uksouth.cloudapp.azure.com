@@ -1,12 +1,15 @@
 ---
 
-hub_url: pfs-prod-hub-1.uksouth.cloudapp.azure.com
-matomo_url: matomo.pfs-prod-hub-1.uksouth.cloudapp.azure.com:12001
-pikwik_url: examples.com
+hub_url: digital-hub.wli.dpn.gov.uk
+matomo_url: analytics.digital-hub.wli.dpn.gov.uk
+pikwik_url: https://analytics.digital-hub.wli.dpn.gov.uk
 #Used for compose override
-drupal_url: http://pfs-prod-hub-1.uksouth.cloudapp.azure.com:11001/sites/default/files
-hub_backend_host: drupal.pfs-prod-hub-1.uksouth.cloudapp.azure.com
-public_crt: ../docker/files/nginx/prod/wayland/public.crt
-private_rsa: ../docker/files/nginx/prod/wayland/private.rsa
+drupal_url: https://content.digital-hub.wli.dpn.gov.uk/sites/default/files
+hub_backend_host: content.digital-hub.wli.dpn.gov.uk
+public_crt: ../docker/files/nginx/prod/Wayland/wli.digital-hub.crt
+private_rsa: ../docker/files/nginx/prod/Wayland/wli.digital-hub.rsa
 app_name: HMP Wayland
 feature_switch: false
+nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
+
+
