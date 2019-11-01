@@ -17,6 +17,7 @@ services:
      restart: "always"
      environment:
       - "APP_NAME={{ app_name }}"
+      - "ESTABLISHMENT_NAME={{ establishment_name }}"
       - "NODE_ENV=production"
       - "DRUPAL_APP_URI={{ drupal_url }}"
       - "MATOMO_URL={{ matomo_url }}"

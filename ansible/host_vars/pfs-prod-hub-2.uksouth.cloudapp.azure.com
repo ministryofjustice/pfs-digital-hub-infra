@@ -11,5 +11,5 @@ private_rsa: ../docker/files/nginx/prod/Berwyn/san.digital-hub.rsa
 app_name: HMP Berwyn
 feature_switch: false
 nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
-
+establishment_name: berwyn
 
