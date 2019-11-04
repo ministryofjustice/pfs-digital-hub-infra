@@ -30,4 +30,22 @@ services:
   hub-elasticsearch:
     restart: "always"
     volumes:
-      - /data/esdata:/usr/share/elasticsearch/data      
+      - /data/esdata:/usr/share/elasticsearch/data
+
+      
+  hub-matomo:
+    restart: "always"
+    volumes:
+      - /data/moj_dhub_matomo_config:/var/www/html/config:rw
+
+  hub-matomo-db:
+    restart: "always"
+    volumes:
+      - /data/moj_dhub_matomo_db/var/lib/mysql/:/var/lib/mysql/
+
+  nginx: 
+    volumes:
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localhost/san.digital-hub.crt
+      - /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa
+      - /etc/nginx/logs:/var/log/nginx:rw
