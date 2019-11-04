@@ -32,6 +32,7 @@ http {
     server {
         listen 443 ssl http2;
         server_name {{ hub_url }};
+        add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
         location /sites/default/files/ {
                 proxy_set_header   Host              $host;
                 proxy_set_header   X-Real-IP         $remote_addr;
@@ -50,6 +51,7 @@ http {
     server {
         listen 443 ssl http2;
         server_name {{ matomo_url }};
+        add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
         location / {
             proxy_set_header Host              $host;
             proxy_set_header X-Real-IP         $remote_addr;
@@ -62,6 +64,7 @@ http {
     server {
         listen 443 ssl http2;
         server_name {{ hub_backend_host }};
+        add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
         location / {
             proxy_set_header Host              $host;
             proxy_set_header X-Real-IP         $remote_addr;

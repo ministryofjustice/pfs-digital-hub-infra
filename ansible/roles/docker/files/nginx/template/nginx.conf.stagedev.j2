@@ -20,6 +20,7 @@ http {
   server {
     listen 443 ssl http2;
     server_name {{ hub_url }}; ##temp
+    add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
 
     location /sites/default/files/ {
       proxy_set_header   Host              $host;
