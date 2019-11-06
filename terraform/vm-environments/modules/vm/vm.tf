@@ -21,6 +21,10 @@ data "azurerm_storage_account" "bootdiagstorageact" {
   resource_group_name = "pfs-all-bootdiag-rg"
 }
 
+data "azurerm_application_security_group" "asg_env" {
+  name                 =  "${var.asg}"
+  resource_group_name  = "${var.asg_rg}"
+}
 
 resource "azurerm_availability_set" "digital_hub_availset" {
   name                         = "${var.prefix}-digital_hub-av"
@@ -62,6 +66,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = "${data.azurerm_subnet.hub_subnet.id}"
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = "${azurerm_public_ip.publicip.*.id[count.index]}"
+    application_security_group_ids = ["${data.azurerm_application_security_group.asg_env.id}"]
   }
   tags = {
     environment = "${var.env}"
@@ -82,8 +87,8 @@ resource "azurerm_virtual_machine" "vm" {
         name              = "${var.prefix}-digital-hub-osdisk-${1 + count.index}"
         caching           = "ReadWrite"
         create_option     = "FromImage"
-        managed_disk_type = "Premium_LRS"
-        disk_size_gb      = "500"
+        managed_disk_type = "${var.manageddisktype}"
+        disk_size_gb      = "${var.disk_size_gb}"
     }
   
 

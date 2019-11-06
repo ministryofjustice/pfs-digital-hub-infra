@@ -99,6 +99,28 @@ variable "nic-name" {
     type = "string"
   
 }
+
+variable "asg" {
+    description = "The application security group this VM belongs to"
+    type = "string"
+}
+
+variable "asg_rg" {
+  description = "resource_group for the ASG"
+  type = "string"
+}
+
+
+variable "manageddisktype" {
+  description = "type of disk, premium or standard - ssd or hdd"
+  type = "string"
+}
+
+variable "disk_size_gb" {
+  description = "Size of managed disk"
+  type = "string"
+}
+  
 /*
 variable "bootdiagstorage" {
     description = "boot diagnosis storage account"

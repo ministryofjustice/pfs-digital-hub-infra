@@ -68,7 +68,7 @@ variable "existing-vnet-name" {
                                                                                                                                                                                                                                 
 
 variable "ipallocation" {
-  default = "dynamic"
+  default = "static"
 }
 
 
@@ -82,4 +82,24 @@ variable "publicipname" {
 
 variable "bootdiagstorage" {
   default = "bootdiagstorageact"
+}
+
+
+variable "asg" {
+    description = "The application security group this VM belongs to"
+    default = "pfs-stage-asg"
+}
+
+variable "asg_rg" {
+  description = "resource_group for the ASG"
+  default = "pfs-stage-core-rg"
+}
+variable "manageddisktype" {
+  description = "type of disk, premium or standard - ssd or hdd"
+  default = "Standard_LRS"
+}
+
+variable "disk_size_gb" {
+  description = "Size of managed disk"
+  default = "30"
 }
