@@ -21,7 +21,6 @@ librarian_roles/
 tmp/
 *.retry
 .vagrant/
-hosts
 stage.old
 Vagrantfile.old
 ./jenkins
