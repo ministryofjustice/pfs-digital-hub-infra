@@ -1,20 +1,18 @@
-
-
 #Define variables
 
 variable "vm-count" {
-  default = "1"  
+  default = "1"
 }
 
 variable "env" {
-  default  = "dev"
+  default = "dev"
 }
 
 variable "environment" {
-      type        = "string"
+  type        = "string"
   description = "tag for env"
   default     = "dev"
-  }
+}
 
 variable "rg-name" {
   type        = "string"
@@ -22,11 +20,10 @@ variable "rg-name" {
   default     = "pfs-dev-digital-hub-rg"
 }
 
-
 variable "vm_size" {
-  type = "string"
+  type        = "string"
   description = "size of the vm from t-shirts in Azure"
-  default = "Standard_DS2_v2"
+  default     = "Standard_DS2_v2"
 }
 
 variable "nic" {
@@ -35,7 +32,6 @@ variable "nic" {
 
 variable "prefix" {
   default = "pfs-dev"
-  
 }
 
 variable "location" {
@@ -46,36 +42,29 @@ variable "username" {
   default = "hubuser"
 }
 
-
- variable "existing-subnet-name" {
-   default = "pfs-dev-web-sn"
-   } 
-
+variable "existing-subnet-name" {
+  default = "pfs-dev-web-sn"
+}
 
 variable "existing-vnet-name" {
   default = "pfs-dev-core-vn"
 }
 
- variable "network-rg" {
+variable "network-rg" {
   default = "pfs-dev-core-rg"
- }
+}
 
-
-
- variable "nic-name" {
-   default = "digital-hub-nic"
- } 
-
-                                                                                                                                                                                                                                
+variable "nic-name" {
+  default = "digital-hub-nic"
+}
 
 variable "ipallocation" {
   default = "dynamic"
 }
 
-
- variable "domainnamelabel" {
-   default = "pfs-dev-hub"
- }
+variable "domainnamelabel" {
+  default = "pfs-dev-hub"
+}
 
 variable "publicipname" {
   default = "digital-hub-publicip"
@@ -83,30 +72,28 @@ variable "publicipname" {
 
 variable "backup-rg" {
   description = "the name of the backup resource group"
-  default = "value"
+  default     = "value"
 }
 
-
 variable "asg" {
-    description = "The application security group this VM belongs to"
-    default = "pfs-dev-asg"
+  description = "The application security group this VM belongs to"
+  default     = "pfs-dev-asg"
 }
 
 variable "asg_rg" {
   description = "resource_group for the ASG"
-  default = "pfs-dev-core-rg"
+  default     = "pfs-dev-core-rg"
 }
 
 variable "manageddisktype" {
   description = "type of disk, premium or standard - ssd or hdd"
-  default = "Standard_LRS"
+  default     = "Standard_LRS"
 }
 
 variable "disk_size_gb" {
   description = "Size of managed disk"
-  default = "30"
+  default     = "30"
 }
-
 
 /*
 variable "bootdiagstorage" {
@@ -198,7 +185,9 @@ variable "storagecontainer" {
 
 */
 
+
 #####
 
 
 #####
+
