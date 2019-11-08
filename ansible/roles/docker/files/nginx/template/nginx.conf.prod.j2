@@ -1,6 +1,5 @@
-events{
-
-}
+worker_rlimit_nofile 30000;
+events {}
 http {
     log_format compression '$remote_addr - $remote_user [$time_local] '
                            '"$request" $status $body_bytes_sent '
@@ -9,7 +8,7 @@ http {
     client_max_body_size 20m;
     server_names_hash_bucket_size 512;
     proxy_headers_hash_bucket_size 128;
-    proxy_cache_path /etc/nginx/cache keys_zone=one:10m max_size=60;
+    proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=content_cache:10m max_size=10g use_temp_path=off;
     upstream hub_node {
         server hub-node:3000;
         keepalive 16;
@@ -39,8 +38,11 @@ http {
                 proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
                 proxy_set_header   X-Forwarded-Proto $scheme;
                 proxy_set_header X-Forwarded-For $remote_addr;
+                proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
+                proxy_cache_valid 200 302 10m;
+                proxy_cache content_cache;
                 proxy_pass http://hub_cms/sites/default/files/;
-                proxy_cache one;
+                
         }
         location / {
                 access_log /var/log/nginx/access.log compression buffer=32k;
@@ -71,6 +73,9 @@ http {
             proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
+            proxy_cache_valid 200 302 10m;
+            proxy_cache content_cache;
             proxy_pass http://hub_cms/;
         }
     }
