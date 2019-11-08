@@ -49,3 +49,4 @@ services:
       - /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localhost/san.digital-hub.crt
       - /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa
       - /etc/nginx/logs:/var/log/nginx:rw
+      - /var/cache/nginx:/var/cache/nginx:rw
