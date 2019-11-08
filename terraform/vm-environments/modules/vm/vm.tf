@@ -134,7 +134,7 @@ resource "azurerm_virtual_machine_extension" "network-watcher" {
 }
 
 resource "azurerm_virtual_machine_extension" "Linux_diag" {
-  count                      = "${var.vm-count}"
+  count                = "${var.vm-count}"
   name                 = "${azurerm_virtual_machine.vm.*.name[count.index]}"
   location             = "${var.location}"
   resource_group_name  = "${var.rg-name}"
@@ -155,7 +155,6 @@ SETTINGS
         "storageAccountKey": "${data.azurerm_storage_account.bootdiagstorageact.primary_access_key}"
     }
 SETTINGS
-
 }
 
 /*
