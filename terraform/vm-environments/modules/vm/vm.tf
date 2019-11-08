@@ -133,6 +133,31 @@ resource "azurerm_virtual_machine_extension" "network-watcher" {
   auto_upgrade_minor_version = true
 }
 
+resource "azurerm_virtual_machine_extension" "Linux_diag" {
+  count                      = "${var.vm-count}"
+  name                 = "${azurerm_virtual_machine.vm.*.name[count.index]}"
+  location             = "${var.location}"
+  resource_group_name  = "${var.rg-name}"
+  virtual_machine_name = "${azurerm_virtual_machine.vm.*.name[count.index]}"
+  publisher            = "Microsoft.OSTCExtensions"
+  type                 = "LinuxDiagnostic"
+  type_handler_version = "2.3"
+
+  settings = <<SETTINGS
+    {
+        "storageAccount": "${data.azurerm_storage_account.bootdiagstorageact.name}"
+    }
+SETTINGS
+
+  protected_settings = <<SETTINGS
+    {
+        "storageAccountName": "${data.azurerm_storage_account.bootdiagstorageact.name}",
+        "storageAccountKey": "${data.azurerm_storage_account.bootdiagstorageact.primary_access_key}"
+    }
+SETTINGS
+
+}
+
 /*
 resource "azurerm_virtual_machine_extension" "anti-malware" {
   count                = "${var.vm-count}"
