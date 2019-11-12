@@ -1,7 +1,7 @@
 ---
 
 - name: Install aptitude
-  apt: name=aptitude state=installed
+  apt: name=aptitude state=present
 
 - name: Update all packages to the latest version
   become: true

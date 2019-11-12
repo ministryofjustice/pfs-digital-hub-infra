@@ -1,7 +1,12 @@
 #Define variables
 
+variable "sku" {
+  description = "publicipsku"
+  default = "standard"
+}
+
 variable "vm-count" {
-  default = "2"
+  default = "4"
 }
 
 variable "env" {

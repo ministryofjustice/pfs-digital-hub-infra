@@ -2,6 +2,11 @@ locals {
   name = "pfs-digital-hub-stage"
 }
 
+variable "sku" {
+  description = "description"
+}
+
+
 #Define variables
 variable "env" {
   description = "env: dev or stage or prod"
