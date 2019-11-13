@@ -1,5 +1,32 @@
 ---
 
+- name: Copy database file into place for initial load. 
+  become: true
+  copy:
+    src: ../hub-containers/db/docker-backup.sh
+    dest: /etc/docker/docker-backup.sh
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+- name: Changing perm of "/etc/docker-backup", adding "+x"
+  become: true
+  file: dest=/etc/docker/docker-backup.sh mode=a+x
+
+
+- name: Database backup job
+  become:
+  cron:
+    name: "Backup MYSQL databases"
+    minute: "00"
+    hour: "01"
+    weekday: "0-6"
+    job: "/etc/docker-backup.sh"
+    disabled: "no"
+    state: present
+  tags:
+   - cronjobs
+
 - name: Remove goland package due to bug with login
   become: true
   apt:
@@ -132,7 +159,7 @@
       export APP_NAME="{{ app_name }}"
       export ACR_PASSWORD={{ script_output.stdout }}
       echo "$ACR_PASSWORD" | docker login --username pfsprodhubacr --password-stdin pfsprodhubacr.azurecr.io
-      #docker login -u pfsprodhubacr -password_st$ACR_PASSWORD pfsprodhubacr.azurecr.io
+      docker-compose pull
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d
     dest: /etc/docker-decomposed-secrets.sh
     mode: 0770
@@ -156,7 +183,6 @@
 - name: Print status
   debug:
     msg: "docker status: {{ dockerstatus.stdout }}"
-
 - name: install docker-py to allow ansible to docker
   become: true
   apt:

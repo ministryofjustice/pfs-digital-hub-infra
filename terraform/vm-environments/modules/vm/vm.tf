@@ -49,6 +49,7 @@ resource "azurerm_public_ip" "publicip" {
   public_ip_address_allocation = "${var.ipallocation}"
   idle_timeout_in_minutes      = 30
   domain_name_label            = "${var.domainnamelabel}-${1 + count.index}"
+  sku                          = "${var.sku}"                                           #Standard is needed for lb
 
   tags = {
     environment = "${var.env}"
