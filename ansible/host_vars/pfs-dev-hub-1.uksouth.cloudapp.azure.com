@@ -13,3 +13,4 @@ feature_switch: true
 nginx_conf: ../docker/files/nginx/template/nginx.conf.stagedev.j2
 establishment_name: berwyn
 FEATURE_NEW_DESIGNS: ""
+MOCK_AUTH: ""
