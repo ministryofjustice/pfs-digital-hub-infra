@@ -12,5 +12,4 @@ app_name: HMP Wayland
 feature_switch: false
 nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
 establishment_name: wayland
-
-
+FEATURE_NEW_DESIGNS: ""

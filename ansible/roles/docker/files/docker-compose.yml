@@ -28,7 +28,6 @@ services:
       MATOMO_URL: //hub-matomo/
       ELASTICSEARCH_ENDPOINT: http://hub-elasticsearch:9200
       BACKEND_URL: http://hub-be
-      FEATURE_NEW_DESIGNS: ${FEATURE_NEW_DESIGNS}
 
   hub-be:
     container_name: hub-be
