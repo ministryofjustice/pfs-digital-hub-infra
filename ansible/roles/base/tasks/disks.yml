@@ -15,9 +15,11 @@
     /mnt/pfs-prod-digital-hub-content-share
 
 - name: Make persistent share
+  become:
   shell: mkdir -p /mnt/pfs-prod-digital-hub-content-share
 
 - name: Make persistent share for Azure
+  become:
   mount:
     path: /mnt/pfs-prod-digital-hub-content-share
     src: //pfsprodhubstorageacc.file.core.windows.net/pfs-prod-digital-hub-content-share 

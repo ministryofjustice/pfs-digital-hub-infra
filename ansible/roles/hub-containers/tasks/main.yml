@@ -1,5 +1,32 @@
 ---
 
+- name: Copy database file into place for initial load. 
+  become: true
+  copy:
+    src: ../hub-containers/db/docker-backup.sh
+    dest: /etc/docker/docker-backup.sh
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+- name: Changing perm of "/etc/docker-backup", adding "+x"
+  become: true
+  file: dest=/etc/docker/docker-backup.sh mode=a+x
+
+
+- name: Database backup job
+  become:
+  cron:
+    name: "Backup MYSQL databases"
+    minute: "00"
+    hour: "01"
+    weekday: "0-6"
+    job: "/etc/docker-backup.sh"
+    disabled: "no"
+    state: present
+  tags:
+   - cronjobs
+
 - name: Remove goland package due to bug with login
   become: true
   apt:
