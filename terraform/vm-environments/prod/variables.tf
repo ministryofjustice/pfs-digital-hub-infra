@@ -2,7 +2,7 @@
 
 variable "sku" {
   description = "publicipsku"
-  default = "standard"
+  default     = "standard"
 }
 
 variable "vm-count" {
