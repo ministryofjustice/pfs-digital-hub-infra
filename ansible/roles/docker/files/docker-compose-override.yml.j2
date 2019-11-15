@@ -26,7 +26,7 @@ services:
       - "ENABLE_PRISON_SWITCH={{ feature_switch }}"
       - "NOMIS_API_TOKEN= true"
       - "NOMIS_API_ENDPOINT=Something"
-
+      - "FEATURE_NEW_DESIGNS={{ FEATURE_NEW_DESIGNS }}"
   hub-elasticsearch:
     restart: "always"
     volumes:
