@@ -10,3 +10,4 @@ private_rsa: ../docker/files/nginx/stage/wayland/private.rsa
 app_name: HMP Wayland
 feature_switch: false
 FEATURE_NEW_DESIGNS: ""
+MOCK_AUTH: ""
