@@ -188,12 +188,3 @@
   apt:
     name: python-docker
 
-- name: enable docker live-restore
-  become: true
-  copy:
-    content: |
-      {"live-restore": true}
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: 0644
