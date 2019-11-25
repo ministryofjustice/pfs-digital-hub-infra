@@ -1,4 +1,3 @@
-:set fileformat=unix
 #!/bin/sh
 #Set date
 HUB_PASSWORD="$(sudo docker exec hub-db printenv | grep MYSQL_PASSWORD)"

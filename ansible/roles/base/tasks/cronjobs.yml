@@ -1,0 +1,32 @@
+---
+
+- name: Copy database file into place for initial load. 
+  become: true
+  copy:
+    src: ../hub-containers/db/docker-backup.sh
+    dest: /etc/cron.daily/docker-backup.sh
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Changing perm of "/etc/docker-backup", adding "+x"
+  become: true
+  file: dest=/etc/cron.daily/docker-backup.sh mode=a+x
+
+
+- name: Database backup job
+  become: true
+  cron:
+    name: "Backup MYSQL databases"
+    minute: "00"
+    hour: "01"
+    weekday: "0-6"
+    job: "/etc/cron.daily/docker-backup.sh"
+    disabled: "no"
+    state: present
+  tags:
+   - cronjobs
+
+- name: check for line breaks (windows issue)
+  become: true
+  shell: sed -i -e 's/\r$//' /etc/cron.daily/docker-backup.sh
