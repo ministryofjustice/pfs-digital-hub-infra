@@ -49,10 +49,7 @@
 - debug:
     msg: "SWARM MODE: {{ swarm_mode }}"
 
-- name: Initialize docker swarm cluster
-  shell: >
-    docker swarm init
-  when: swarm_mode.stdout is match("inactive")
+
 
 # requirement for ansible docker modules to work
 - name: Install python pip
