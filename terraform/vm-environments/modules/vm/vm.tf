@@ -49,6 +49,7 @@ resource "azurerm_public_ip" "publicip" {
   public_ip_address_allocation = "${var.ipallocation}"
   idle_timeout_in_minutes      = 30
   domain_name_label            = "${var.domainnamelabel}-${1 + count.index}"
+
   #sku                          = "${var.sku}"                                           #Standard is needed for lb
 
   tags = {
@@ -197,6 +198,4 @@ resource "azurerm_recovery_services_protected_vm" "vm1" {
   recovery_vault_name = "${var.recovery_vault_name}"
   source_vm_id        = "${azurerm_virtual_machine.vm.*.id[count.index]}"
   backup_policy_id    = "${data.azurerm_recovery_services_protection_policy_vm.backup_policy.id}"
-
-  
 }

@@ -99,4 +99,3 @@ variable "usecase" {
   description = "Use case, such as digital hub or bastion"
   default     = "digital-hub"
 }
-

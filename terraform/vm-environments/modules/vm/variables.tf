@@ -1,6 +1,7 @@
 locals {
   name = "pfs-digital-hub-stage"
 }
+
 /*
 variable "sku" {
   description = "description"
@@ -110,10 +111,7 @@ variable "disk_size_gb" {
   type        = "string"
 }
 
-variable "usecase" {
-  
-}
-
+variable "usecase" {}
 
 /*
 variable "bootdiagstorage" {
