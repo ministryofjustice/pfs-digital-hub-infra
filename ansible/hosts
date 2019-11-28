@@ -10,3 +10,6 @@ pfs-stage-hub-1.uksouth.cloudapp.azure.com
 pfs-prod-hub-1.uksouth.cloudapp.azure.com
 pfs-prod-hub-2.uksouth.cloudapp.azure.com
 pfs-prod-hub-3.uksouth.cloudapp.azure.com
+
+[bastion]
+pfs-management-bastion-1.uksouth.cloudapp.azure.com

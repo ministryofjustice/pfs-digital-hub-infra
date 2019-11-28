@@ -1,10 +1,11 @@
 terraform {
   backend "azurerm" {
-    storage_account_name = "pfsbackendtfrgacctdev"        #Needs to be centralised?
-    container_name       = "azstatelock-dev"              # Dev test only? Could be a env variable TF_CONTAINER_NAME
-    key                  = "pfshubvm-test_tf_dev.tfstate" #Needs to be somewhow unique
+    storage_account_name = "pfsbackendtfrgacctprod"         #Needs to be centralised?
+    container_name       = "azstatelock-prod"               # Dev test only? Could be a env variable TF_CONTAINER_NAME
+    key                  = "pfsbastion-prod-tf_state.tfsprod" #Needs to be somewhow unique
   }
 }
+
 
 resource "azurerm_resource_group" "hub-rg" {
   name     = "${var.rg-name}"

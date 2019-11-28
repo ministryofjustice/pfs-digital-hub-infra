@@ -104,3 +104,8 @@ variable "disk_size_gb" {
   description = "Size of managed disk"
   default     = "500"
 }
+
+variable "usecase" {
+  description = "Use case, such as digital hub or bastion"
+  default     = "digital-hub"
+}

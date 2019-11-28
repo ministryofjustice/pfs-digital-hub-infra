@@ -1,10 +1,11 @@
 locals {
   name = "pfs-digital-hub-stage"
 }
-
+/*
 variable "sku" {
   description = "description"
 }
+*/
 
 #Define variables
 variable "env" {
@@ -108,6 +109,11 @@ variable "disk_size_gb" {
   description = "Size of managed disk"
   type        = "string"
 }
+
+variable "usecase" {
+  
+}
+
 
 /*
 variable "bootdiagstorage" {

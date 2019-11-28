@@ -5,33 +5,33 @@ variable "vm-count" {
 }
 
 variable "env" {
-  default = "stage"
+  default = "management"
 }
 
 variable "environment" {
   type        = "string"
   description = "tag for env"
-  default     = "stage"
+  default     = "management"
 }
 
 variable "rg-name" {
   type        = "string"
   description = "resource group name"
-  default     = "pfs-stage-digital-hub-rg"
-}
-
-variable "nic" {
-  default = "pfs-stage-hub-vnic"
-}
-
-variable "prefix" {
-  default = "pfs-stage"
+  default     = "pfs-management-digital-hub-rg"
 }
 
 variable "vm_size" {
   type        = "string"
   description = "size of the vm from t-shirts in Azure"
-  default     = "Standard_DS2_v2"
+  default     = "Standard_DS1_v2"
+}
+
+variable "nic" {
+  default = "pfs-management-hub-vnic"
+}
+
+variable "prefix" {
+  default = "pfs-management"
 }
 
 variable "location" {
@@ -43,45 +43,46 @@ variable "username" {
 }
 
 variable "existing-subnet-name" {
-  default = "pfs-stage-web-sn"
+  default = "pfs-prod-vm-sn"
 }
 
 variable "existing-vnet-name" {
-  default = "pfs-stage-core-vn"
+  default = "pfs-prod-access-vn"
 }
 
 variable "network-rg" {
-  default = "pfs-stage-core-rg"
+  default = "pfs-prod-access-rg"
 }
 
 variable "nic-name" {
-  default = "digital-hub-nic"
+  default = "management-hub-nic"
 }
 
 variable "ipallocation" {
-  default = "static"
+  default = "dynamic"
 }
 
 variable "domainnamelabel" {
-  default = "pfs-stage-hub"
+  default = "pfs-management-bastion"
 }
 
 variable "publicipname" {
-  default = "digital-hub-publicip"
+  default = "management-hub-publicip"
 }
 
-variable "bootdiagstorage" {
-  default = "bootdiagstorageact"
+variable "backup-rg" {
+  description = "the name of the backup resource group"
+  default     = "value"
 }
 
 variable "asg" {
   description = "The application security group this VM belongs to"
-  default     = "pfs-stage-asg"
+  default     = "pfs-bastion-asg"
 }
 
 variable "asg_rg" {
   description = "resource_group for the ASG"
-  default     = "pfs-stage-core-rg"
+  default     = "pfs-prod-core-rg"
 }
 
 variable "manageddisktype" {
@@ -94,8 +95,7 @@ variable "disk_size_gb" {
   default     = "30"
 }
 
-
 variable "usecase" {
   description = "Use case, such as digital hub or bastion"
-  default     = "digital-hub"
+  default     = "bastion"
 }
