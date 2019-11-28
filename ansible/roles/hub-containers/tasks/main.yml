@@ -120,6 +120,7 @@
   become: true
   copy:
     content: |
+      #!/bin/bash
       export MYSQL_USER=hubdb_user
       export MYSQL_ROOT_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_ROOT_PASSWORD)
       export MYSQL_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_PASSWORD)
@@ -131,6 +132,15 @@
       export MATOMO_URL=//{{ matomo_url }}
       export APP_NAME="{{ app_name }}"
       export ACR_PASSWORD={{ script_output.stdout }}
+      HOSTNAME=$(hostname)
+      echo "$HOSTNAME"
+      if [[ $HOSTNAME == *prod* ]]; then
+           KEY="nomis-prod-api-key"
+      else
+           KEY="nomis-staging-api-key"
+      fi
+      export AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
+      export NOMIS_API_KEY="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$KEY/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
       echo "$ACR_PASSWORD" | docker login --username pfsprodhubacr --password-stdin pfsprodhubacr.azurecr.io
       docker-compose pull
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d
