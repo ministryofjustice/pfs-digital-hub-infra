@@ -12,6 +12,7 @@ unattended_origins_patterns:
 groups_to_create:
   - name: admin
   - name: studio
+  - name: docker
 
 studio_users:
   - username: gemmabarnes
@@ -96,6 +97,16 @@ studio_users:
     shell: /bin/bash
     update_password: on_create
 
+  - username: ciuser
+    name: "ciuser"
+    groups:
+      - studio
+      - admin
+      - docker
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCyv5KnwA6Okicy2oM8lRCoM8oH8JCq7Sm39TCkx86b4m3TIabTFxWGdvVa+a2M6KYCO54hiUujPlqmxToBrTo0AUnawPg9ib0LzEFTSHe0RQMdN5cqYQUCPNI073XHH1KIHjOveOrKUoJvcoR2UZTBUq/bJj4Slon6UueaZstkstN3RPwfZLKvF6+o1EtxKmj6smDhRE5IhA5ol3KcF/p/YTRZmL9sk0AsKENNDh4+Xr6cTk3JZwRNFe11fe4Ah6jgmQDRcZPH1vXgy4fZK74afu8XXwUU0iDr9xawlPWx8h+Hvjven6x6D4tbNz7XRt+azWgumw5YWpMI9HFjubl0dhUUzXVAtUnWQUZomV1yGowfCkQX7xiKw0QXKLDJXeLO12bGqCsurZuxv4XoOmwVU6HzjTGe1Nwg9A6jlFTmbYbXgTs9P464pmeSag7iVOKgsTWNVEbRuufM5MD50lnrycEG0UztBVHbNqG5WZgHli/+FBSLpWHNzttH1oFE8ZwuVydfhYCJFoxF4K63z6WvqYzfhB6feLmwBAXbM5rNEY+Ghs/H6M6M//zONQzKK44+HhTkANzMy5wVpiNRcY61oZ7c9mwCezyfzYeOYo+zpf9VN+Ck31F8fAGI2vZC0QrXoL8T5HzCHNVu7sreTwqUtnbYsO58OFM5XgaHN8+2kQ== ciuser@digital.justice.gov.uk"
+    shell: /bin/bash
+    update_password: on_create
   
 
 users: "{{ studio_users }}"

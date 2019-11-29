@@ -89,5 +89,9 @@ An example of a tag just runing the containers role within Ansible. If you just 
 - provisioning
 - jnv.unattended-upgrades
 - base
-- azure 
+- azure
+- docker
 
+For the bastion server
+
+ansible-playbook --skip-tags="docker,containers" --user <username> -K -i hosts site.yml --limit pfs-management-bastion-1.uksouth.cloudapp.azure.com

@@ -14,3 +14,4 @@ nginx_conf: ../docker/files/nginx/template/nginx.conf.stagedev.j2
 establishment_name: berwyn
 FEATURE_NEW_DESIGNS: "true"
 MOCK_AUTH: "true"
+NOMIS_API_ENDPOINT: https://gateway.t3.nomis-api.hmpps.dsd.io

@@ -45,4 +45,5 @@ module "vm" {
   asg                 = "${var.asg}"
   asg_rg              = "${var.asg_rg}"
   recovery_vault_name = "${data.azurerm_recovery_services_protection_policy_vm.backup_policy.recovery_vault_name}"
+  usecase             = "${var.usecase}"
 }

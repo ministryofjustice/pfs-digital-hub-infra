@@ -9,8 +9,9 @@ hub_backend_host: drupal.pfs-dev-hub-1.uksouth.cloudapp.azure.com
 public_crt: ../docker/files/nginx/Dev/Berwyn/san.digital-hub.crt
 private_rsa: ../docker/files/nginx/Dev/Berwyn/san.digital-hub.rsa
 app_name: HMP Berwyn
-feature_switch: true
+feature_switch: "true"
 nginx_conf: ../docker/files/nginx/template/nginx.conf.stagedev.j2
 establishment_name: berwyn
 FEATURE_NEW_DESIGNS: ""
 MOCK_AUTH: ""
+NOMIS_API_ENDPOINT: https://gateway.t3.nomis-api.hmpps.dsd.io

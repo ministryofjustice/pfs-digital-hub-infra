@@ -49,7 +49,8 @@ resource "azurerm_public_ip" "publicip" {
   public_ip_address_allocation = "${var.ipallocation}"
   idle_timeout_in_minutes      = 30
   domain_name_label            = "${var.domainnamelabel}-${1 + count.index}"
-  sku                          = "${var.sku}"                                           #Standard is needed for lb
+
+  #sku                          = "${var.sku}"                                           #Standard is needed for lb
 
   tags = {
     environment = "${var.env}"
@@ -78,7 +79,7 @@ resource "azurerm_network_interface" "nic" {
 
 resource "azurerm_virtual_machine" "vm" {
   count                 = "${var.vm-count}"
-  name                  = "${var.prefix}-digital-hub-${1 + count.index}"
+  name                  = "${var.prefix}-${var.usecase}-${1 + count.index}"
   availability_set_id   = "${azurerm_availability_set.digital_hub_availset.id}"
   location              = "${var.location}"
   resource_group_name   = "${var.rg-name}"
@@ -189,7 +190,7 @@ resource "azurerm_virtual_machine_extension" "anti-malware" {
 }
 */
 
-/*##module.vm.azurerm_recovery_services_protected_vm.vm1 - Due to a bug in the terraform destroy you need to skip this */
+/*##module.vm.azurerm_recovery_services_protected_vm.vm1 - Due to a bug in the terraform destroy you need to skip this  */
 
 resource "azurerm_recovery_services_protected_vm" "vm1" {
   count               = "${var.vm-count}"
