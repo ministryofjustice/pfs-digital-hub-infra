@@ -89,5 +89,6 @@ An example of a tag just runing the containers role within Ansible. If you just 
 - provisioning
 - jnv.unattended-upgrades
 - base
-- azure 
+- azure
+- docker
 

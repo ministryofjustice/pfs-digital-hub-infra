@@ -28,3 +28,16 @@
     mode: 0644
   notify:
     - reload sshd
+    
+
+- name: Remove hubuser user
+  user: 
+    name: hubuser
+    state: absent
+    remove: yes
+
+- name: Disallow password authentication
+  lineinfile: dest=/etc/ssh/sshd_config
+                regexp="^PasswordAuthentication"
+                line="PasswordAuthentication no"
+                state=present

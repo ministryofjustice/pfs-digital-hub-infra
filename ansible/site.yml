@@ -1,7 +1,7 @@
 ---
 
 #Role used to call secure passwords from the vault
-- name: baseline
+- name: Azure
   hosts: all
   roles:
     - azure
