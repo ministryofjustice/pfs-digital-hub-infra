@@ -108,5 +108,5 @@ variable "usecase" {
 
 variable "sku" {
   description = "The sku for the NIC"
-  default = "Standard"
+  default     = "Standard"
 }
