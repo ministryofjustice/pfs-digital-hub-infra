@@ -7,9 +7,6 @@ terraform {
   }
 }
 
-
-
-
 resource "azurerm_resource_group" "pfs-prod-digital-hub-vault-rg" {
   name     = "${var.rg-name}"
   location = "${var.location}"
@@ -17,6 +14,21 @@ resource "azurerm_resource_group" "pfs-prod-digital-hub-vault-rg" {
     prevent_destroy = true
   }
 }
+
+data "azurerm_azuread_service_principal" "pfs-1" {
+  display_name = "pfs-prod-digital-hub-1"
+}
+
+
+data "azurerm_azuread_service_principal" "pfs-2" {
+  display_name = "pfs-prod-digital-hub-2"
+}
+
+data "azurerm_azuread_service_principal" "pfs-stage-1" {
+  display_name = "pfs-stage-digital-hub-1"
+}
+
+
 
 data "azuread_group" "DSDT" {
   name = "Digital Studio Dev Team - Digital Hub"
@@ -38,8 +50,6 @@ resource "azurerm_key_vault" "vault" {
   access_policy {
     object_id = "${data.azuread_group.DSDT.id}"
     tenant_id = "${data.azurerm_client_config.current.tenant_id}"
-
-
 
     key_permissions = [
       "create",
@@ -88,14 +98,64 @@ resource "azurerm_key_vault" "vault" {
       "update"
     ]
   }
-    network_acls {
-    default_action = "Deny"
-    bypass         = "AzureServices"
-    ip_rules       = "${var.ips}"
+
+  access_policy {
+    object_id = "${data.azurerm_azuread_service_principal.pfs-1.object_id}"
+    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
+
+    secret_permissions = [
+      "get",
+      "list"]
   }
-    tags = {
-    environment = "Prod"
+
+    access_policy {
+    object_id = "${data.azurerm_azuread_service_principal.pfs-2.object_id}"
+    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
+
+    secret_permissions = [
+      "get",
+      "list"]
   }
+
+      access_policy {
+    object_id = "${data.azurerm_azuread_service_principal.pfs-stage-1.object_id}"
+    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
+
+    secret_permissions = [
+      "get",
+      "list"]
+  }
+
+
+
+        enabled_for_template_deployment = false
+        tags                            = {
+            "environment" = "Prod"
+        }
+
+       network_acls {
+          default_action             = "Deny"
+          bypass         = "AzureServices"
+          ip_rules       = "${var.ips}"
+
+          virtual_network_subnet_ids = [
+            "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-dev-core-rg/providers/microsoft.network/virtualnetworks/pfs-dev-core-vn/subnets/pfs-dev-app-sn",
+             "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-dev-core-rg/providers/microsoft.network/virtualnetworks/pfs-dev-core-vn/subnets/pfs-dev-data-sn",
+              "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-dev-core-rg/providers/microsoft.network/virtualnetworks/pfs-dev-core-vn/subnets/pfs-dev-management-sn",
+               "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-dev-core-rg/providers/microsoft.network/virtualnetworks/pfs-dev-core-vn/subnets/pfs-dev-web-sn",
+              "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-access-rg/providers/microsoft.network/virtualnetworks/pfs-prod-access-vn/subnets/pfs-prod-spare-sn",
+              "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-access-rg/providers/microsoft.network/virtualnetworks/pfs-prod-access-vn/subnets/pfs-prod-vm-sn",
+             "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-app-sn",
+               "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-data-sn",
+               "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-management-sn",
+              "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-spare01-sn",
+             "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-web-sn",
+               "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-stage-core-rg/providers/microsoft.network/virtualnetworks/pfs-stage-core-vn/subnets/pfs-stage-app-sn",
+              "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-stage-core-rg/providers/microsoft.network/virtualnetworks/pfs-stage-core-vn/subnets/pfs-stage-data-sn",
+              "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-stage-core-rg/providers/microsoft.network/virtualnetworks/pfs-stage-core-vn/subnets/pfs-stage-management-sn",
+              "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-stage-core-rg/providers/microsoft.network/virtualnetworks/pfs-stage-core-vn/subnets/pfs-stage-web-sn"
+            ] 
+        }
 }
 resource "null_resource" "azure_storage_queue-enable-soft-delete" {
   provisioner "local-exec" {
