@@ -28,6 +28,7 @@ services:
       - "NOMIS_API_ENDPOINT={{ NOMIS_API_ENDPOINT }}"
       - "FEATURE_NEW_DESIGNS={{ FEATURE_NEW_DESIGNS }}"
       - "MOCK_AUTH={{ MOCK_AUTH }}"
+      - "FQDN={{ DOMAIN }}"
   hub-elasticsearch:
     restart: "always"
     volumes:
