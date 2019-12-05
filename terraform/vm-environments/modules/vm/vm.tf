@@ -55,7 +55,7 @@ resource "azurerm_public_ip" "publicip" {
   idle_timeout_in_minutes      = 30
   domain_name_label            = "${var.domainnamelabel}-${1 + count.index}"
 
-  sku                          = "${var.sku}"                                           #Standard is needed for lb
+  sku = "${var.sku}" #Standard is needed for lb
 
   tags = {
     environment = "${var.env}"
@@ -122,14 +122,14 @@ resource "azurerm_virtual_machine" "vm" {
     enabled     = true
     storage_uri = "${data.azurerm_storage_account.bootdiagstorageact.primary_blob_endpoint}"
   }
-    identity {
+  identity {
     type = "SystemAssigned"
   }
 
   tags = {
     environment = "${var.environment}"
-    prison = lookup(var.prison, count.index+1, "Default")
-    
+    prison      = lookup(var.prison, count.index + 1, "Default")
+
   }
 }
 
