@@ -1,9 +1,5 @@
 #Define variables
 
-variable "sku" {
-  description = "publicipsku"
-  default     = "standard"
-}
 
 variable "vm-count" {
   default = "4"
@@ -108,4 +104,9 @@ variable "disk_size_gb" {
 variable "usecase" {
   description = "Use case, such as digital hub or bastion"
   default     = "digital-hub"
+}
+
+variable "sku" {
+  description = "The sku for the NIC"
+  default     = "Standard"
 }

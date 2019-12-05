@@ -121,6 +121,14 @@
   copy:
     content: |
       #!/bin/bash
+      IMAGE_VERSION=latest
+      while getopts "v:" opt
+      do
+          case "$opt" in
+              v ) IMAGE_VERSION=$OPTARG ;;
+            esac
+          done
+      export IMAGE_VERSION
       export MYSQL_USER=hubdb_user
       export MYSQL_ROOT_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_ROOT_PASSWORD)
       export MYSQL_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_PASSWORD)

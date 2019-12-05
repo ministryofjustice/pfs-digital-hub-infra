@@ -98,3 +98,9 @@ variable "usecase" {
   description = "Use case, such as digital hub or bastion"
   default     = "digital-hub"
 }
+
+
+variable "sku" {
+  description = "The sku for the NIC"
+  default     = "Basic"
+}

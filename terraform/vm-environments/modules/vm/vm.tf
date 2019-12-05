@@ -4,6 +4,11 @@ resource "random_password" "password" {
   override_special = "_%@"
 }
 
+locals {
+  #Prison = "${azurerm_virtual_machine.vm[count.index].name}" == "pfs-prod-digital-hub-1" ? "Wayland" : "${azurerm_virtual_machine.vm[count.index].name}" == "pfs-prod-digital-hub-2" ? "Berwyn" : "Default"
+}
+
+
 #refer to a subnet
 data "azurerm_subnet" "hub_subnet" {
   name                 = "${var.existing-subnet-name}"
@@ -50,7 +55,7 @@ resource "azurerm_public_ip" "publicip" {
   idle_timeout_in_minutes      = 30
   domain_name_label            = "${var.domainnamelabel}-${1 + count.index}"
 
-  #sku                          = "${var.sku}"                                           #Standard is needed for lb
+  sku = "${var.sku}" #Standard is needed for lb
 
   tags = {
     environment = "${var.env}"
@@ -117,9 +122,14 @@ resource "azurerm_virtual_machine" "vm" {
     enabled     = true
     storage_uri = "${data.azurerm_storage_account.bootdiagstorageact.primary_blob_endpoint}"
   }
+  identity {
+    type = "SystemAssigned"
+  }
 
   tags = {
     environment = "${var.environment}"
+    prison      = lookup(var.prison, count.index + 1, "Default")
+
   }
 }
 

@@ -113,11 +113,22 @@ variable "disk_size_gb" {
 
 variable "usecase" {}
 
+variable "sku" {}
+
+variable "prison" {
+  type = "map"
+  default = {
+    1 = "Wayland"
+    2 = "Berwyn"
+  }
+}
+
 /*
 variable "bootdiagstorage" {
     description = "boot diagnosis storage account"
     type = "string"
 }
+
 
 
 
