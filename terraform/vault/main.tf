@@ -135,6 +135,7 @@ resource "azurerm_key_vault" "vault" {
     secret_permissions = [
       "get",
       "list"]
+      
   }
 
 
