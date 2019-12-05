@@ -12,6 +12,7 @@ app_name: HMP Wayland
 feature_switch: "false"
 nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
 establishment_name: wayland
-FEATURE_NEW_DESIGNS: ""
+FEATURE_NEW_DESIGNS: "true"
 MOCK_AUTH: ""
 NOMIS_API_ENDPOINT: https://gateway.nomis-api.service.justice.gov.uk
+DOMAIN: "wli.dpn.gov.uk"

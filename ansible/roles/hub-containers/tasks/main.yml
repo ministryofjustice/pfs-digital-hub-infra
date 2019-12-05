@@ -6,6 +6,12 @@
     name: golang-docker-credential-helpers
     state: absent
 
+- name: Install JQ
+  become: true
+  apt:
+    name: jq
+    state: present
+
 - name: Setup directory and permissions for nginx folder
   become: true
   file:
@@ -158,12 +164,12 @@
     group: docker
 
 
-- name: Run docker sh
-  shell: ./docker-decomposed-secrets.sh
-  register: compose
-  args:
-    chdir: /etc
-  become: True # because you're using sudo # Note Ansible dir
+#- name: Run docker sh
+#  shell: ./docker-decomposed-secrets.sh
+ # register: compose
+  #args:
+   # chdir: /etc
+  #become: True # because you're using sudo # Note Ansible dir
 
   
 - name: Check docker status
