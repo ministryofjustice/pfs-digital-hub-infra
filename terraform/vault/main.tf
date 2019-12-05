@@ -29,6 +29,12 @@ data "azurerm_azuread_service_principal" "pfs-stage-1" {
 }
 
 
+data "azurerm_azuread_service_principal" "pfs-dev-1" {
+  display_name = "pfs-dev-digital-hub-1"
+}
+
+
+
 
 data "azuread_group" "DSDT" {
   name = "Digital Studio Dev Team - Digital Hub"
@@ -126,6 +132,14 @@ resource "azurerm_key_vault" "vault" {
     "list"]
   }
 
+  access_policy {
+    object_id = "${data.azurerm_azuread_service_principal.pfs-dev-1.object_id}"
+    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
+
+    secret_permissions = [
+      "get",
+    "list"]
+  }
 
 
   enabled_for_template_deployment = false
