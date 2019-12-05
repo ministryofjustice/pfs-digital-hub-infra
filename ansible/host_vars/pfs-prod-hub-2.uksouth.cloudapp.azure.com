@@ -15,4 +15,4 @@ establishment_name: berwyn
 FEATURE_NEW_DESIGNS: "true"
 MOCK_AUTH: ""
 NOMIS_API_ENDPOINT: https://gateway.nomis-api.service.justice.gov.uk
-DOMAIN: ""bwi.dpn.gov.uk""cd
+DOMAIN: "bwi.dpn.gov.uk"
