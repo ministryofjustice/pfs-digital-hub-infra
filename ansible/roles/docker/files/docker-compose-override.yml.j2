@@ -29,6 +29,7 @@ services:
       - "FEATURE_NEW_DESIGNS={{ FEATURE_NEW_DESIGNS }}"
       - "MOCK_AUTH={{ MOCK_AUTH }}"
       - "FQDN={{ DOMAIN }}"
+      - "DOMAIN_CONTROLLER={{ DOMAIN }}"
   hub-elasticsearch:
     restart: "always"
     volumes:
