@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #Set date
 HUB_PASSWORD="$(sudo docker exec hub-db printenv | grep MYSQL_PASSWORD)"
 MATOMO_PASSWORD="$(sudo docker exec hub-matomo-db printenv | grep MYSQL_PASSWORD)"

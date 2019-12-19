@@ -16,3 +16,4 @@ FEATURE_NEW_DESIGNS: "true"
 MOCK_AUTH: ""
 NOMIS_API_ENDPOINT: https://gateway.nomis-api.service.justice.gov.uk
 DOMAIN: "bwi.dpn.gov.uk"
+DOMAIN_CONTROLLER: "bwi.dpn.gov.uk"
