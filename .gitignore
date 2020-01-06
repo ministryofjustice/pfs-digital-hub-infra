@@ -14,6 +14,7 @@ docker/selfseigned.pfx
 ansible/roles/letsencrypt
 *.rsa
 *.crt
+*.pem
 Gemfile.lock
 Ansiblefile.lock
 .librarian
