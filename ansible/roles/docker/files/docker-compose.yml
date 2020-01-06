@@ -93,12 +93,23 @@ services:
       - MYSQL_USER=${HUB_MATOMO_MYSQL_USER_USERNAME}
       - MYSQL_PASSWORD=${HUB_MATOMO_MYSQL_USER_PASSWORD}
 
-  nginx:
-    image: nginx:stable
-    container_name: production_nginx
+ # nginx:
+  #  image: nginx:stable
+   # container_name: production_nginx
+    #ports:
+     # - 443:443
+    #depends_on:
+     # - hub-node
+     # - hub-be
+    #restart: "always"
+
+  haproxy:
+    image: haproxy:alpine
+    container_name: haproxy
     ports:
       - 443:443
     depends_on:
       - hub-node
       - hub-be
     restart: "always"
+

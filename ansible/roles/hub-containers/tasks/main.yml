@@ -12,10 +12,10 @@
     name: jq
     state: present
 
-- name: Setup directory and permissions for nginx folder
+- name: Setup directory and permissions for haproxy folder
   become: true
   file:
-      path: /etc/nginx
+      path: /etc/haproxy
       owner: root
       group: docker
       mode: 0755
@@ -46,31 +46,31 @@
     group: docker
     mode: u=rw,g=r,o=r
 
-- name: Nginx config copy
+- name: haxproxy ssl copy
   become: true
   copy:
     src: "{{ public_crt }}"
-    dest: /etc/nginx/san.digital-hub.crt
+    dest: /etc/haproxy/key.pem
     owner: root
     group: docker
     mode: u=rw,g=r,o=r
 
-- name: Nginx config copy
-  become: true
-  copy:
-    src: "{{ private_rsa }}"
-    dest: /etc/nginx/san.digital-hub.rsa
-    owner: root
-    group: docker
-    mode: u=rw,g=r,o=r
+#- name: Nginx config copy
+ # become: true
+  #copy:
+   # src: "{{ private_rsa }}"
+    #dest: /etc/nginx/san.digital-hub.rsa
+    #owner: root
+    #group: docker
+    #mode: u=rw,g=r,o=r
 
 
 
 - name: Copy and template the nginx config
   become: true
   template:
-    src: "{{ nginx_conf }}"
-    dest: /etc/nginx/nginx.conf
+    src: "{{ haproxy_cfg }}"
+    dest: /etc/haproxy/haproxy.cfg
     owner: root
     group: docker
     mode: u=rw,g=r,o=r
