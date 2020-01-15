@@ -152,7 +152,7 @@ resource "azurerm_key_vault" "vault" {
     "list"]
   }
 
-    access_policy {
+  access_policy {
     object_id = "${data.azurerm_azuread_service_principal.pfs-ad-bwi-1.object_id}"
     tenant_id = "${data.azurerm_client_config.current.tenant_id}"
 
@@ -161,7 +161,7 @@ resource "azurerm_key_vault" "vault" {
     "list"]
   }
 
-    access_policy {
+  access_policy {
     object_id = "${data.azurerm_azuread_service_principal.pfs-ad-wli-1.object_id}"
     tenant_id = "${data.azurerm_client_config.current.tenant_id}"
 
