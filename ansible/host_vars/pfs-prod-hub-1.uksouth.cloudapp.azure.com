@@ -7,7 +7,7 @@ pikwik_url: https://analytics.digital-hub.wli.dpn.gov.uk
 drupal_url: https://content.digital-hub.wli.dpn.gov.uk/sites/default/files
 hub_backend_host: content.digital-hub.wli.dpn.gov.uk
 #public_crt: ../docker/files/nginx/prod/Wayland/wli.digital-hub.crt
-public_crt: ../docker/files/haproxy/prod/wayland/key.pem
+public_crt: ../docker/files/haproxy/prod/wayland/wayland.pem
 #private_rsa: ../docker/files/nginx/prod/Wayland/wli.digital-hub.rsa
 app_name: HMP Wayland
 feature_switch: "false"
