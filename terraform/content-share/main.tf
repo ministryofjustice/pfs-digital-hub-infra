@@ -115,9 +115,9 @@ output "subnet_id_dev_data" {
 
 terraform {
   backend "azurerm" {
-    storage_account_name  = "pfsbackendtfrgacctprod" #Needs to be centralised?
-    container_name        = "azstatelock-prod" # Dev test only? Could be a env variable TF_CONTAINER_NAME
-    key                   = "pfscontentshare_tf_state.tfsprod" #Needs to be somewhow unique
+    storage_account_name = "pfsbackendtfrgacctprod"           #Needs to be centralised?
+    container_name       = "azstatelock-prod"                 # Dev test only? Could be a env variable TF_CONTAINER_NAME
+    key                  = "pfscontentshare_tf_state.tfsprod" #Needs to be somewhow unique
   }
 }
 
@@ -128,27 +128,27 @@ resource "azurerm_resource_group" "pfs-prod-digital-hub-content-rg" {
   lifecycle {
     prevent_destroy = true
   }
-    tags = {
-      environment = "prod"
-}
+  tags = {
+    environment = "prod"
+  }
 }
 
 resource "azurerm_storage_account" "pfs-prod-digital-hub-content-acct" {
-  name                     = "pfsprodhubstorageacc"
-  resource_group_name      = "${azurerm_resource_group.pfs-prod-digital-hub-content-rg.name}"
-  location                 = "${var.location}"
-  account_tier             = "Premium"
-  account_replication_type = "LRS"
-  account_kind             =  "FileStorage"
+  name                      = "pfsprodhubstorageacc"
+  resource_group_name       = "${azurerm_resource_group.pfs-prod-digital-hub-content-rg.name}"
+  location                  = "${var.location}"
+  account_tier              = "Premium"
+  account_replication_type  = "LRS"
+  account_kind              = "FileStorage"
   enable_https_traffic_only = true
   lifecycle {
     prevent_destroy = true
   }
-   tags = {
-      environment = "prod"
-    }
+  tags = {
+    environment = "prod"
+  }
 
-    network_rules {
+  network_rules {
     default_action             = "Deny"
     ip_rules                   = "${var.ips}"
     virtual_network_subnet_ids = "${var.subnets}"
@@ -157,7 +157,7 @@ resource "azurerm_storage_account" "pfs-prod-digital-hub-content-acct" {
 }
 
 resource "azurerm_storage_share" "pfs-prod-hub-content-share" {
-  name = "pfs-prod-digital-hub-content-share"
+  name                 = "pfs-prod-digital-hub-content-share"
   resource_group_name  = "${azurerm_resource_group.pfs-prod-digital-hub-content-rg.name}"
   storage_account_name = "${azurerm_storage_account.pfs-prod-digital-hub-content-acct.name}"
 
@@ -165,14 +165,14 @@ resource "azurerm_storage_share" "pfs-prod-hub-content-share" {
   lifecycle {
     prevent_destroy = true
   }
-   acl {
-        id = "drupal"
+  acl {
+    id = "drupal"
 
-          access_policy {
-          permissions = "rcwdl"
-          start = "${timestamp()}"
-          expiry = "${timeadd(timestamp(),"2629746m")}"
-            }
-        }
+    access_policy {
+      permissions = "rcwdl"
+      start       = "${timestamp()}"
+      expiry      = "${timeadd(timestamp(), "2629746m")}"
+    }
+  }
 
 }

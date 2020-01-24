@@ -13,7 +13,7 @@ variable "bootdiagstorage" {
 }
 
 variable "env" {
-      type        = "string"
+  type        = "string"
   description = "tag for env"
   default     = "all"
-  }
+}
