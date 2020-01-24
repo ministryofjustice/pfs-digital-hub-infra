@@ -140,6 +140,7 @@ resource "azurerm_storage_account" "pfs-prod-digital-hub-content-acct" {
   account_tier             = "Premium"
   account_replication_type = "LRS"
   account_kind             =  "FileStorage"
+  enable_https_traffic_only = true
   lifecycle {
     prevent_destroy = true
   }
@@ -160,7 +161,7 @@ resource "azurerm_storage_share" "pfs-prod-hub-content-share" {
   resource_group_name  = "${azurerm_resource_group.pfs-prod-digital-hub-content-rg.name}"
   storage_account_name = "${azurerm_storage_account.pfs-prod-digital-hub-content-acct.name}"
 
-  quota = 250
+  quota = 1000
   lifecycle {
     prevent_destroy = true
   }

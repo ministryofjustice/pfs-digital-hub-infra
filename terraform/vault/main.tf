@@ -221,6 +221,7 @@ resource "azurerm_storage_account" "pfs-prod-hub-vault-storage-acct" {
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "GRS"
+  enable_https_traffic_only = true
 }
 
 resource "azurerm_monitor_diagnostic_setting" "prodworkspace" {
