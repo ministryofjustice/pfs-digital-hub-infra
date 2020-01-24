@@ -20,6 +20,7 @@ resource "azurerm_storage_account" "pfsdighubbootdiagact" {
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "GRS"
+  enable_https_traffic_only = true
 
    tags = {
       environment = "${var.env}"
