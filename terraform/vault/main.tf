@@ -216,11 +216,12 @@ resource "azurerm_log_analytics_workspace" "prodworkspace" {
 }
 
 resource "azurerm_storage_account" "pfs-prod-hub-vault-storage-acct" {
-  name                     = "pfsprodvaultloga"
-  resource_group_name      = "${var.rg-name}"
-  location                 = "${var.location}"
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
+  name                      = "pfsprodvaultloga"
+  resource_group_name       = "${var.rg-name}"
+  location                  = "${var.location}"
+  account_tier              = "Standard"
+  account_replication_type  = "GRS"
+  enable_https_traffic_only = true
 }
 
 resource "azurerm_monitor_diagnostic_setting" "prodworkspace" {
