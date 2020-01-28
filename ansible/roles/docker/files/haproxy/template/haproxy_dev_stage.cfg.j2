@@ -17,6 +17,7 @@ frontend www-https
     option http-keep-alive
     log global
     option httplog
+    option forwardfor
     timeout client 30s
     acl content-acl path_beg -i /sites/default/files
     acl analytics-acl path_beg -i /matomo

@@ -19,6 +19,7 @@ frontend www-https
     option http-keep-alive
     log global
     option httplog
+    option forwardfor
     timeout client 30s
     acl digital-hub-acl req_ssl_sni -i {{ hub_url }}
     acl analytics-acl req_ssl_sni -i {{ matomo_url }}
