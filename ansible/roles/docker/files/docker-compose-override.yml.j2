@@ -30,6 +30,12 @@ services:
       - "MOCK_AUTH={{ MOCK_AUTH }}"
       - "FQDN={{ DOMAIN }}"
       - "DOMAIN_CONTROLLER={{ DOMAIN }}"
+      - "PHONE_SERVER={{ PHONE_SERVER }}"
+      - "PHONE_PORT={{ PHONE_PORT }}"
+      - "PHONE_PASSPHRASE={{ PHONE_PASSPHRASE }}"
+      - "PHONE_ITERATIONS={{ PHONE_ITERATIONS }}"
+      - "PHONE_SALT={{ PHONE_SALT }}"
+      - "PHONE_IV={{ PHONE_IV }}"
   hub-elasticsearch:
     restart: "always"
     volumes:
