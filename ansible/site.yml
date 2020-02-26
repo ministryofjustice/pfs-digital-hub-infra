@@ -1,10 +1,4 @@
 ---
-
-#Role used to call secure passwords from the vault
-- name: Azure
-  hosts: all
-  roles:
-    - azure
 #base line for the host
 - name: baseline
   hosts: all
