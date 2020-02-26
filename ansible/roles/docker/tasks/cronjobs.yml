@@ -1,6 +1,6 @@
 ---
 
-- name: Copy database file into place for initial load. 
+- name: Copy daily backup cron job into place
   become: true
   copy:
     src: ../hub-containers/db/docker-backup.sh
@@ -30,3 +30,35 @@
 - name: check for line breaks (windows issue)
   become: true
   shell: sed -i -e 's/\r$//' /etc/cron.daily/docker-backup.sh
+
+
+- name: Copy clear down  cron job into place
+  become: true
+  copy:
+    src: ../hub-containers/files/cleardown-docker-images.sh
+    dest: /etc/cron.daily/cleardown-docker-images.sh
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Changing perm of "/etc/cleardown-docker-images.sh", adding "+x"
+  become: true
+  file: dest=/etc/cron.daily/cleardown-docker-images.sh mode=a+x
+
+  
+- name: docker image clear down job
+  become: true
+  cron:
+    name: "docker image clear down job"
+    minute: "00"
+    hour: "02"
+    weekday: "0-6"
+    job: "/etc/cron.daily/cleardown-docker-images.sh"
+    disabled: "no"
+    state: present
+  tags:
+   - cronjobs
+
+- name: check for line breaks (windows issue)
+  become: true
+  shell: sed -i -e 's/\r$//' /etc/cron.daily/cleardown-docker-images.sh

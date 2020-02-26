@@ -19,4 +19,10 @@ MOCK_AUTH: ""
 NOMIS_API_ENDPOINT: https://gateway.nomis-api.service.justice.gov.uk
 DOMAIN: "bwi.dpn.gov.uk"
 DOMAIN_CONTROLLER: "bwi.dpn.gov.uk"
+PHONE_SERVER: ""
+PHONE_PORT: ""
+PHONE_PASSPHRASE: ""
+PHONE_ITERATIONS: ""
+PHONE_SALT: ""
+PHONE_IV: ""
 
