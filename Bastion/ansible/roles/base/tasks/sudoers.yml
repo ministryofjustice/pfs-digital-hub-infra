@@ -1,0 +1,15 @@
+- name: Allow %{{ item }} to nopasswd sudo
+  become: true
+  copy:
+    dest: /etc/sudoers.d/{{ item }}
+    content: |
+      %{{ item }} ALL=(ALL) NOPASSWD: ALL
+    owner: root
+    group: root
+    mode: 0644
+    validate: /usr/sbin/visudo -cf %s
+  with_items:
+    - "{{ sudo_groups }}"
+
+
+

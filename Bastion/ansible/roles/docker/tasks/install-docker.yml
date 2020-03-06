@@ -1,0 +1,25 @@
+---
+
+  - name:    Install prerequisites
+    become: true
+    apt:     name={{item}} update_cache=yes
+    with_items:
+     - apt-transport-https
+     - ca-certificates
+     - curl
+     - software-properties-common
+     
+  - name:    Add Docker GPG key
+    become: true
+    apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+  - name:    Add Docker APT repository
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
+  - name:    Install Docker
+    apt:     name=docker-ce
+
+  - name: Download docker compose latest and install
+    shell: sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+  - name: Modify permissions for docker-compose
+    shell: sudo chmod +x /usr/local/bin/docker-compose
