@@ -186,7 +186,7 @@ resource "azurerm_key_vault" "vault" {
     "list"]
   }
 
-  
+
   access_policy {
     object_id = "${data.azurerm_azuread_service_principal.pfs-backup.object_id}"
     tenant_id = "${data.azurerm_client_config.current.tenant_id}"
@@ -198,8 +198,8 @@ resource "azurerm_key_vault" "vault" {
     key_permissions = [
       "backup",
       "get",
-      "list"]
-}
+    "list"]
+  }
 
   enabled_for_template_deployment = false
   tags = {
