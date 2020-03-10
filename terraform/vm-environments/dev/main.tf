@@ -1,3 +1,5 @@
+
+
 terraform {
   backend "azurerm" {
     storage_account_name = "pfsbackendtfrgacctdev"        #Needs to be centralised?
@@ -5,7 +7,6 @@ terraform {
     key                  = "pfshubvm-test_tf_dev.tfstate" #Needs to be somewhow unique
   }
 }
-
 resource "azurerm_resource_group" "hub-rg" {
   name     = "${var.rg-name}"
   location = "${var.location}"
@@ -37,6 +38,7 @@ module "vm" {
   domainnamelabel      = "${var.domainnamelabel}"
   publicipname         = "${var.publicipname}"
   nic-name             = "${var.nic-name}"
+  sku                  = "${var.sku}"
 
   #bootdiagstorage        = "${var.bootdiagstorage}"
   manageddisktype     = "${var.manageddisktype}"

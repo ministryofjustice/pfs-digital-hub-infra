@@ -1,3 +1,7 @@
+provider "azurerm" {
+version  = "=1.44.0"
+} 
+
 terraform {
   backend "azurerm" {
     storage_account_name = "pfsbackendtfrgacctprod"           #Needs to be centralised?
@@ -37,6 +41,7 @@ module "vm" {
   domainnamelabel      = "${var.domainnamelabel}"
   publicipname         = "${var.publicipname}"
   nic-name             = "${var.nic-name}"
+  sku                  = "${var.sku}"
 
   #bootdiagstorage        = "${var.bootdiagstorage}"
   manageddisktype     = "${var.manageddisktype}"

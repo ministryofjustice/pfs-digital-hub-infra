@@ -1,0 +1,28 @@
+global: 
+
+  slack_api_url: {{ web_hook }}
+
+{% raw %}
+route:
+  receiver: 'slack-notifications'
+  group_by: [alertname, datacenter, app, uptime]
+  
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#pfs-alerts'
+    send_resolved: true
+    title: '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] PFS Monitoring Event'
+    title_link: 'pfs-management-bastion-1.uksouth.cloudapp.azure.com/#/alerts'
+    text: >-
+       {{ range .Alerts }}
+           *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+         *Description:* {{ .Annotations.description }}
+         *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:> 
+         *Details:*
+         {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+         {{ end }}
+       {{ end }}
+
+ {% endraw %}
