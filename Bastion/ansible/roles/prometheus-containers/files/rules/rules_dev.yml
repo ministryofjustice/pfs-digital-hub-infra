@@ -1,0 +1,82 @@
+groups:
+
+  - name: uptime
+    rules: 
+     - record: job:uptime:average:hub
+       expr: avg without (instance) (up{job="Hub-Dev"})
+
+
+  - name: containers
+    rules:
+      - alert: hub_node_container_down
+        expr: absent(container_memory_usage_bytes{name="hub-node", job="Hub-Dev"})
+        for: 30s
+        labels:
+          severity: critical, slack
+        annotations:
+          summary: "hub-node container down :("
+          description: "hub-node container is down for more than 30 seconds." 
+  
+      - alert: hub_be_container_down 
+        expr: absent(container_memory_usage_bytes{name="hub-be", job="Hub-Dev"})
+        for: 30s
+        labels:
+          severity: critical, slack
+        annotations:
+         summary: "hub-be container down :("
+         description: "hub-be container is down for more than 30 seconds." 
+
+      - alert: hub_db_container_down 
+        expr: absent(container_memory_usage_bytes{name="hub-db", job="Hub-Dev"})
+        for: 30s
+        labels:
+         severity: critical, slack
+        annotations:
+         summary: "hub-db container down :("
+         description: "hub-db container is down for more than 30 seconds." 
+      
+      - alert: hub_matomo_container_down
+        expr: absent(container_memory_usage_bytes{name="hub-matomo", job="Hub-Dev"})
+        for: 30s
+        labels:
+          severity: critical, slack
+        annotations:
+          summary: "hub-matomo container down :("
+          description: "hub-matomo container is down for more than 30 seconds." 
+
+      - alert: hub_matomo_db_container_down
+        expr: absent(container_memory_usage_bytes{name="hub-matomo-db", job="Hub-Dev"})
+        for: 30s
+        labels:
+          severity: critical, slack
+        annotations:
+          summary: "hub-matomo-db container down :("
+          description: "hub-matomo-db container is down for more than 30 seconds." 
+
+      - alert: hub_elasticsearch_container_down
+        expr: absent(container_memory_usage_bytes{name="hub-elasticsearch", job="Hub-Dev"})
+        for: 30s
+        labels:
+          severity: critical, slack
+        annotations:
+          summary: "hub-elasticsearch container down :("
+          description: "hub-elasticsearch container is down for more than 30 seconds." 
+
+      - alert: hub_nginx_container_down
+        expr: absent(container_memory_usage_bytes{name="production_nginx", job="Hub-Dev"})
+        for: 30s
+        labels:
+          severity: critical, slack
+        annotations:
+          summary: "nginx container down :("
+          description: "nginx container is down for more than 30 seconds." 
+
+      - alert: monitor_service_down
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical, slack
+        annotations:
+          summary: "Monitor service non-operational"
+          description: "Service {{ $labels.instance }} is down."
+    

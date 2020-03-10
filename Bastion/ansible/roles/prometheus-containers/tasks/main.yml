@@ -1,0 +1,78 @@
+---
+
+- name: Remove goland package due to bug with login
+  become: true
+  apt:
+    name: golang-docker-credential-helpers
+    state: absent
+
+- name: Install JQ
+  become: true
+  apt:
+    name: jq
+    state: present
+   
+- name: Copy docker-compose with owner and permission, using symbolic representation
+  become: true
+  copy:
+    src: ../docker/files/docker-compose.yml
+    dest: /etc/docker/docker-compose.yml
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+- name: Get auth token
+  become: true
+  shell: export AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
+
+- name: slack secret from vault   
+  become: true
+  shell: export SLACK_API="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$SLACK_API/?api-version=2016-10-01 -H "Authorization:^ Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
+  
+- name: Check docker status
+  become: True
+  command: docker ps -a
+  register: dockerstatus
+
+- name: Print status
+  debug:
+    msg: "docker status: {{ dockerstatus.stdout }}"
+- name: install docker-py to allow ansible to docker
+  become: true
+  apt:
+    name: python-docker
+
+- name: Copy multiple files in Ansible with different permissions
+  copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      #mode: "{{item.mode}}"
+  with_items:
+      - { src: '../files/alertmanager/data/',dest: '/etc/docker/alertmanager/data'}
+      - { src: '../files/alertmanager/prometheus/',dest: '/etc/docker/alertmanager/prometheus'}
+      - { src: '../files/alertmanager/alertmanager.yml',dest: '/etc/docker/alertmanager/alertmanager.yml'}
+      - { src: '../files/blackbox/',dest: '/etc/docker/blackbox/'}
+      - { src: '../files/blackbox/config/blackbox.yml',dest: '/etc/docker/blackbox/config/blackbox.yml'}
+      - { src: '../files/ca/',dest: '/etc/docker/ca/'}
+      - { src: '../files/ca/dev/',dest: '/etc/docker/ca/dev/'}
+      - { src: '../files/ca/dev/disk/',dest: '/etc/docker/ca/dev/disk/'}
+      - { src: '../files/ca/sys/',dest: '/etc/docker/ca/sys'}
+      - { src: '../files/ca/var/',dest: '/etc/docker/ca/var'}
+      - { src: '../files/ca/var/lib/',dest: '/etc/docker/ca/var/lib/'}
+      - { src: '../files/ca/var/lib/docker/',dest: '/etc/docker/ca/var/lib/docker/'}
+      - { src: '../files/ca/var/run/',dest: '/etc/docker/ca/var/run/'}
+      - { src: '../files/rules/',dest: '/etc/docker/prometheus/rules'}
+      - { src: '../files/prometheus/',dest: '/etc/docker/prometheus/'}      
+      - { src: '../files/prometheus.yml',dest: '/etc/docker/prometheus/prometheus.yml'}
+      
+- name: Modify permissions for grafana
+  become: true
+  shell: chown 472:472 -R /etc/docker/grafana
+
+- name: Modify permissions for prometheus
+  become: true
+  shell: chown 777:777 -R /etc/docker/prometheus
+
+- name: Modify permissions for prometheus
+  become: true
+  shell: chmod 777 -R /etc/docker/prometheus
