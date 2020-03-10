@@ -40,6 +40,7 @@ scrape_configs:
     - targets: ['hub-dev.pfs-management.com:9100']
     - targets: ['hub-dev.pfs-management.com:8080']
 
+
   - job_name: Hub-Stage
 
     static_configs:
@@ -57,7 +58,7 @@ scrape_configs:
     static_configs:
     - targets: ['digital-hub.bwi.dpn.gov.uk:9100']
     - targets: ['digital-hub.bwi.dpn.gov.uk:8080']
-
+    
   - job_name: Grafana
 
     static_configs:

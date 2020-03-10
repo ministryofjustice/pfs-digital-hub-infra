@@ -21,6 +21,16 @@
     group: docker
     mode: u=rw,g=r,o=r
 
+
+
+- name: Get auth token
+  become: true
+  shell: export AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
+
+- name: slack secret from vault   
+  become: true
+  shell: export SLACK_API="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$SLACK_API/?api-version=2016-10-01 -H "Authorization:^ Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
+
 - name: Check docker status
   become: True
   command: docker ps -a
@@ -34,11 +44,13 @@
   apt:
     name: python-docker
 
-- name: Copy and template the docker-compose-override file
+
+- name: Jinja templated file. This file is not stored in git, please speak to ops for a copy
   become: true
   template:
     src: ./files/alertmanager/alertmanager.yml.j2
     dest: /etc/docker/alertmanager/alertmanager.yml
+
 
 - name: Copy multiple files in Ansible with different permissions
   copy:
@@ -48,7 +60,6 @@
   with_items:
       - { src: '../files/alertmanager/data/',dest: '/etc/docker/alertmanager/data'}
       - { src: '../files/alertmanager/prometheus/',dest: '/etc/docker/alertmanager/prometheus'}
-      #- { src: '../files/alertmanager/alertmanager.yml',dest: '/etc/docker/alertmanager/alertmanager.yml'}
       - { src: '../files/blackbox/',dest: '/etc/docker/blackbox/'}
       - { src: '../files/blackbox/config/blackbox.yml',dest: '/etc/docker/blackbox/config/blackbox.yml'}
       - { src: '../files/ca/',dest: '/etc/docker/ca/'}
@@ -74,4 +85,5 @@
 - name: Modify permissions for prometheus
   become: true
   shell: chmod 777 -R /etc/docker/prometheus
+
 
