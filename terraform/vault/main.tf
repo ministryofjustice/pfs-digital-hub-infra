@@ -43,6 +43,13 @@ data "azurerm_azuread_service_principal" "pfs-ad-wli-1" {
   display_name = "pfs-prd-wli-dc1"
 }
 
+data "azurerm_azuread_service_principal" "pfs-bastion" {
+  display_name = "pfs-management-bastion-1"
+}
+
+data "azurerm_azuread_service_principal" "pfs-backup" {
+  display_name = "Backup Management Service"
+}
 
 
 
@@ -170,6 +177,29 @@ resource "azurerm_key_vault" "vault" {
     "list"]
   }
 
+  access_policy {
+    object_id = "${data.azurerm_azuread_service_principal.pfs-bastion.object_id}"
+    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
+
+    secret_permissions = [
+      "get",
+    "list"]
+  }
+
+
+  access_policy {
+    object_id = "${data.azurerm_azuread_service_principal.pfs-backup.object_id}"
+    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
+
+    secret_permissions = [
+      "get",
+    "list"]
+
+    key_permissions = [
+      "backup",
+      "get",
+    "list"]
+  }
 
   enabled_for_template_deployment = false
   tags = {

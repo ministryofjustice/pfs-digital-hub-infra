@@ -7,7 +7,7 @@ pikwik_url: examples.com
 drupal_url: http://pfs-stage-hub-1.uksouth.cloudapp.azure.com:11001/sites/default/files
 hub_backend_host: drupal.pfs-stage-hub-1.uksouth.cloudapp.azure.com
 public_crt: ../docker/files/haproxy/prod/berwyn/key.pem
-#private_rsa: ../docker/files/nginx/stage/Berwyn/san.digital-hub.rsa
+private_rsa: ../docker/files/nginx/stage/Berwyn/san.digital-hub.rsa
 app_name: HMP Berwyn
 feature_switch: "true"
 haproxy_cfg: ../docker/files/haproxy/template/haproxy_dev_stage.cfg.j2
