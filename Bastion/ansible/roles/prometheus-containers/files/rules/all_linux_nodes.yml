@@ -1,0 +1,190 @@
+###Generic node config
+
+groups:
+  - name: general
+    rules:
+      - alert: OutOfMemory
+        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
+        for: 5m
+        labels:
+          severity: critical, slack
+        annotations:
+          summary: "Out of memory (instance {{ $labels.instance }})"
+          description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}" 
+  
+      - alert: UnusualNetworkThroughputIn
+        expr: sum by (instance) (irate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
+        for: 5m
+        labels:
+          severity: critical, slack
+        annotations:
+         summary: "Unusual network throughput in (instance {{ $labels.instance }})"
+         description: "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}" 
+
+      - alert: UnusualNetworkThroughputOut
+        expr: sum by (instance) (irate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unusual network throughput out (instance {{ $labels.instance }})"
+          description: "Host network interfaces are probably sending too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: UnusualDiskReadRate
+        expr: sum by (instance) (irate(node_disk_read_bytes_total[2m])) / 1024 / 1024 > 50
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unusual disk read rate (instance {{ $labels.instance }})"
+          description: "Disk is probably reading too much data (> 50 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: UnusualDiskWriteRate
+        expr: sum by (instance) (irate(node_disk_written_bytes_total[2m])) / 1024 / 1024 > 50
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unusual disk write rate (instance {{ $labels.instance }})"
+          description: "Disk is probably writing too much data (> 50 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: OutOfDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/rootfs"}  * 100) / node_filesystem_size_bytes{mountpoint="/rootfs"} < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Out of disk space (instance {{ $labels.instance }})"
+          description: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: OutOfDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/rootfs"}  * 100) / node_filesystem_size_bytes{mountpoint="/mnt/pfs-prod-digital-hub-content-share"} < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Out of disk space (instance {{ $labels.instance }})"
+          description: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: DiskWillFillIn4Hours
+        expr: predict_linear(node_filesystem_free_bytes{fstype!~"tmpfs"}[1h], 4 * 3600) < 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk will fill in 4 hours (instance {{ $labels.instance }})"
+          description: "Disk will fill in 4 hours at current write rate\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: OutOfInodes
+        expr: node_filesystem_files_free{mountpoint ="/rootfs"} / node_filesystem_files{mountpoint ="/rootfs"} * 100 < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Out of inodes (instance {{ $labels.instance }})"
+          description: "Disk is almost running out of available inodes (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: HighCpuLoad
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU load (instance {{ $labels.instance }})"
+          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+         ###cAdvisor
+
+      - alert: ContainerKilled
+        expr: time() - container_last_seen > 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container killed (instance {{ $labels.instance }})"
+          description: "A container has disappeared\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: ContainerCpuUsage
+        expr: (sum(rate(container_cpu_usage_seconds_total[3m])) BY (instance, name) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container CPU usage (instance {{ $labels.instance }})"
+          description: "Container CPU usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      #commented out as appears to be false alerting
+     # - alert: ContainerMemoryUsage
+      #  expr: (sum(container_memory_usage_bytes) BY (instance) / sum(container_memory_max_usage_bytes) BY (instance) * 100) > 80
+       # for: 5m
+        #labels:
+         # severity: warning
+        #annotations:
+        #  summary: "Container Memory usage (instance {{ $labels.instance }})"
+         # description: "Container Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: ContainerVolumeUsage
+        expr: (1 - (sum(container_fs_inodes_free) BY (instance) / sum(container_fs_inodes_total) BY (instance)) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container Volume usage (instance {{ $labels.instance }})"
+          description: "Container Volume usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: ContainerVolumeIoUsage
+        expr: (sum(container_fs_io_current) BY (instance, name) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container Volume IO usage (instance {{ $labels.instance }})"
+          description: "Container Volume IO usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: SwitchIsDown
+        expr: junos_up == 0
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+          summary: "Switch is down (instance {{ $labels.instance }})"
+          description: "The switch appears to be down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: HighBandwithUsage1gib
+        expr: irate(junos_interface_transmit_bytes[1m]) * 8 > 1e+9 * 0.90
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+          summary: "High Bandwith Usage 1GiB (instance {{ $labels.instance }})"
+          description: "Interface is highly saturated for at least 1 min. (> 0.90GiB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: HighBandwithUsage1gib
+        expr: irate(junos_interface_transmit_bytes[1m]) * 8 > 1e+9 * 0.80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Bandwith Usage 1GiB (instance {{ $labels.instance }})"
+          description: "Interface is getting saturated for at least 1 min. (> 0.80GiB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: CorednsPanicCount
+        expr: increase(coredns_panic_count_total[10m]) > 0
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+          summary: "CoreDNS Panic Count (instance {{ $labels.instance }})"
+          description: "Number of CoreDNS panics encountered\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: websitedown
+        expr: probe_success != 1
+        for: 10s
+        labels:
+          severity: error
+        annotations:
+          summary: "Website is down / probe has failed (instance {{ $labels.instance }})"
+          description: "Website is down / probe has failed \n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      
+      
+      

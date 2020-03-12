@@ -1,0 +1,72 @@
+groups:
+  - name: uptime
+    rules:
+      - record: job:uptime:average:Grafana
+        expr: avg without (instance) (up{job="Grafana"})
+      - alert: GrafanaApplicationDown
+        expr: job:uptime:average:Grafana < .75
+        for: 30s
+        labels:
+          severity: slack
+          team: devops
+
+  - name: targets
+    rules:
+     - alert: monitor_service_down
+       expr: up == 0
+       for: 30s
+       labels:
+       severity: critical, slack
+    annotations:
+      summary: "Monitor service non-operational"
+      description: "Service {{ $labels.instance }} is down."
+
+  - name: containers
+    rules:
+    - alert: grafana_container_down
+      expr: absent(container_memory_usage_bytes{name="grafana"})
+      for: 30s
+      labels:
+      severity: critical, slack
+    annotations:
+     summary: "Grafana container down :("
+     description: "Grafana container is down for more than 30 seconds." 
+  
+  - name: prometheus
+    rules:
+      - alert: PrometheusConfigurationReload
+        expr: prometheus_config_last_reload_successful != 1
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+         summary: "Prometheus configuration reload (instance {{ $labels.instance }})"
+         description: "Prometheus configuration reload error\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: PrometheusNotConnectedToAlertmanager
+        expr: prometheus_notifications_alertmanagers_discovered < 1
+        for: 5m
+        labels:
+         severity: error
+        annotations:
+         summary: "Prometheus not connected to alertmanager (instance {{ $labels.instance }})"
+         description: "Prometheus cannot connect the alertmanager\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: AlertmanagerConfigurationReload
+        expr: alertmanager_config_last_reload_successful != 1
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+         summary: "AlertManager configuration reload (instance {{ $labels.instance }})"
+         description: "AlertManager configuration reload error\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: ExporterDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Exporter down (instance {{ $labels.instance }})"
+          description: "Prometheus exporter down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+

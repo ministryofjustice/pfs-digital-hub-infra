@@ -12,6 +12,7 @@
 ansible/roles/hub-containers/db/dump/hub.sql
 docker/selfseigned.pfx
 ansible/roles/letsencrypt
+Bastion\ansible\host_vars\pfs-management-bastion-1.uksouth.cloudapp.azure.com
 *.rsa
 *.crt
 *.pem

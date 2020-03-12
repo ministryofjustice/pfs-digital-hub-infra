@@ -1,0 +1,13 @@
+---
+#base line for the host
+- hosts: bastion
+  become: true
+  roles: 
+    - base
+    - jnv.unattended-upgrades
+    - role: singleplatform-eng.users
+      tags:
+      - users
+    - provisioning
+    - docker
+    - prometheus-containers

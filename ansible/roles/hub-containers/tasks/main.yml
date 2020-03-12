@@ -12,14 +12,7 @@
     name: jq
     state: present
 
-- name: Setup directory and permissions for haproxy folder
-  become: true
-  file:
-      path: /etc/haproxy
-      owner: root
-      group: docker
-      mode: 0755
-      state: directory
+
 
 - local_action: shell {{ role_path }}/files/vault_pas_matomo.sh
   register: script_output
@@ -46,35 +39,17 @@
     group: docker
     mode: u=rw,g=r,o=r
 
-- name: haxproxy ssl copy
+
+- name: Nginx config copy
   become: true
   copy:
-    src: "{{ public_crt }}"
-    dest: /etc/haproxy/key.pem
+    src: "{{ private_rsa }}"
+    dest: /etc/nginx/san.digital-hub.rsa
     owner: root
     group: docker
     mode: u=rw,g=r,o=r
 
-#- name: Nginx config copy
- # become: true
-  #copy:
-   # src: "{{ private_rsa }}"
-    #dest: /etc/nginx/san.digital-hub.rsa
-    #owner: root
-    #group: docker
-    #mode: u=rw,g=r,o=r
 
-
-
-- name: Copy and template the haproxy config
-  become: true
-  template:
-    src: "{{ haproxy_cfg }}"
-    dest: /etc/haproxy/haproxy.cfg
-    owner: root
-    group: docker
-    mode: u=rw,g=r,o=r
-   
 - name: Copy and template the docker-compose-override file
   become: true
   template:
@@ -181,15 +156,6 @@
     mode: 0770
     owner: root
     group: docker
-
-
-#- name: Run docker sh
-#  shell: ./docker-decomposed-secrets.sh
- # register: compose
-  #args:
-   # chdir: /etc
-  #become: True # because you're using sudo # Note Ansible dir
-
   
 - name: Check docker status
   become: True
