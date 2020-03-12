@@ -1,0 +1,66 @@
+version: "3"
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports: 
+       - 9090:9090
+    restart: always
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules:/etc/prometheus/rules/
+      - ./prometheus/data:/prometheus/data/
+    command:
+    - '--web.external-url=http://localhost:9090'
+    - '--config.file=/etc/prometheus/prometheus.yml'
+
+  blackbox_exporter:
+    container_name: blackbox
+    image: prom/blackbox-exporter
+    ports:
+      - "9115:9115"
+    #dns: 8.8.8.8
+    restart: always
+    volumes:
+      - "./blackbox/config:/config"
+    command: 
+     - '--config.file=/config/blackbox.yml'
+
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports: 
+       - 3000:3000
+    restart: always
+    volumes:
+     - ./grafana/data:/var/lib/grafana
+
+  alertmanager:
+    container_name: alertmanager
+    image: prom/alertmanager
+    volumes:
+      - ./alertmanager/prometheus:/prometheus
+      - ./alertmanager/data:/data
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager.yml
+    command:
+    - '--config.file=/etc/alertmanager.yml'
+    ports:
+      - 9093:9093
+    restart: always
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    ports:
+    - 8080:8080
+    restart: always
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+
+  
+
