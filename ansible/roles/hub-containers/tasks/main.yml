@@ -131,6 +131,10 @@
            PHONE_ITERATIONS="PHONE-ITERATIONS-PROD"
            PHONE_SALT="PHONE-SALT-PROD"
            PHONE_IV="PHONE-IV-PROD"
+           LDAP_URL="LDAP-URL-PROD"
+           LDAP_ADMIN_DN="LDAP-ADMIN-DN-PROD"
+           LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-PROD"
+           LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-PROD"
       else
            KEY="nomis-staging-api-key"
            PHONE_SERVER="PHONE-SERVER-DEV"
@@ -139,6 +143,10 @@
            PHONE_ITERATIONS="PHONE-ITERATIONS-DEV"
            PHONE_SALT="PHONE-SALT-DEV"
            PHONE_IV="PHONE-IV-DEV"
+           LDAP_URL="LDAP-URL-DEV"
+           LDAP_ADMIN_DN="LDAP-ADMIN-DN-DEV"
+           LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-DEV"
+           LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-DEV"
       fi
       export AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
       export NOMIS_API_KEY="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$KEY/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
@@ -148,6 +156,10 @@
       export PHONE_ITERATIONS="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$PHONE_ITERATIONS/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
       export PHONE_SALT="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$PHONE_SALT/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
       export PHONE_IV="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$PHONE_IV/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
+      export LDAP_URL="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_URL/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
+      export LDAP_ADMIN_DN="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_ADMIN_DN/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
+      export LDAP_ADMIN_PWD="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_ADMIN_PWD/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
+      export LDAP_USER_SEARCH_BASE="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_USER_SEARCH_BASE/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
       echo "$ACR_PASSWORD" | docker login --username pfsprodhubacr --password-stdin pfsprodhubacr.azurecr.io
       docker pull mojdigitalstudio/digital-hub-node:$IMAGE_VERSION
       docker-compose pull

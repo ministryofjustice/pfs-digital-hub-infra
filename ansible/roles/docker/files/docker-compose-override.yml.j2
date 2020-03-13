@@ -36,6 +36,12 @@ services:
       - "PHONE_ITERATIONS={{ PHONE_ITERATIONS }}"
       - "PHONE_SALT={{ PHONE_SALT }}"
       - "PHONE_IV={{ PHONE_IV }}"
+      - "LDAP_URL=${LDAP_URL}"
+      - "LDAP_ADMIN_DN=${LDAP_ADMIN_DN}"
+      - "LDAP_ADMIN_PWD=${LDAP_ADMIN_PWD}"
+      - "LDAP_USER_SEARCH_BASE="${LDAP_USER_SEARCH_BASE}"
+      - "LDAP_START_TLS={{ LDAP-START-TLS }}"
+
   hub-elasticsearch:
     restart: "always"
     volumes:
