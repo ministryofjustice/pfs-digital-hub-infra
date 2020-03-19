@@ -1,0 +1,42 @@
+groups:
+  - name: memory
+    rules:
+    - alert: WindowsServerMemoryUsage
+      expr: 100 * (wmi_os_physical_memory_free_bytes) / wmi_cs_physical_memory_bytes > 90
+      for: 5m
+      labels:
+        severity: warning
+    annotations:
+      summary: "Windows Server memory Usage (instance {{ $labels.instance }})"
+      description: "Memory usage is more than 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  
+  - name: disk space
+    rules: 
+    - alert: WindowsServerDiskSpaceUsage
+      expr: 100.0 - 100 * ((wmi_logical_disk_free_bytes{} / 1024 / 1024 ) / (wmi_logical_disk_size_bytes{} / 1024 / 1024)) > 80
+      for: 5m
+      labels:
+      severity: error
+    annotations:
+     summary: "Windows Server disk Space Usage (instance {{ $labels.instance }})"
+     description: "Disk usage is more than 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}" 
+ 
+  - name: CPU Usage
+    rules: 
+    - alert: WindowsServerCpuUsage
+      expr: 100 - (avg by (instance) (rate(wmi_cpu_time_total{mode="idle"}[2m])) * 100) > 80
+      for: 5m
+      labels:
+      severity: warning
+    annotations:
+     summary: "Windows Server CPU Usage (instance {{ $labels.instance }})"
+     description: "CPU Usage is more than 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"  
+
+  - alert: WindowsServerServiceStatus
+    expr: wmi_service_status{status="ok"} != 1
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Windows Server service Status (instance {{ $labels.instance }})"
+      description: "Windows Service state is not OK\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"  
