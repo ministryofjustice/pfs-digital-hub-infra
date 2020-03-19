@@ -58,7 +58,54 @@ scrape_configs:
     static_configs:
     - targets: ['digital-hub.bwi.dpn.gov.uk:9100']
     - targets: ['digital-hub.bwi.dpn.gov.uk:8080']
-    
+
+  - job_name: Berwyn-Prod-Windows
+
+    static_configs:
+    - targets: ['pfs-prd-bwi-dc1.bwi.dpn.gov.uk:9182']
+    - targets: ['pfs-prd-bwi-dc2.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisulws001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisulws002.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisulws003.bwi.dpn.gov.uk:9182']
+    - targets: ['bwismssq002.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisulns001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwispifs001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisulap001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwiddccf001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwiddccf002.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisdhcp001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwiscaen001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwismssq001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwiscmpr001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwissepm002.bwi.dpn.gov.uk:9182']
+    - targets: ['bwiscvcs001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisloap001.bwi.dpn.gov.uk:9182']
+    - targets: ['bwisloap002.bwi.dpn.gov.uk:9182']
+    - targets: ['bwishyph001.bwi.dpn.gov.uk:9182']
+
+  - job_name: Wayland-Prod-Windows
+
+    static_configs:
+    - targets: ['pfs-prd-wli-dc1.wli.dpn.gov.uk:9182']
+    - targets: ['pfs-prd-wli-dc2.wli.dpn.gov.uk:9182']
+    - targets: ['wlisulws001.wli.dpn.gov.uk:9182']
+    - targets: ['wlisulws002.wli.dpn.gov.uk:9182']
+    - targets: ['wlisulws003.wli.dpn.gov.uk:9182']
+    - targets: ['wlismssq002.wli.dpn.gov.uk:9182']
+    - targets: ['wlisulns001.wli.dpn.gov.uk:9182']
+    - targets: ['wlispifs001.wli.dpn.gov.uk:9182']
+    - targets: ['wliddccf001.wli.dpn.gov.uk:9182']
+    - targets: ['wliddccf002.wli.dpn.gov.uk:9182']
+    - targets: ['wlisdhcp001.wli.dpn.gov.uk:9182']
+    - targets: ['wliscaen001.wli.dpn.gov.uk:9182']
+    - targets: ['wlismssq001.wli.dpn.gov.uk:9182']
+    - targets: ['wlissepm002.wli.dpn.gov.uk:9182']
+    - targets: ['wliscvcs001.wli.dpn.gov.uk:9182']
+    - targets: ['wlisloap001.wli.dpn.gov.uk:9182']
+    - targets: ['wlisloap002.wli.dpn.gov.uk:9182']
+    - targets: ['wlishyph001.wli.dpn.gov.uk:9182']
+
+
   - job_name: Grafana
 
     static_configs:
