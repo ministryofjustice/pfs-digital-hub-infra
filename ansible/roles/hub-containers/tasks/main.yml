@@ -49,6 +49,15 @@
     group: docker
     mode: u=rw,g=r,o=r
 
+- name: Nginx config copy and template
+  become: true
+  template:
+    src: ../docker/files/nginx/template/nginx.conf.stagedev.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
 
 - name: Copy and template the docker-compose-override file
   become: true

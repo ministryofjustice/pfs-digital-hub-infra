@@ -14,8 +14,11 @@ services:
       - ./prometheus/rules:/etc/prometheus/rules/
       - ./prometheus/data:/prometheus/data/
     command:
-    - '--web.external-url=http://localhost:9090'
+    - '--web.external-url=http://pfs-management-bastion-1.uksouth.cloudapp.azure.com:9090'
     - '--config.file=/etc/prometheus/prometheus.yml'
+    - '--storage.tsdb.retention.time=7d'
+    - '--storage.tsdb.retention.size=30GB'
+    - '--storage.tsdb.wal-compression'
 
   blackbox_exporter:
     container_name: blackbox

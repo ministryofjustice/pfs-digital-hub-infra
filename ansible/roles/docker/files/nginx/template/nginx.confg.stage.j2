@@ -1,0 +1,114 @@
+worker_rlimit_nofile 30000;
+events {}
+http {
+    log_format compression '$remote_addr - $remote_user [$time_local] '
+                           '"$request" $status $body_bytes_sent '
+                           '"$http_referer" "$http_user_agent" "$gzip_ratio"';
+     error_log /etc/nginx/error_log.log warn;
+    client_max_body_size 20m;
+    server_names_hash_bucket_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=content_cache:10m max_size=10g use_temp_path=off;
+    proxy_buffer_size 16k; # should be enough for most PHP websites, or adjust as above
+    proxy_busy_buffers_size 24k; # essentially, proxy_buffer_size + 2 small buffers of 4k
+    proxy_buffers 64 4k; # should be enough for most PHP websites, adjust as above to get an accurate value
+    upstream hub_node {
+        server hub-node:3000;
+        keepalive 16;
+    }
+    upstream hub_cms {
+        server hub-be:80;
+        keepalive 16;
+    }
+    upstream hub_analytics {
+        server hub-matomo:80;
+        keepalive 16;
+    }
+  
+    server {
+        listen 80 http2;
+        server_name digital-hub-stage.hmpps.dsd.io content.digital-hub-stage.hmpps.dsd.io analytics.digital-hub-stage.hmpps.dsd.io;
+        location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    server {
+        listen       443  default_server;
+        server_name  _;
+        return       418;
+    }
+
+    server {
+        listen 443 ssl http2;
+        server_name {{ hub_url }};
+        add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
+        location /sites/default/files/ {
+                proxy_set_header   Host              $host;
+                proxy_set_header   X-Real-IP         $remote_addr;
+                proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+                proxy_set_header   X-Forwarded-Proto $scheme;
+                proxy_set_header X-Forwarded-For $remote_addr;
+                proxy_buffer_size 16k; # should be enough for most PHP websites, or adjust as above
+                proxy_busy_buffers_size 24k; # essentially, proxy_buffer_size + 2 small buffers of 4k
+                proxy_buffers 64 4k; # should be enough for most PHP websites, adjust as above to get an accurate value
+                proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
+                proxy_cache_valid 200 302 10m;
+                proxy_cache content_cache;
+                proxy_pass http://hub_cms/sites/default/files/;
+                
+        }
+        location / {
+                access_log /var/log/nginx/access.log compression buffer=32k;
+                proxy_pass http://hub_node/;
+                proxy_http_version 1.1;
+                proxy_set_header Connection "";
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        server_name {{ matomo_url }};
+        add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
+        location / {
+            proxy_set_header Host              $host;
+            proxy_set_header X-Real-IP         $remote_addr;
+            proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_pass http://hub_analytics/;
+        }
+    }
+
+    server {
+        listen 443 ssl http2;
+        server_name {{ hub_backend_host }};
+        add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
+        location / {
+            proxy_set_header Host              $host;
+            proxy_set_header X-Real-IP         $remote_addr;
+            proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_buffer_size 16k; # should be enough for most PHP websites, or adjust as above
+            proxy_busy_buffers_size 24k; # essentially, proxy_buffer_size + 2 small buffers of 4k
+            proxy_buffers 64 4k; # should be enough for most PHP websites, adjust as above to get an accurate value
+            proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
+            proxy_cache_valid 200 302 10m;
+            proxy_cache content_cache;
+            proxy_pass http://hub_cms/;
+        }
+    }
+
+    ssl_certificate /etc/letsencrypt/live/localhost/san.digital-hub.crt;
+    ssl_certificate_key /etc/letsencrypt/live/localhost/san.digital-hub.rsa;
+    ssl_certificate /etc/letsencrypt/live/digital-hub-stage.hmpps.dsd.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/digital-hub-stage.hmpps.dsd.io/privkey.pem;
+    ssl_session_timeout 30m;
+    ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+    ssl_session_tickets off;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    # HSTS (ngx_http_headers_module is required) (63072000 seconds)
+    add_header Strict-Transport-Security "max-age=63072000" always;
+
+}

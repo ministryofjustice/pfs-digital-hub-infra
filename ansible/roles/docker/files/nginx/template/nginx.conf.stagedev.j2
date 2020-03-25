@@ -15,6 +15,15 @@ http {
     }
 
   server {
+    listen 80 http2;
+    server_name digital-hub-stage.hmpps.dsd.io content.digital-hub-stage.hmpps.dsd.io analytics.digital-hub-stage.hmpps.dsd.io;
+    location /.well-known/acme-challenge/ {
+    root /var/www/certbot;
+}
+
+    }
+
+  server {
     listen 443 ssl http2;
     server_name {{ hub_url }}; ##temp
     add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
