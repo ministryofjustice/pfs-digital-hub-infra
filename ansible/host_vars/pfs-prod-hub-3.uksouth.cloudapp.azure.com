@@ -11,8 +11,7 @@ public_crt: ../docker/files/haproxy/prod/berwyn/berwyn.pem
 #private_rsa: ../docker/files/nginx/prod/Berwyn/san.digital-hub.rsa
 app_name: HMP Berwyn
 feature_switch: "false"
-haproxy_cfg: ../docker/files/haproxy/template/haproxy.cfg.j2
-#nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
+nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
 establishment_name: berwyn
 FEATURE_NEW_DESIGNS: "true"
 MOCK_AUTH: ""

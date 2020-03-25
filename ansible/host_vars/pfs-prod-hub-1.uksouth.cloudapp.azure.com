@@ -9,7 +9,7 @@ hub_backend_host: content.digital-hub.wli.dpn.gov.uk
 private_rsa: ../docker/files/nginx/prod/Wayland/wli.digital-hub.rsa
 app_name: HMP Wayland
 feature_switch: "false"
-haproxy_cfg: ../docker/files/haproxy/template/haproxy.cfg.j2
+nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
 establishment_name: wayland
 FEATURE_NEW_DESIGNS: "true"
 MOCK_AUTH: ""

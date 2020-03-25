@@ -65,6 +65,13 @@ services:
     - /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa
     - /etc/nginx/logs:/var/log/nginx:rw
     - /var/cache/nginx:/var/cache/nginx:rw
+    - /data/certbot/conf:/etc/letsencrypt
+    - /data/certbot/www:/var/www/certbot
+
+  certbot:
+    volumes:
+    - /data/certbot/conf:/etc/letsencrypt
+    - /data/certbot/www:/var/www/certbot
 
   cadvisor:
     volumes:
