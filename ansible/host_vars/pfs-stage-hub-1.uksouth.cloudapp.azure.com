@@ -25,9 +25,4 @@ PHONE_PASSPHRASE: ""
 PHONE_ITERATIONS: ""
 PHONE_SALT: ""
 PHONE_IV: ""
-<<<<<<< Updated upstream
 LDAP-START-TLS: "false"
-=======
-
-
->>>>>>> Stashed changes
