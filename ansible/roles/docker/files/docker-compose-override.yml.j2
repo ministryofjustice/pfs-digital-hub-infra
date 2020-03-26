@@ -74,6 +74,7 @@ services:
     - /data/certbot/www:/var/www/certbot
 
   cadvisor:
+    restart: "always"
     volumes:
     - /:/rootfs:ro
     - /var/run:/var/run:rw
