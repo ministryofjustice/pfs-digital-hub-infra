@@ -52,7 +52,7 @@
 - name: Nginx config copy and template
   become: true
   template:
-    src: ../docker/files/nginx/template/nginx.conf.stagedev.j2
+    src: "{{ nginx_conf }}"
     dest: /etc/nginx/nginx.conf
     owner: root
     group: docker
