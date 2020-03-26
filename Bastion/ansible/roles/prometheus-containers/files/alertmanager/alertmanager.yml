@@ -2,7 +2,6 @@ global:
 
   slack_api_url: https://hooks.slack.com/services/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 
 
-
 route:
   receiver: 'slack-notifications'
   group_by: [alertname, datacenter, app, uptime]
