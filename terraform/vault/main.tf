@@ -121,6 +121,25 @@ resource "azurerm_key_vault" "vault" {
       "setsas",
       "update"
     ]
+
+    certificate_permissions = [
+      "backup",
+      "create",
+      "delete",
+      "deleteissuers",
+      "get",
+      "getissuers",
+      "import",
+      "list",
+      "listissuers",
+      "managecontacts",
+      "manageissuers",
+      "purge",
+      "recover",
+      "restore",
+      "setissuers",
+      "update"
+    ]
   }
 
   access_policy {

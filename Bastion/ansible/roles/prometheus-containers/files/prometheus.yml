@@ -124,9 +124,10 @@ scrape_configs:
     static_configs:
       - targets:
         - https://hub-dev.pfs-management.com
-        - https://pfs-stage-hub-1.uksouth.cloudapp.azure.com
+        - https://pfs-digital-hub-stage.hmpps.dsd.io
         - https://digital-hub.wli.dpn.gov.uk
         - https://digital-hub.bwi.dpn.gov.uk
+        - http://pfs-management-bastion-1.uksouth.cloudapp.azure.com/feeback
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
