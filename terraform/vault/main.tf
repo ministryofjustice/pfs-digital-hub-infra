@@ -123,20 +123,20 @@ resource "azurerm_key_vault" "vault" {
     ]
 
     certificate_permissions = [
-      "backup", 
-      "create", 
-      "delete", 
+      "backup",
+      "create",
+      "delete",
       "deleteissuers",
-      "get", 
-      "getissuers", 
-      "import", 
-      "list", 
+      "get",
+      "getissuers",
+      "import",
+      "list",
       "listissuers",
-      "managecontacts", 
+      "managecontacts",
       "manageissuers",
       "purge",
       "recover",
-      "restore", 
+      "restore",
       "setissuers",
       "update"
     ]
