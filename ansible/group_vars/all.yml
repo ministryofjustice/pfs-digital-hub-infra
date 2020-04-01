@@ -109,8 +109,8 @@ studio_users:
     shell: /bin/bash
     update_password: on_create
 
-  - username: pfs-gituser
-    name: "ciuser"
+  - username: gitaction
+    name: "gitaction"
     groups:
       - studio
       - admin

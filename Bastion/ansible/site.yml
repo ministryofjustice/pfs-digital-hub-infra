@@ -11,3 +11,4 @@
     - provisioning
     - docker
     - prometheus-containers
+    - nginx

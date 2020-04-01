@@ -1,0 +1,22 @@
+---
+
+- name: Creates directory
+  file:
+    path: /etc/nginx
+    state: directory
+
+- name: Copy nginx config in place
+  become: true
+  copy:
+    src: ../nginx/files/nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+
+
+
+- name: Modify permissions for elasticsearch
+  become: true
+  shell: chown 1000:1000 -R /data/feedback
+  
