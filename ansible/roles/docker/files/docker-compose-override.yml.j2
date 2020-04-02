@@ -41,8 +41,8 @@ services:
       - "LDAP_ADMIN_PWD=${LDAP_ADMIN_PWD}"
       - "LDAP_USER_SEARCH_BASE=${LDAP_USER_SEARCH_BASE}"
       - "LDAP_START_TLS={{ LDAP_START_TLS }}"
-        "ANALYTICS_ENDPOINT={{ ANALYTICS_ENDPOINT }}"
-        "ANALYTICS_SITE_ID={{ ANALYTICS_SITE_ID }}"
+      - "ANALYTICS_ENDPOINT={{ ANALYTICS_ENDPOINT }}"
+      - "ANALYTICS_SITE_ID={{ ANALYTICS_SITE_ID }}"
 
   hub-elasticsearch:
     restart: "always"
