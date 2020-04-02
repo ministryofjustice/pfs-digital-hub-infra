@@ -84,7 +84,7 @@ http {
 
     server {
         listen 443 ssl http2;
-        server_name {{ drupal_url }};
+        server_name {{ hub_backend_host }};
         add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
         location / {
             proxy_set_header Host              $host;
