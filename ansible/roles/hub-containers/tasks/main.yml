@@ -1,5 +1,9 @@
 ---
 
+- name: Gather facts from new server
+  setup:
+    filter: ansible_hostname
+
 - name: Remove goland package due to bug with login
   become: true
   apt:
@@ -11,7 +15,6 @@
   apt:
     name: jq
     state: present
-
 
 
 - local_action: shell {{ role_path }}/files/vault_pas_matomo.sh
@@ -40,6 +43,18 @@
     mode: u=rw,g=r,o=r
 
 
+- name: Copy letsencrypt script
+  become: true
+  copy:
+    src: ../docker/files/nginx/generate-dummy-certs.sh # this can be tempalted if needed at a later date using j2
+    dest: /etc/docker/generate-dummy-certs.sh
+    owner: root
+    group: docker
+    mode: u=rw,g=r,o=r
+  when: "'stage' not in group_names"
+
+
+
 - name: Nginx config copy
   become: true
   copy:
@@ -48,6 +63,8 @@
     owner: root
     group: docker
     mode: u=rw,g=r,o=r
+  when: "'stage' not in group_names"
+
 
 - name: Nginx config copy and template
   become: true
