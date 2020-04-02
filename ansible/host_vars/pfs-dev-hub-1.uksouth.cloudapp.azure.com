@@ -25,5 +25,6 @@ PHONE_IV: ""
 LDAP_START_TLS: "false"
 ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
 ANALYTICS_SITE_ID: "UA-152065860-4"
+FEEDBACK_URL: "http://pfs-management-digital-hub-1.pfs-management.com/test-feedback/_doc"
 
 nginx_cert_needed: true
