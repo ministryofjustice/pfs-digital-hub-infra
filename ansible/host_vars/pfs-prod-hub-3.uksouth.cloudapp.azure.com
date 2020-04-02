@@ -18,4 +18,5 @@ MOCK_AUTH: ""
 NOMIS_API_ENDPOINT: https://gateway.nomis-api.service.justice.gov.uk
 DOMAIN: "bwi.dpn.gov.uk"
 DOMAIN_CONTROLLER: "bwi.dpn.gov.uk"
-
+ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
+ANALYTICS_SITE_ID: "UA-152065860-4"
