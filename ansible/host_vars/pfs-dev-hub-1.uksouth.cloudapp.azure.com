@@ -25,3 +25,5 @@ PHONE_IV: ""
 LDAP_START_TLS: "false"
 ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
 ANALYTICS_SITE_ID: "UA-152065860-4"
+
+nginx_cert_needed: true

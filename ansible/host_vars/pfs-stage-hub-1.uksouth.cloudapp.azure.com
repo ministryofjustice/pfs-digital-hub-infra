@@ -1,19 +1,15 @@
 ---
 
-#hub_url: digital-hub-stage.hmpps.dsd.io
-hub_url: pfs-stage-hub-1.uksouth.cloudapp.azure.com
-#matomo_url: matomo.pfs-stage-hub-1.uksouth.cloudapp.azure.com:12001
-matomo_url: analytics.digital-hub-stage.hmpps.dsd.io:12001
-pikwik_url: https://analytics.digital-hub-stage.hmpps.dsd.io
+hub_url: pfs-digital-hub-stage.hmpps.dsd.io
+#matomo_url: analytics.pfs-digital-hub-stage.hmpps.dsd.io
+matomo_url: analytics.pfs-digital-hub-stage.hmpps.dsd.io
+pikwik_url: https://analytics.pfs-digital-hub-stage.hmpps.dsd.io
 #Used for compose override
-drupal_url: http://pfs-stage-hub-1.uksouth.cloudapp.azure.com:11001/sites/default/files
-#drupal_url: https://content.digital-hub-stage.hmpps.dsd.io/sites/default/files
+drupal_url: http://content.pfs-digital-hub-stage.hmpps.dsd.io/sites/default/files
 hub_backend_host: content.digital-hub-stage.hmpps.dsd.io
-public_crt: ../docker/files/haproxy/prod/berwyn/key.pem
-private_rsa: ../docker/files/nginx/stage/Berwyn/san.digital-hub.rsa
+
 app_name: HMP Berwyn
 feature_switch: "true"
-nginx_conf: ../docker/files/nginx/template/nginx.confg.stage.j2
 establishment_name: berwyn
 FEATURE_NEW_DESIGNS: "true"
 MOCK_AUTH: "true"
@@ -28,3 +24,11 @@ PHONE_IV: ""
 LDAP_START_TLS: "false"
 ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
 ANALYTICS_SITE_ID: "UA-152065860-4"
+
+
+private_rsa: ../docker/files/nginx/stage/Berwyn/san.digital-hub.rsa
+
+#nginx
+nginx_conf: ../docker/files/nginx/template/nginx.confg.stage.j2
+nginx_server_names: pfs-digital-hub-stage.hmpps.dsd.io content.pfs-digital-hub-stage.hmpps.dsd.io analytics.pfs-digital-hub-stage.hmpps.dsd.io
+nginx_cert_needed: false

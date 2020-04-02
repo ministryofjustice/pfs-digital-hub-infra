@@ -23,7 +23,7 @@ variable "rg-name" {
 variable "vm_size" {
   type        = "string"
   description = "size of the vm from t-shirts in Azure"
-  default     = "Standard_DS1_v2"
+  default     = "Standard F4s_v2"
 }
 
 variable "nic" {
