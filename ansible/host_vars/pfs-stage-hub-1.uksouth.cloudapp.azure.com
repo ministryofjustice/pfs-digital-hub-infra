@@ -33,3 +33,5 @@ private_rsa: ../docker/files/nginx/stage/Berwyn/san.digital-hub.rsa
 nginx_conf: ../docker/files/nginx/template/nginx.confg.stage.j2
 nginx_server_names: pfs-digital-hub-stage.hmpps.dsd.io content.pfs-digital-hub-stage.hmpps.dsd.io analytics.pfs-digital-hub-stage.hmpps.dsd.io
 nginx_cert_needed: false
+nginx_config_crt: ""
+nginx_config_rsa: ""
