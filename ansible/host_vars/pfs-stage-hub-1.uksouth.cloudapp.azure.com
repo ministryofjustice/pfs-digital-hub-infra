@@ -6,7 +6,7 @@ matomo_url: analytics.pfs-digital-hub-stage.hmpps.dsd.io
 pikwik_url: https://analytics.pfs-digital-hub-stage.hmpps.dsd.io
 #Used for compose override
 drupal_url: http://content.pfs-digital-hub-stage.hmpps.dsd.io/sites/default/files
-hub_backend_host: content.digital-hub-stage.hmpps.dsd.io
+hub_backend_host: content.pfs-digital-hub-stage.hmpps.dsd.io
 
 app_name: HMP Berwyn
 feature_switch: "true"
