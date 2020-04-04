@@ -32,6 +32,42 @@
   shell: sed -i -e 's/\r$//' /etc/cron.daily/docker-backup.sh
 
 
+  #####
+
+- name: Copy scheduled release cron job into place
+  become: true
+  copy:
+    src: ../hub-containers/db/release-schedule.sh
+    dest: /etc/cron.d/release-schedule.sh
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Changing perm of "/etc/release-schedule", adding "+x"
+  become: true
+  file: dest=/etc/cron.d/release-schedule.sh mode=a+x
+
+
+- name: release-schedule
+  become: true
+  cron:
+    name: "release-schedule"
+    minute: "05"
+    hour: "08"
+    weekday: "0"
+    job: "/etc/cron.d/release-schedule.sh"
+    disabled: "no"
+    state: present
+  tags:
+   - cronjobs
+
+- name: check for line breaks (windows issue)
+  become: true
+  shell: sed -i -e 's/\r$//' /etc/cron.d/release-schedule.sh
+
+
+  ###
+
 - name: Copy clear down  cron job into place
   become: true
   copy:
