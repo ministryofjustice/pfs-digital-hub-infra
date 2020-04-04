@@ -35,7 +35,7 @@ echo "backing up db"  >> /etc/docker/scheduled-release.txt
 
 echo "run a backup"
 
-sudo docker exec hub-db /usr/bin/mysqldump -u hubdb_user --password="${HUB_PASSWORD//MYSQL_PASSWORD=}" hubdb > /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files/databases/scheduled-content-release-$DATE.sql
+sudo docker exec hub-db /usr/bin/mysqldump -u hubdb_user --password="${HUB_PASSWORD//MYSQL_PASSWORD=}" hubdb > /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files/databases/hub-db-backups/scheduled-content-release-$DATE.sql
 echo "sleeping"
 sleep 2m
 
