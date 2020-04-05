@@ -45,7 +45,7 @@ echo "sleeping"
 echo "restoring DB" >> /etc/docker/scheduled-release.txt
 echo "run a release"
 
-docker exec -i hub-db mysql -u hubdb_user --password="${HUB_PASSWORD//MYSQL_PASSWORD=}" hubdb < /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files/databases/hub-db-backups/scheduled-content-release-$DATE.sql
+sudo docker exec -i hub-db mysql -u hubdb_user --password="${HUB_PASSWORD//MYSQL_PASSWORD=}" hubdb < /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files/databases/hub-db-backups/scheduled-content-release-$DATE.sql
 
  fi
 }
