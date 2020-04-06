@@ -53,7 +53,7 @@
   cron:
     name: "release-schedule"
     minute: "05"
-    hour: "08"
+    hour: "07" #servers are in UTC
     weekday: "0"
     job: "/etc/cron.d/release-schedule.sh"
     disabled: "no"
