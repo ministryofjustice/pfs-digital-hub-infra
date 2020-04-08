@@ -208,3 +208,37 @@
   apt:
     name: python-docker
 
+- name: get latest root ca and deploy it
+  become: true
+  copy:
+    content: |
+      #!/bin/bash
+      #sample value for your variables
+      AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
+      ROOT-CA="$(curl 'https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/root-ca-dev-cert/?api-version=2016-10-01' -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
+      echo "$SLACK_WEBHOOK"
+      # read the yml template from a file and substitute the string
+      # MYVARNAME with the value of the MYVARVALUE variable
+
+      sed -i -e "s|slackwebhook|$SLACK_WEBHOOK|g" /etc/docker/alertmanager/alertmanager.yml
+      # apply the yml with the substituted value
+    dest: /etc/alertmanager_config.sh
+    mode: 0770
+    owner: root
+    group: docker
+
+    
+- name: Configure alert manager webhook - sed
+  become: true
+  shell: sed -i -e 's/\r$//' /etc/alertmanager_config.sh
+
+
+- name: Run alert manager config
+  become: true
+  shell: /etc/alertmanager_config.sh
+
+- name: Remove file the file as it isn't needed on the host
+  file:
+    path: /etc/alertmanager_config.sh
+    state: absent
+  

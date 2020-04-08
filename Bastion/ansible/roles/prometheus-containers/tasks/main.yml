@@ -70,7 +70,7 @@
   become: true
   shell: chmod 777 -R /etc/docker/prometheus
 
-- name: setup secrets file for decomposed
+- name: setup secrets file for alertmanager
   become: true
   copy:
     content: |
@@ -99,6 +99,10 @@
   become: true
   shell: /etc/alertmanager_config.sh
 
+- name: Remove file the file as it isn't needed on the host
+  file:
+    path: /etc/alertmanager_config.sh
+    state: absent
   
 
 
