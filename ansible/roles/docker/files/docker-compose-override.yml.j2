@@ -15,6 +15,8 @@ services:
 
   hub-node:
      restart: "always"
+     volumes:
+       - /etc/docker/ldap_cert/root-ca-base64.cer:/etc/ssl/certs/root-ca-base64.cer
      environment:
       - "APP_NAME={{ app_name }}"
       - "ESTABLISHMENT_NAME={{ establishment_name }}"
@@ -29,7 +31,7 @@ services:
       - "FEATURE_NEW_DESIGNS={{ FEATURE_NEW_DESIGNS }}"
       - "MOCK_AUTH={{ MOCK_AUTH }}"
       - "FQDN={{ DOMAIN }}"
-      - "DOMAIN_CONTROLLER={{ DOMAIN }}"
+      - "DOMAIN_CONTROLLER={{ DOMAIN }}" # can be removed once we merge LDAP
       - "PHONE_SERVER={{ PHONE_SERVER }}"
       - "PHONE_PORT={{ PHONE_PORT }}"
       - "PHONE_PASSPHRASE={{ PHONE_PASSPHRASE }}"

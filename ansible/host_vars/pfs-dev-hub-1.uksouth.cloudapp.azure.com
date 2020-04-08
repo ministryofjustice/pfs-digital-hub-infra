@@ -22,12 +22,14 @@ PHONE_PASSPHRASE: ""
 PHONE_ITERATIONS: ""
 PHONE_SALT: ""
 PHONE_IV: ""
-LDAP_START_TLS: "false"
 ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
 ANALYTICS_SITE_ID: "UA-152065860-4"
 FEEDBACK_URL: "http://pfs-management-digital-hub-1.pfs-management.com/api/feedback/test-feedback/_doc"
-LDAP_CERT_PATH: "/etc/ssl/cacerts.pem"
 
-nginx_cert_needed: true
+
+#ldap section
+LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
+LDAP_START_TLS: "true"
+
 nginx_config_crt: "- /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localhost/san.digital-hub.crt"
 nginx_config_rsa: "- /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa"

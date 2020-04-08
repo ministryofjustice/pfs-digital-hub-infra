@@ -172,7 +172,7 @@
            LDAP_URL="LDAP-URL-DEV"
            LDAP_ADMIN_DN="LDAP-ADMIN-DN-DEV"
            LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-DEV"
-           LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-DEV"
+           LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-DE"
       fi
       export AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
       export NOMIS_API_KEY="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$KEY/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
