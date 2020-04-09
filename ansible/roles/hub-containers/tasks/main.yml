@@ -186,7 +186,6 @@
       export LDAP_ADMIN_DN="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_ADMIN_DN/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
       export LDAP_ADMIN_PWD="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_ADMIN_PWD/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
       export LDAP_USER_SEARCH_BASE="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_USER_SEARCH_BASE/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')" 
-      echo "$ACR_PASSWORD" | docker login --username pfsprodhubacr --password-stdin pfsprodhubacr.azurecr.io
       docker pull mojdigitalstudio/digital-hub-node:$IMAGE_VERSION
       docker-compose pull
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d
@@ -213,32 +212,58 @@
   copy:
     content: |
       #!/bin/bash
-      #sample value for your variables
+      find_cert ()
+      {
+          #Set all available hosts
+          HOSTNAME=$(hostname)
+          DEV="pfs-dev-digital-hub-1"
+          STAGE="pfs-stage-digita-hub-1"
+          WAYLAND="pfs-prod-digital-hub-1"
+          BERWYN="pfs-prod-digital-hub-2"
+          #Check the hosts, work out which one is which. Then set the var for the vault
+          if     [ "$HOSTNAME" = "$WAYLAND" ]; then
+              ROOT_CA="wayland"
+              echo "This server is running $ROOT_CA"
+          elif
+          [ "$HOSTNAME" = "$BERWYN" ]; then
+              ROOT_CA="berwyn"
+              echo "This server is running $ROOT_CA"
+          elif
+          [ "$HOSTNAME" = "$STAGE" ]; then
+              ROOT_CA="stage"
+              echo "This server is running $ROOT_CA"
+          elif
+          [ "$HOSTNAME" = "$DEV" ]; then
+              ROOT_CA="root-ca-dev-cert"
+              echo "This server is running $ROOT_CA"
+          fi
+      }
+      #call func
+      find_cert
+      
+      #call the auth token for the VM, then use it to the cert in a string
       AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
-      ROOT-CA="$(curl 'https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/root-ca-dev-cert/?api-version=2016-10-01' -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
-      echo "$SLACK_WEBHOOK"
-      # read the yml template from a file and substitute the string
-      # MYVARNAME with the value of the MYVARVALUE variable
-
-      sed -i -e "s|slackwebhook|$SLACK_WEBHOOK|g" /etc/docker/alertmanager/alertmanager.yml
-      # apply the yml with the substituted value
-    dest: /etc/alertmanager_config.sh
+      ROOT_CA="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$ROOT_CA/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
+      echo "$ROOT_CA"
+      #take the string and format it correctly for the cert use. awk.cer is then mounted in the docker-compose and translated to another file name
+      printf '%s\n' "$ROOT_CA" |
+      awk 'match($0,/^(\S+ \S+)(.*)(\S+ \S+)$/,a){gsub(/ /,ORS,a[2]); print a[1] a[2] a[3]}' > awk.cer
+    dest: /etc/certpull.sh
     mode: 0770
     owner: root
     group: docker
-
     
-- name: Configure alert manager webhook - sed
+- name: Configure certpull - sed
   become: true
-  shell: sed -i -e 's/\r$//' /etc/alertmanager_config.sh
+  shell: sed -i -e 's/\r$//' /etc/certpull.sh
 
 
-- name: Run alert manager config
+- name: Run alert cert config
   become: true
-  shell: /etc/alertmanager_config.sh
+  shell: /etc/certpull.sh
 
 - name: Remove file the file as it isn't needed on the host
+  become: true
   file:
-    path: /etc/alertmanager_config.sh
+    path: /etc/certpull.sh
     state: absent
-  

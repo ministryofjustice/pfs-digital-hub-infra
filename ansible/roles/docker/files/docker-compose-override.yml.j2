@@ -16,7 +16,7 @@ services:
   hub-node:
      restart: "always"
      volumes:
-       - /etc/docker/ldap_cert/root-ca-base64.cer:/etc/ssl/certs/root-ca-base64.cer
+       - /etc/docker/ldap_cert/awk.cer:/etc/ssl/certs/root-ca-base64.cer
      environment:
       - "APP_NAME={{ app_name }}"
       - "ESTABLISHMENT_NAME={{ establishment_name }}"
