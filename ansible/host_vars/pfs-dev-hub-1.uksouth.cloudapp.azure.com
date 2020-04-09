@@ -29,5 +29,5 @@ FEEDBACK_URL: "http://pfs-management-digital-hub-1.pfs-management.com/api/feedba
 LDAP_CERT_PATH: "/etc/ssl/cacerts.pem"
 
 nginx_cert_needed: true
-nginx_config_crt: - /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localhost/san.digital-hub.crt
-nginx_config_rsa: - /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa
+nginx_config_crt: "- /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localhost/san.digital-hub.crt"
+nginx_config_rsa: "- /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa"
