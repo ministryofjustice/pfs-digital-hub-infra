@@ -51,10 +51,21 @@
 - name: release-schedule
   become: true
   cron:
-    name: "release-schedule"
-    minute: "05"
+    name: "release-schedule 8am"
+    minute: "00"
     hour: "07" #servers are in UTC
-    weekday: "0"
+    job: "/etc/cron.d/release-schedule.sh"
+    disabled: "no"
+    state: present
+  tags:
+   - cronjobs
+
+- name: release-schedule
+  become: true
+  cron:
+    name: "release-schedule 4pm"
+    minute: "00"
+    hour: "15" #servers are in UTC
     job: "/etc/cron.d/release-schedule.sh"
     disabled: "no"
     state: present
