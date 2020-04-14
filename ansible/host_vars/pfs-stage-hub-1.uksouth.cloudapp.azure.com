@@ -25,7 +25,6 @@ LDAP_START_TLS: "false"
 ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
 ANALYTICS_SITE_ID: "UA-152065860-4"
 FEEDBACK_URL: "http://pfs-management-digital-hub-1.pfs-management.com/api/feedback/test-feedback/_doc"
-LDAP_CERT_PATH: "/etc/ssl/cacerts.pem"
 
 
 private_rsa: ../docker/files/nginx/stage/Berwyn/san.digital-hub.rsa
@@ -36,3 +35,6 @@ nginx_server_names: pfs-digital-hub-stage.hmpps.dsd.io content.pfs-digital-hub-s
 nginx_cert_needed: false
 nginx_config_crt: ""
 nginx_config_rsa: ""
+
+LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
+LDAP_START_TLS: "false"
