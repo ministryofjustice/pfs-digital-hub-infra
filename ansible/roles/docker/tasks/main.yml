@@ -1,5 +1,4 @@
 ---
-- include: install-docker.yml
-- include: docker-post.yml
+
 - include: cronjobs.yml
 - include: disks.yml

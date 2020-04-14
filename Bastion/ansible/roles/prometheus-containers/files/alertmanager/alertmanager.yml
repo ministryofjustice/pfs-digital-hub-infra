@@ -1,16 +1,16 @@
 global: 
 
-  slack_api_url: https://hooks.slack.com/services/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
+  slack_api_url: slackwebhook
 
 route:
   receiver: 'slack-notifications'
   group_by: [alertname, datacenter, app, uptime]
-  
+
 
 receivers:
 - name: 'slack-notifications'
   slack_configs:
-  - channel: '#pfs_hub_dev'
+  - channel: '#pfs-alerts'
     send_resolved: true
     title: '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] PFS Monitoring Event'
     title_link: 'localhost:9093/#/alerts'

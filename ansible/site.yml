@@ -11,12 +11,18 @@
       - users
     - provisioning # This will cause the intial run to fail due to deleting the hub user
 
+- hosts: stage, prod
+  become: true
+  roles: 
+    - dockerinstall #broke out due to some issue with Dev, if rebuilding dev this will need to be run
+
     #builds the docker and container config
 - hosts: all
   roles:
     - hub-containers
     - docker
   tags: containers
+
 
 - hosts: all
   become: true
