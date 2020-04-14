@@ -222,15 +222,15 @@
           BERWYN="pfs-prod-digital-hub-2"
           #Check the hosts, work out which one is which. Then set the var for the vault
           if     [ "$HOSTNAME" = "$WAYLAND" ]; then
-              ROOT_CA="wayland"
+              ROOT_CA="wli-root-int-combined-cert"
               echo "This server is running $ROOT_CA"
           elif
           [ "$HOSTNAME" = "$BERWYN" ]; then
-              ROOT_CA="berwyn"
+              ROOT_CA="bwi-root-int-combines-cert"
               echo "This server is running $ROOT_CA"
           elif
           [ "$HOSTNAME" = "$STAGE" ]; then
-              ROOT_CA="stage"
+              ROOT_CA="root-ca-dev-cert" # Not used so just added temp
               echo "This server is running $ROOT_CA"
           elif
           [ "$HOSTNAME" = "$DEV" ]; then
