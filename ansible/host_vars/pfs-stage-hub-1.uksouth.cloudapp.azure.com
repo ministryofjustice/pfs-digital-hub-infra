@@ -11,7 +11,7 @@ hub_backend_host: content.pfs-digital-hub-stage.hmpps.dsd.io
 app_name: HMP Berwyn
 feature_switch: "true"
 establishment_name: berwyn
-FEATURE_NEW_DESIGNS: "true"
+FEATURE_NEW_DESIGNS: ""
 MOCK_AUTH: "true"
 NOMIS_API_ENDPOINT: https://gateway.t3.nomis-api.hmpps.dsd.io
 DOMAIN: ""

@@ -13,7 +13,7 @@ app_name: HMP Berwyn
 feature_switch: "false"
 nginx_conf: ../docker/files/nginx/template/nginx.conf.prod.j2
 establishment_name: berwyn
-FEATURE_NEW_DESIGNS: "true"
+FEATURE_NEW_DESIGNS: ""
 MOCK_AUTH: ""
 NOMIS_API_ENDPOINT: https://gateway.nomis-api.service.justice.gov.uk
 DOMAIN: "bwi.dpn.gov.uk"
