@@ -37,4 +37,4 @@ nginx_config_crt: ""
 nginx_config_rsa: ""
 
 LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
-LDAP_START_TLS: "false"
+
