@@ -12,7 +12,7 @@ app_name: HMP Berwyn
 feature_switch: "true"
 nginx_conf: ../docker/files/nginx/template/nginx.conf.stagedev.j2
 establishment_name: berwyn
-FEATURE_NEW_DESIGNS: "true"
+FEATURE_NEW_DESIGNS: ""
 MOCK_AUTH: ""
 NOMIS_API_ENDPOINT: https://gateway.t3.nomis-api.hmpps.dsd.io
 DOMAIN: pfs-dev-ad.local
