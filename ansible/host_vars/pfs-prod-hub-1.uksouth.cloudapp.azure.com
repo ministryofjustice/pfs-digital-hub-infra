@@ -22,7 +22,6 @@ PHONE_PASSPHRASE: ""
 PHONE_ITERATIONS: ""
 PHONE_SALT: ""
 PHONE_IV: ""
-LDAP_START_TLS: "false"
 ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
 ANALYTICS_SITE_ID: "UA-152065860-2"
 FEEDBACK_URL: "http://pfs-management.dpn.gov.uk/api/feedback/prod-feedback/_doc"
@@ -33,3 +32,4 @@ nginx_config_rsa: "- /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localh
 
 LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
 LDAP_START_TLS: "true"
+ldap_username_attribute: "cn"
