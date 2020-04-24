@@ -24,6 +24,8 @@ PHONE_IV: ""
 ANALYTICS_ENDPOINT: "https://www.google-analytics.com/collect"
 ANALYTICS_SITE_ID: "UA-152065860-4"
 FEEDBACK_URL: "http://pfs-management-digital-hub-1.pfs-management.com/api/feedback/test-feedback/_doc"
+npr_stream: "http://185.14.84.101:8000/stream.ogg"
+npr_stream_endpoint: "/npr-stream"
 
 
 private_rsa: ../docker/files/nginx/stage/Berwyn/san.digital-hub.rsa

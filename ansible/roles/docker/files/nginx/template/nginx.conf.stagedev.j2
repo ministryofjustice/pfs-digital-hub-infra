@@ -47,6 +47,10 @@ http {
       proxy_pass http://hub-matomo:80/;
     }
 
+    location {{ npr_stream_endpoint }} {
+      proxy_pass {{ npr_stream }};
+    }
+
     location / {
       access_log /var/log/nginx/access.log compression buffer=32k;
       proxy_pass http://hub_node; # Pass all traffic to the hub to the backend service node on port 3000 using https
