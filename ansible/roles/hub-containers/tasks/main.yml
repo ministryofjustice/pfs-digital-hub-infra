@@ -16,14 +16,6 @@
     name: jq
     state: present
 
-
-- local_action: shell {{ role_path }}/files/vault_pas_matomo.sh
-  register: script_output
-  
-- name: set_fact for vault
-  set_fact: 
-       fact_name: script_output.stdout
-
 - name: Setup directory and permissions for content folder
   become: true
   file:
@@ -146,34 +138,62 @@
       export DRUPAL_URL=https://{{ hub_backend_host }}
       export MATOMO_URL=//{{ matomo_url }}
       export APP_NAME="{{ app_name }}"
-      export ACR_PASSWORD={{ script_output.stdout }}
       HOSTNAME=$(hostname)
       echo "$HOSTNAME"
       if [[ $HOSTNAME == *prod* ]]; then
            KEY="nomis-prod-api-key"
-           PHONE_SERVER="PHONE-SERVER-PROD"
-           PHONE_PORT="PHONE-PORT-PROD"
-           PHONE_PASSPHRASE="PHONE-PASSPHRASE-PROD"
-           PHONE_ITERATIONS="PHONE-ITERATIONS-PROD"
-           PHONE_SALT="PHONE-SALT-PROD"
-           PHONE_IV="PHONE-IV-PROD"
-           LDAP_URL="LDAP-URL-PROD"
-           LDAP_ADMIN_DN="LDAP-ADMIN-DN-PROD"
-           LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-PROD"
-           LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-PROD"
+           
       else
            KEY="nomis-staging-api-key"
-           PHONE_SERVER="PHONE-SERVER-DEV"
-           PHONE_PORT="PHONE-PORT-DEV"
-           PHONE_PASSPHRASE="PHONE-PASSPHRASE-DEV"
-           PHONE_ITERATIONS="PHONE-ITERATIONS-DEV"
-           PHONE_SALT="PHONE-SALT-DEV"
-           PHONE_IV="PHONE-IV-DEV"
-           LDAP_URL="LDAP-URL-DEV"
-           LDAP_ADMIN_DN="LDAP-ADMIN-DN-DEV"
-           LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-DEV"
-           LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-DE"
       fi
+
+      find_prison ()
+      {
+       HOSTNAME=$(hostname)
+       WAYLAND="pfs-prod-digital-hub-1"
+       BERWYN="pfs-prod-digital-hub-2"
+       if [ "$HOSTNAME" = "$WAYLAND" ]; then
+               PRISON="wayland"
+               PHONE_SERVER="PHONE-SERVER-PROD-WLi"
+               PHONE_PORT="PHONE-PORT-PROD-WLI"
+               PHONE_PASSPHRASE="PHONE-PASSPHRASE-PROD-WLI"
+               PHONE_ITERATIONS="PHONE-ITERATIONS-PROD-WLI"
+               PHONE_SALT="PHONE-SALT-PROD-WLI"
+               PHONE_IV="PHONE-IV-PROD-WLI"
+               LDAP_URL="LDAP-URL-PROD-WLI"
+               LDAP_ADMIN_DN="LDAP-ADMIN-DN-PROD-WLI"
+               LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-PROD-WLI"
+               LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-PROD-WLI"
+               echo "This server is running $PRISON"
+       elif    [ "$HOSTNAME" = "$BERWYN" ]; then
+               PRISON="berwyn"
+               LDAP_URL="LDAP-URL-PROD-BWI"
+               LDAP_ADMIN_DN="LDAP-ADMIN-DN-PROD-BWI"
+               LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-PROD-BWI"
+               LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-PROD-BWI"
+               PHONE_SERVER="PHONE-SERVER-PROD-BWI"
+               PHONE_PORT="PHONE-PORT-PROD-BWI"
+               PHONE_PASSPHRASE="PHONE-PASSPHRASE-PROD-BWI"
+               PHONE_ITERATIONS="PHONE-ITERATIONS-PROD-BWI"
+               PHONE_SALT="PHONE-SALT-PROD-BWI"
+               PHONE_IV="PHONE-IV-PROD-BWI"
+               echo "This server is running $PRISON"
+       else
+               PHONE_SERVER="PHONE-SERVER-DEV"
+               PHONE_PORT="PHONE-PORT-DEV"
+               PHONE_PASSPHRASE="PHONE-PASSPHRASE-DEV"
+               PHONE_ITERATIONS="PHONE-ITERATIONS-DEV"
+               PHONE_SALT="PHONE-SALT-DEV"
+               PHONE_IV="PHONE-IV-DEV"
+               LDAP_URL="LDAP-URL-DEV"
+               LDAP_ADMIN_DN="LDAP-ADMIN-DN-DEV"
+               LDAP_ADMIN_PWD="LDAP-ADMIN-PWD-DEV"
+               LDAP_USER_SEARCH_BASE="LDAP-USER-SEARCH-BASE-DE"
+       fi
+      }
+      #call func
+      find_prison
+
       export AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
       export NOMIS_API_KEY="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$KEY/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
       export PHONE_SERVER="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$PHONE_SERVER/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
@@ -206,6 +226,13 @@
   become: true
   apt:
     name: python-docker
+
+- name: Create a directory if it does not exist
+  become: true
+  file:
+    path: /etc/docker/ldap_cert
+    state: directory
+    mode: '0755'
 
 - name: get latest root ca and deploy it
   become: true
@@ -247,7 +274,7 @@
       echo "$ROOT_CA"
       #take the string and format it correctly for the cert use. awk.cer is then mounted in the docker-compose and translated to another file name
       printf '%s\n' "$ROOT_CA" |
-      awk 'match($0,/^(\S+ \S+)(.*)(\S+ \S+)$/,a){gsub(/ /,ORS,a[2]); print a[1] a[2] a[3]}' > awk.cer
+      awk 'match($0,/^(\S+ \S+)(.*)(\S+ \S+)$/,a){gsub(/ /,ORS,a[2]); print a[1] a[2] a[3]}' > /etc/docker/ldap_cert/awk.cer
     dest: /etc/certpull.sh
     mode: 0770
     owner: root
@@ -261,9 +288,3 @@
 - name: Run alert cert config
   become: true
   shell: /etc/certpull.sh
-
-- name: Remove file the file as it isn't needed on the host
-  become: true
-  file:
-    path: /etc/certpull.sh
-    state: absent
