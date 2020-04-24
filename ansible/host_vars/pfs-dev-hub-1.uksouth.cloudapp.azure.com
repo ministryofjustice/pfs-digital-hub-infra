@@ -30,6 +30,7 @@ FEEDBACK_URL: "http://pfs-management-digital-hub-1.pfs-management.com/api/feedba
 #ldap section
 LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
 LDAP_START_TLS: "true"
+ldap_username_attribute: "cn"
 
 nginx_config_crt: "- /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localhost/san.digital-hub.crt"
 nginx_config_rsa: "- /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa"
