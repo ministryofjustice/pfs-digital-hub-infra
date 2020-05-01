@@ -4,7 +4,7 @@ hub_url: digital-hub.wli.dpn.gov.uk
 matomo_url: analytics.digital-hub.wli.dpn.gov.uk
 pikwik_url: https://analytics.digital-hub.wli.dpn.gov.uk
 #Used for compose override
-drupal_url: https://content.digital-hub.wli.dpn.gov.uk/sites/default/files
+drupal_url: https://digital-hub.wli.dpn.gov.uk/sites/default/files
 hub_backend_host: content.digital-hub.wli.dpn.gov.uk
 private_rsa: ../docker/files/nginx/prod/Wayland/wli.digital-hub.rsa
 app_name: HMP Wayland
