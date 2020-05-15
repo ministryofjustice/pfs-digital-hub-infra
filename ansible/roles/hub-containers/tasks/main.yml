@@ -154,7 +154,7 @@
        BERWYN="pfs-prod-digital-hub-2"
        if [ "$HOSTNAME" = "$WAYLAND" ]; then
                PRISON="wayland"
-               PHONE_SERVER="PHONE-SERVER-PROD-WLi"
+               PHONE_SERVER="PHONE-SERVER-PROD-WLI"
                PHONE_PORT="PHONE-PORT-PROD-WLI"
                PHONE_PASSPHRASE="PHONE-PASSPHRASE-PROD-WLI"
                PHONE_ITERATIONS="PHONE-ITERATIONS-PROD-WLI"
