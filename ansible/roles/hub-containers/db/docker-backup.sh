@@ -9,12 +9,17 @@ find_prison ()
  HOSTNAME=$(hostname)
  WAYLAND="pfs-prod-digital-hub-1"
  BERWYN="pfs-prod-digital-hub-2"
+ COOKHAMWOOD="pfs-prod-digital-hub-3"
  if [ "$HOSTNAME" = "$WAYLAND" ]; then
          PRISON="wayland"
          echo "This server is running $PRISON"
  elif
          [ "$HOSTNAME" = "$BERWYN" ]; then
          PRISON="berwyn"
+         echo "This server is running $PRISON"
+ elif
+         [ "$HOSTNAME" = "$COOKHAMWOOD" ]; then
+         PRISON="cookhamwood"
          echo "This server is running $PRISON"
  fi
 }

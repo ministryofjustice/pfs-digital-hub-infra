@@ -152,6 +152,7 @@
        HOSTNAME=$(hostname)
        WAYLAND="pfs-prod-digital-hub-1"
        BERWYN="pfs-prod-digital-hub-2"
+       COOKHAMWOOD="pfs-prod-digital-hub-3"
        if [ "$HOSTNAME" = "$WAYLAND" ]; then
                PRISON="wayland"
                PHONE_SERVER="PHONE-SERVER-PROD-WLI"
@@ -178,6 +179,19 @@
                PHONE_SALT="PHONE-SALT-PROD-BWI"
                PHONE_IV="PHONE-IV-PROD-BWI"
                echo "This server is running $PRISON"
+        elif    [ "$HOSTNAME" = "$COOKHAMWOOD" ]; then
+                PRISON="cookhamwood"
+                LDAP_URL=""
+                LDAP_ADMIN_DN=""
+                LDAP_ADMIN_PWD=""
+                LDAP_USER_SEARCH_BASE=""
+                PHONE_SERVER=""
+                PHONE_PORT=""
+                PHONE_PASSPHRASE=""
+                PHONE_ITERATIONS=""
+                PHONE_SALT=""
+                PHONE_IV=""
+                echo "This server is running $PRISON"
        else
                PHONE_SERVER="PHONE-SERVER-DEV"
                PHONE_PORT="PHONE-PORT-DEV"
@@ -247,12 +261,17 @@
           STAGE="pfs-stage-digita-hub-1"
           WAYLAND="pfs-prod-digital-hub-1"
           BERWYN="pfs-prod-digital-hub-2"
+          COOKHAMWOOD="pfs-prod-digital-hub-3"
           #Check the hosts, work out which one is which. Then set the var for the vault
           if     [ "$HOSTNAME" = "$WAYLAND" ]; then
               ROOT_CA="wli-root-int-combined-cert"
               echo "This server is running $ROOT_CA"
           elif
           [ "$HOSTNAME" = "$BERWYN" ]; then
+              ROOT_CA="bwi-root-int-combines-cert"
+              echo "This server is running $ROOT_CA"
+          elif
+          [ "$HOSTNAME" = "$COOKHAMWOOD" ]; then
               ROOT_CA="bwi-root-int-combines-cert"
               echo "This server is running $ROOT_CA"
           elif

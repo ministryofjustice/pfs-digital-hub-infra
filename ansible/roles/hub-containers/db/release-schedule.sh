@@ -9,6 +9,7 @@ find_prison ()
  STAGING="pfs-stage-digital-hub-1"
  WAYLAND="pfs-prod-digital-hub-1"
  BERWYN="pfs-prod-digital-hub-2"
+ COOKHAMWOOD="pfs-prod-digital-hub-3"
  if [ "$HOSTNAME" = "$WAYLAND" ]; then
          PRISON="wayland"
          echo "This server is running $PRISON"
@@ -16,7 +17,10 @@ find_prison ()
          [ "$HOSTNAME" = "$BERWYN" ]; then
          PRISON="berwyn"
          echo "This server is running $PRISON"
-
+ elif
+         [ "$HOSTNAME" = "$COOKHAMWOOD" ]; then
+         PRISON="cookhamwood"
+         echo "This server is running $PRISON"
  elif   [ "$HOSTNAME" = "$STAGING" ]; then
          PRISON="STAGING"
          echo "This server is running $PRISON"
@@ -39,7 +43,7 @@ sudo docker exec hub-db /usr/bin/mysqldump -u hubdb_user --password="${HUB_PASSW
 echo "sleeping"
 sleep 2m
 
- elif [ "$HOSTNAME" = "$WAYLAND" ] || [ "$HOSTNAME" = "$BERWYN" ] ; then
+ elif [ "$HOSTNAME" = "$WAYLAND" ] || [ "$HOSTNAME" = "$BERWYN" ] || [ "$HOSTNAME" = "$COOKHAMWOOD" ] ; then
 echo "sleeping"
  sleep 2m
 echo "restoring DB" >> /etc/docker/scheduled-release.txt

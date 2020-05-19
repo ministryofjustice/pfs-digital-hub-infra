@@ -27,4 +27,5 @@ stage.old
 Vagrantfile.old
 ./jenkins
 ./letsencrypt
-
+ansible/roles/docker/files/nginx/Prod/
+hub-containers/

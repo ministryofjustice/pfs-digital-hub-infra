@@ -120,6 +120,7 @@ variable "prison" {
   default = {
     1 = "Wayland"
     2 = "Berwyn"
+    3 = "CookhamWood"
   }
 }
 
