@@ -41,7 +41,8 @@
     owner: root
     group: docker
     mode: u=rw,g=r,o=r
-  when: "'stage' not in group_names"
+  when: ('stage' not in group_names) and ('cw' not in group_names)
+
 
 - name: Nginx config copy
   become: true
@@ -51,7 +52,7 @@
     owner: root
     group: docker
     mode: u=rw,g=r,o=r
-  when: "'stage' not in group_names"
+  when: ('stage' not in group_names) and ('cw' not in group_names)
 
 - name: Nginx config copy and template
   become: true
@@ -228,14 +229,6 @@
     owner: root
     group: docker
 
-- name: Check docker status
-  become: True
-  command: docker ps -a
-  register: dockerstatus
-
-- name: Print status
-  debug:
-    msg: "docker status: {{ dockerstatus.stdout }}"
 - name: install docker-py to allow ansible to docker
   become: true
   apt:
