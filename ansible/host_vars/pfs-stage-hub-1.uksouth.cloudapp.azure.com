@@ -5,7 +5,7 @@ hub_url: pfs-digital-hub-stage.hmpps.dsd.io
 matomo_url: analytics.pfs-digital-hub-stage.hmpps.dsd.io
 pikwik_url: https://analytics.pfs-digital-hub-stage.hmpps.dsd.io
 #Used for compose override
-drupal_url: http://content.pfs-digital-hub-stage.hmpps.dsd.io/sites/default/files
+drupal_url: https://content.pfs-digital-hub-stage.hmpps.dsd.io
 hub_backend_host: content.pfs-digital-hub-stage.hmpps.dsd.io
 
 app_name: HMP Berwyn
@@ -35,3 +35,4 @@ LDAP_START_TLS: "false"
 LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
 ldap_username_attribute: "cn"
 
+feature_personalization=true

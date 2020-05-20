@@ -64,44 +64,14 @@ services:
         soft: -1
         hard: -1
 
-  hub-matomo:
-    container_name: hub-matomo
-    image: pfsprodhubacr.azurecr.io/digital-hub-matomo
-    depends_on:
-      - hub-matomo-db
-    environment:
-      - MATOMO_DATABASE_HOST=hub-matomo-db
-      - MATOMO_DATABASE_TABLES_PREFIX=matomo_
-      - MATOMO_DATABASE_USERNAME=${HUB_MATOMO_MYSQL_USER_USERNAME}
-      - MATOMO_DATABASE_PASSWORD=${HUB_MATOMO_MYSQL_USER_PASSWORD}
-      - MATOMO_DATABASE_DBNAME=matomo
-      - MATOMO_GENERAL_ENABLE_INTERNET_FEATURES=0
-      - MATOMO_GENERAL_ENABLE_MARKETPLACE=0
-      - MATOMO_GENERAL_ENABLE_PLUGIN_UPLOAD=1
-      - MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK=0
-      - MATOMO_GENERAL_ASSUME_SECURE_PROTOCOL=1
-    ports:
-      - 12001:80
-    links:
-      - hub-matomo-db
-
-  hub-matomo-db:
-    container_name: hub-matomo-db
-    image: mariadb
-    environment:
-      - MYSQL_ROOT_PASSWORD=${HUB_MATOMO_MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=matomo
-      - MYSQL_USER=${HUB_MATOMO_MYSQL_USER_USERNAME}
-      - MYSQL_PASSWORD=${HUB_MATOMO_MYSQL_USER_PASSWORD}
-
   nginx:
-   image: nginx:stable
-   container_name: production_nginx
-   ports:
-    - 443:443
-   depends_on:
-     - hub-node
-     - hub-be
+    image: nginx:stable
+    container_name: production_nginx
+    ports:
+      - 443:443
+    depends_on:
+      - hub-node
+      - hub-be
    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
    restart: "always"
 
@@ -114,6 +84,4 @@ services:
     image: google/cadvisor:latest
     container_name: cadvisor
     ports:
-    - 8080:8080
-
-  
+      - 8080:8080

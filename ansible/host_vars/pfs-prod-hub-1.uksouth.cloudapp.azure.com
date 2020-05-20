@@ -4,7 +4,7 @@ hub_url: digital-hub.wli.dpn.gov.uk
 matomo_url: analytics.digital-hub.wli.dpn.gov.uk
 pikwik_url: https://analytics.digital-hub.wli.dpn.gov.uk
 #Used for compose override
-drupal_url: https://digital-hub.wli.dpn.gov.uk/sites/default/files
+drupal_url: https://digital-hub.wli.dpn.gov.uk
 hub_backend_host: content.digital-hub.wli.dpn.gov.uk
 private_rsa: ../docker/files/nginx/prod/Wayland/wli.digital-hub.rsa
 app_name: HMP Wayland
@@ -29,3 +29,5 @@ nginx_config_rsa: "- /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localh
 LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
 LDAP_START_TLS: "true"
 ldap_username_attribute: "cn"
+
+feature_personalization=true
