@@ -16,11 +16,7 @@ data "azurerm_subnet" "hub_subnet" {
   resource_group_name  = "${var.network-rg}"
 }
 
-data "azurerm_recovery_services_protection_policy_vm" "backup_policy" {
-  recovery_vault_name = "pfs-hub-prod-recovery-vault"
-  name                = "pfs-hub-prod-content-bkp-policy"
-  resource_group_name = "pfs-prod-hub-content-backup-services"
-}
+
 
 data "azurerm_storage_account" "bootdiagstorageact" {
   name                = "bootdiagstorageact"
@@ -51,9 +47,10 @@ resource "azurerm_public_ip" "publicip" {
   name                         = "${var.prefix}-${var.publicipname}-${1 + count.index}"
   location                     = "${var.location}"
   resource_group_name          = "${var.rg-name}"
-  public_ip_address_allocation = "${var.ipallocation}"
+  #public_ip_address_allocation = "${var.ipallocation}"
   idle_timeout_in_minutes      = 30
   domain_name_label            = "${var.domainnamelabel}-${1 + count.index}"
+  allocation_method            = "Static"
 
   sku = "${var.sku}" #Standard is needed for lb
 
@@ -68,19 +65,24 @@ resource "azurerm_network_interface" "nic" {
   location            = "${var.location}"
   resource_group_name = "${var.rg-name}"
 
-  #network_security_group_id = "${azurerm_network_security_group.nsg.id}"
-
   ip_configuration {
     name                           = "nic"
     subnet_id                      = "${data.azurerm_subnet.hub_subnet.id}"
     private_ip_address_allocation  = "Dynamic"
     public_ip_address_id           = "${azurerm_public_ip.publicip.*.id[count.index]}"
-    application_security_group_ids = ["${data.azurerm_application_security_group.asg_env.id}"]
+ 
   }
   tags = {
     environment = "${var.env}"
   }
 }
+
+resource "azurerm_network_interface_application_security_group_association" "asg_link" {
+  count                         = "${var.vm-count}"
+  network_interface_id          = "${azurerm_network_interface.nic[count.index].id}"
+  application_security_group_id = "${data.azurerm_application_security_group.asg_env.id}"
+}
+
 
 resource "azurerm_virtual_machine" "vm" {
   count                 = "${var.vm-count}"
@@ -128,32 +130,31 @@ resource "azurerm_virtual_machine" "vm" {
 
   tags = {
     environment = "${var.environment}"
-    prison      = lookup(var.prison, count.index + 1, "Default")
+   prison      = lookup(var.prison, count.index + 1, "Default")
 
   }
 }
 
+
+
 resource "azurerm_virtual_machine_extension" "network-watcher" {
   count                      = "${var.vm-count}"
-  name                       = "PrisonerFacingService"
-  location                   = "${var.location}"
-  resource_group_name        = "${var.rg-name}"
-  virtual_machine_name       = "${azurerm_virtual_machine.vm.*.name[count.index]}"
+  name                       = "NetworkWatcherAgentLinux"
+  virtual_machine_id         = "${azurerm_virtual_machine.vm.*.id[count.index]}"
   publisher                  = "Microsoft.Azure.NetworkWatcher"
   type                       = "NetworkWatcherAgentLinux"
   type_handler_version       = "1.4"
   auto_upgrade_minor_version = true
 }
 
+
 resource "azurerm_virtual_machine_extension" "Linux_diag" {
   count                = "${var.vm-count}"
   name                 = "${azurerm_virtual_machine.vm.*.name[count.index]}"
-  location             = "${var.location}"
-  resource_group_name  = "${var.rg-name}"
-  virtual_machine_name = "${azurerm_virtual_machine.vm.*.name[count.index]}"
   publisher            = "Microsoft.OSTCExtensions"
   type                 = "LinuxDiagnostic"
   type_handler_version = "2.3"
+  virtual_machine_id         = "${azurerm_virtual_machine.vm.*.id[count.index]}"
 
   settings = <<SETTINGS
     {
@@ -169,43 +170,5 @@ SETTINGS
 SETTINGS
 }
 
-/*
-resource "azurerm_virtual_machine_extension" "anti-malware" {
-  count                = "${var.vm-count}"
-  name                 = "IaaSAntimalware"
-  location             = "${var.location}"
-  resource_group_name  = "${var.rg-name}"
-  virtual_machine_name = "${azurerm_virtual_machine.vm.*.name[count.index]}"
-  publisher            = "Microsoft.Azure.Security"
-  type                 = "IaaSAntimalware"
-  type_handler_version = "1.3"
 
-  settings = <<SETTINGS
-    {
-      "AntimalwareEnabled": "true",
-      "RealtimeProtectionEnabled": "true",
-      "ScheduledScanSettings": {
-        "isEnabled": "true",
-        "day": "7",
-        "time": "120",
-        "scanType": "Quick"
-      },
-      "Exclusions": {
-        "Extensions": "",
-        "Paths": "",
-        "Processes": ""
-      }
-    }
-  SETTINGS
-}
-*/
 
-/*##module.vm.azurerm_recovery_services_protected_vm.vm1 - Due to a bug in the terraform destroy you need to skip this  */
-
-resource "azurerm_recovery_services_protected_vm" "vm1" {
-  count               = "${var.vm-count}"
-  resource_group_name = "pfs-prod-hub-content-backup-services"
-  recovery_vault_name = "${var.recovery_vault_name}"
-  source_vm_id        = "${azurerm_virtual_machine.vm.*.id[count.index]}"
-  backup_policy_id    = "${data.azurerm_recovery_services_protection_policy_vm.backup_policy.id}"
-}

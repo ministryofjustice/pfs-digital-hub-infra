@@ -1,8 +1,7 @@
 #Define variables
 
-
 variable "vm-count" {
-  default = "4"
+  default = "3"
 }
 
 variable "env" {
@@ -10,19 +9,19 @@ variable "env" {
 }
 
 variable "environment" {
-  type        = "string"
+  type        = string
   description = "tag for env"
   default     = "prod"
 }
 
 variable "rg-name" {
-  type        = "string"
+  type        = string
   description = "resource group name"
   default     = "pfs-prod-digital-hub-rg"
 }
 
 variable "vm_size" {
-  type        = "string"
+  type        = string
   description = "size of the vm from t-shirts in Azure"
   default     = "Standard_DS2_v2"
 }
@@ -110,3 +109,4 @@ variable "sku" {
   description = "The sku for the NIC"
   default     = "Standard"
 }
+
