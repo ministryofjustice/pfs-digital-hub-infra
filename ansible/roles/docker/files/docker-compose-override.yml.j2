@@ -4,7 +4,7 @@ services:
   hub-be:
     restart: "always"
     environment:
-      HUB_EXT_FILE_URL: {{ drupal_url }}
+      HUB_EXT_FILE_URL: {{ drupal_url }}/sites/default/files
     volumes:
       - /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files:/var/www/html/sites/default/files
 
