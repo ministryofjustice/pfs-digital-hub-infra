@@ -4,7 +4,7 @@ hub_url: pfs-dev-hub-1.uksouth.cloudapp.azure.com
 matomo_url: matomo.pfs-dev-hub-1.uksouth.cloudapp.azure.com:12001
 pikwik_url: examples.com
 #Used for compose override
-drupal_url: http://pfs-dev-hub-1.uksouth.cloudapp.azure.com:11001/sites/default/files
+drupal_url: http://pfs-dev-hub-1.uksouth.cloudapp.azure.com:11001
 hub_backend_host: drupal.pfs-dev-hub-1.uksouth.cloudapp.azure.com
 public_crt: ../docker/files/nginx/Dev/Berwyn/san.digital-hub.crt
 private_rsa: ../docker/files/nginx/Dev/Berwyn/san.digital-hub.rsa
@@ -30,3 +30,5 @@ ldap_username_attribute: "cn"
 
 nginx_config_crt: "- /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localhost/san.digital-hub.crt"
 nginx_config_rsa: "- /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa"
+
+feature_personalization=true
