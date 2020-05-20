@@ -133,7 +133,7 @@
       export MATOMO_URL=//{{ matomo_url }}
       export APP_NAME="{{ app_name }}"
 
-      {% if feature_personalization %}
+      {% if feature_personalization | bool %}
 
       HOSTNAME=$(hostname)
       echo "$HOSTNAME"
