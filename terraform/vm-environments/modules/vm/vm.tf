@@ -43,14 +43,14 @@ resource "azurerm_availability_set" "digital_hub_availset" {
 
 # create public IP address (Temp only)
 resource "azurerm_public_ip" "publicip" {
-  count                        = "${var.vm-count}"
-  name                         = "${var.prefix}-${var.publicipname}-${1 + count.index}"
-  location                     = "${var.location}"
-  resource_group_name          = "${var.rg-name}"
+  count               = "${var.vm-count}"
+  name                = "${var.prefix}-${var.publicipname}-${1 + count.index}"
+  location            = "${var.location}"
+  resource_group_name = "${var.rg-name}"
   #public_ip_address_allocation = "${var.ipallocation}"
-  idle_timeout_in_minutes      = 30
-  domain_name_label            = "${var.domainnamelabel}-${1 + count.index}"
-  allocation_method            = "Static"
+  idle_timeout_in_minutes = 30
+  domain_name_label       = "${var.domainnamelabel}-${1 + count.index}"
+  allocation_method       = "Static"
 
   sku = "${var.sku}" #Standard is needed for lb
 
@@ -66,11 +66,11 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = "${var.rg-name}"
 
   ip_configuration {
-    name                           = "nic"
-    subnet_id                      = "${data.azurerm_subnet.hub_subnet.id}"
-    private_ip_address_allocation  = "Dynamic"
-    public_ip_address_id           = "${azurerm_public_ip.publicip.*.id[count.index]}"
- 
+    name                          = "nic"
+    subnet_id                     = "${data.azurerm_subnet.hub_subnet.id}"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = "${azurerm_public_ip.publicip.*.id[count.index]}"
+
   }
   tags = {
     environment = "${var.env}"
@@ -130,7 +130,7 @@ resource "azurerm_virtual_machine" "vm" {
 
   tags = {
     environment = "${var.environment}"
-   prison      = lookup(var.prison, count.index + 1, "Default")
+    prison      = lookup(var.prison, count.index + 1, "Default")
 
   }
 }
@@ -154,7 +154,7 @@ resource "azurerm_virtual_machine_extension" "Linux_diag" {
   publisher            = "Microsoft.OSTCExtensions"
   type                 = "LinuxDiagnostic"
   type_handler_version = "2.3"
-  virtual_machine_id         = "${azurerm_virtual_machine.vm.*.id[count.index]}"
+  virtual_machine_id   = "${azurerm_virtual_machine.vm.*.id[count.index]}"
 
   settings = <<SETTINGS
     {
