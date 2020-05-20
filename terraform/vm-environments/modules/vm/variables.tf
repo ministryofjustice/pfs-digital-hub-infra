@@ -118,8 +118,8 @@ variable "sku" {}
 variable "prison" {
   type = "map"
   default = {
-    1 = "Wayland"
-    2 = "Berwyn"
+    "1" = "Wayland"
+    "2" = "Berwyn"
   }
 }
 
