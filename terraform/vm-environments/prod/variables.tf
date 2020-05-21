@@ -81,12 +81,12 @@ variable "recovery_vault_name" {
 }
 
 variable "asg" {
-  type = map(string)
+  type        = map(string)
   description = "The application security group this VM belongs to"
   default = {
-    "1"  = "pfs-prod-asg"
-    "2"  = "pfs-prod-asg"
-    "3"  = "pfs-prod-cw-asg"
+    "1" = "pfs-prod-asg"
+    "2" = "pfs-prod-asg"
+    "3" = "pfs-prod-cw-asg"
   }
 }
 

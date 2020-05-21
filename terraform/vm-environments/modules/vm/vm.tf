@@ -27,7 +27,7 @@ data "azurerm_application_security_group" "asg_env" {
   count               = "${var.vm-count}"
   name                = lookup(var.asg, count.index + 1, "Default")
   resource_group_name = "${var.asg_rg}"
-  
+
 }
 
 resource "azurerm_availability_set" "digital_hub_availset" {
