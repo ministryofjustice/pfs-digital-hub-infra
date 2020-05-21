@@ -34,25 +34,7 @@ groups:
         annotations:
          summary: "hub-db container down :("
          description: "hub-db container is down for more than 30 seconds." 
-      
-      - alert: hub_matomo_container_down
-        expr: absent(container_memory_usage_bytes{name="hub-matomo", job="Hub-Dev"})
-        for: 30s
-        labels:
-          severity: critical, slack
-        annotations:
-          summary: "hub-matomo container down :("
-          description: "hub-matomo container is down for more than 30 seconds." 
-
-      - alert: hub_matomo_db_container_down
-        expr: absent(container_memory_usage_bytes{name="hub-matomo-db", job="Hub-Dev"})
-        for: 30s
-        labels:
-          severity: critical, slack
-        annotations:
-          summary: "hub-matomo-db container down :("
-          description: "hub-matomo-db container is down for more than 30 seconds." 
-
+         
       - alert: hub_elasticsearch_container_down
         expr: absent(container_memory_usage_bytes{name="hub-elasticsearch", job="Hub-Dev"})
         for: 30s
