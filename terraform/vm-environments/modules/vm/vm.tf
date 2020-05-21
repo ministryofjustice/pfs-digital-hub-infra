@@ -24,8 +24,10 @@ data "azurerm_storage_account" "bootdiagstorageact" {
 }
 
 data "azurerm_application_security_group" "asg_env" {
-  name                = "${var.asg}"
+  count               = "${var.vm-count}"
+  name                = lookup(var.asg, count.index + 1, "Default")
   resource_group_name = "${var.asg_rg}"
+
 }
 
 resource "azurerm_availability_set" "digital_hub_availset" {
@@ -80,8 +82,9 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_network_interface_application_security_group_association" "asg_link" {
   count                         = "${var.vm-count}"
   network_interface_id          = "${azurerm_network_interface.nic[count.index].id}"
-  application_security_group_id = "${data.azurerm_application_security_group.asg_env.id}"
+  application_security_group_id = "${data.azurerm_application_security_group.asg_env[count.index].id}"
 }
+
 
 
 resource "azurerm_virtual_machine" "vm" {
