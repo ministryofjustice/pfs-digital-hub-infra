@@ -93,7 +93,7 @@ variable "nic-name" {
 
 variable "asg" {
   description = "The application security group this VM belongs to"
-  type        = "string"
+  type        = "map"
 }
 
 variable "asg_rg" {
