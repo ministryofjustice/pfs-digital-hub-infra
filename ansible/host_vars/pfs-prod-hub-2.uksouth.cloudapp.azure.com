@@ -31,3 +31,5 @@ LDAP_START_TLS: "true"
 ldap_username_attribute: "sAMAccountName"
 
 feature_personalization: true
+
+services: "hub-db hub-be hub-node hub-elasticsearch cadvisor nginx"

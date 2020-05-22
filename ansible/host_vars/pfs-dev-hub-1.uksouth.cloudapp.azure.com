@@ -32,3 +32,5 @@ nginx_config_crt: "- /etc/nginx/san.digital-hub.crt:/etc/letsencrypt/live/localh
 nginx_config_rsa: "- /etc/nginx/san.digital-hub.rsa:/etc/letsencrypt/live/localhost/san.digital-hub.rsa"
 
 feature_personalization: true
+
+services: "hub-db hub-be hub-node hub-elasticsearch cadvisor nginx"
