@@ -43,7 +43,6 @@
     mode: u=rw,g=r,o=r
   when: ('stage' not in group_names) and ('cw' not in group_names)
 
-
 - name: Nginx config copy
   become: true
   copy:
@@ -222,8 +221,8 @@
       {% endif %}
 
       docker pull mojdigitalstudio/digital-hub-node:$IMAGE_VERSION
-      docker-compose pull
-      docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d
+      docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml pull
+      docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d {{ services }}
     dest: /etc/docker-decomposed-secrets.sh
     mode: 0770
     owner: root
