@@ -42,11 +42,6 @@ http {
     }
 
 
-    location /matomo/ {
-      proxy_set_header   Host              $host;                                                                                                                                                                                                                                     proxy_set_header   X-Real-IP         $remote_addr;                                                                                                                                                                                                                              proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;                                                                                                                                                                                                                proxy_set_header   X-Forwarded-Proto $scheme;                                                                                                                                                 
-      proxy_pass http://hub-matomo:80/;
-    }
-
     location {{ npr_stream_endpoint }} {
       proxy_pass {{ npr_stream }};
     }
