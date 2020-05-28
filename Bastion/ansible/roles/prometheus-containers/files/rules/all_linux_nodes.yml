@@ -105,7 +105,7 @@ groups:
           description: "A container has disappeared\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
       
       - alert: ContainerCpuUsage
-        expr: (sum(rate(container_cpu_usage_seconds_total[3m])) BY (instance, name) * 100) > 80
+        expr: (sum(rate(container_cpu_usage_seconds_total{instance!~"digital-hub.wli.dpn.gov.uk:8080|digital-hub.bwi.dpn.gov.uk:8080"}[3m])) BY (instance, name) * 100) > 8
         for: 5m
         labels:
           severity: warning
