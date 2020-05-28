@@ -100,3 +100,18 @@ services:
     restart: "always"
     volumes:
     - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+  jenkins:
+    image: 'jenkins/jenkins:lts'
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '81:8080'
+      - '443:8443'
+      - '50000:50000'
+    volumes:
+      - ./jenkins_data:/jenkins_config:rw
+      - ./jenkins_home:/var/jenkins_home:rw
+    #volumes:
+    #jenkins_data:
+    #driver: local

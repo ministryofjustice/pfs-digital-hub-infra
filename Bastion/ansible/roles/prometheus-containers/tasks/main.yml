@@ -70,6 +70,14 @@
   become: true
   shell: chmod 777 -R /etc/docker/prometheus
 
+- name: Modify permissions for jenkins home
+  become: true
+  shell: chmod 777 -R /etc/docker/jenkins_home
+
+- name: Modify permissions for jenkins data
+  become: true
+  shell: chmod 777 -R /etc/docker/jenkins_data
+
 - name: setup secrets file for alertmanager
   become: true
   copy:
