@@ -1,10 +1,10 @@
 ---
 
-hub_url: pfs-prod-hub-3.uksouth.cloudapp.azure.com
+hub_url: digital-hub-cw.prisoner.service.justice.gov.uk
 matomo_url: http://foo.bar
 pikwik_url: http://foo.bar
 #Used for compose override
-drupal_url: http://pfs-prod-hub-3.uksouth.cloudapp.azure.com
+drupal_url: http://digital-hub-cw.prisoner.service.justice.gov.uk
 app_name: HMP Cookham Wood
 feature_switch: "false"
 nginx_conf: ../docker/files/nginx/template/nginx.conf.http.j2
