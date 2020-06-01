@@ -104,14 +104,14 @@ groups:
           summary: "Container killed (instance {{ $labels.instance }})"
           description: "A container has disappeared\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
       
-      - alert: ContainerCpuUsage
-        expr: (sum(rate(container_cpu_usage_seconds_total{instance!~"digital-hub.wli.dpn.gov.uk:8080|digital-hub.bwi.dpn.gov.uk:8080"}[3m])) BY (instance, name) * 100) > 8
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Container CPU usage (instance {{ $labels.instance }})"
-          description: "Container CPU usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+   #   - alert: ContainerCpuUsage
+    #    expr: (sum(rate(container_cpu_usage_seconds_total{instance!~"digital-hub.wli.dpn.gov.uk:8080|digital-hub.bwi.dpn.gov.uk:8080"}[3m])) BY (instance, name) * 100) > 8
+     #   for: 5m
+      #  labels:
+       #   severity: warning
+       # annotations:
+        #  summary: "Container CPU usage (instance {{ $labels.instance }})"
+         # description: "Container CPU usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
       #commented out as appears to be false alerting
      # - alert: ContainerMemoryUsage
       #  expr: (sum(container_memory_usage_bytes) BY (instance) / sum(container_memory_max_usage_bytes) BY (instance) * 100) > 80
