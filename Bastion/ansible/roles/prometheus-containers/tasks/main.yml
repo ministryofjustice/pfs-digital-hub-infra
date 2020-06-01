@@ -85,7 +85,7 @@
       #!/bin/bash
       #sample value for your variables
       AZURE_AUTH_TOKEN="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net' -H Metadata:true 2>/dev/null | jq -r '.access_token')"
-      SLACK_WEBHOOK="$(curl 'https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/SLACK-WEBHOOK/?api-version=2016-10-01' -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
+      SLACK_WEBHOOK="$(curl 'https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/SLACK-HOOK/?api-version=2016-10-01' -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
       echo "$SLACK_WEBHOOK"
       # read the yml template from a file and substitute the string
       # MYVARNAME with the value of the MYVARVALUE variable
