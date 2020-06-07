@@ -68,6 +68,7 @@ services:
     container_name: production_nginx
     ports:
       - 443:443
+      - 80:80
     depends_on:
       - hub-node
       - hub-be
