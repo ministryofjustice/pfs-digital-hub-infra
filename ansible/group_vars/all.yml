@@ -98,6 +98,17 @@ studio_users:
     shell: /bin/bash
     update_password: on_create
 
+  - username: ryanbrooks
+    name: "Ryan Brooks"
+    groups:
+      - studio
+      - admin
+      - docker
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDQn7iT9HzULamvq33VotQWgPsCQvsrHwJGoW5TLe/RIJCXTtKZjeQrAW9KvJV8Q/C6Ujd+S7AJ90u9rruST5EmIAC9Zzv6kzCKTYcWi0nabwxTScRf3VrZ4zj6GpCnMcT7kTxFsol4qvERpJUSPzoZQJeZKYLsnSG6Jjzx09VkbCrzOijvdkbvQPWv9xoucswbbqLm9BKhXz2nBTvbRUuhiRhzh74h2Orl1vv8sxO15JVRR8dPJOrqS1RwCywbBqTUIYisXgbxmWZfQiQk2Z+JQu9cCQDYjWE4YKdahonWHtvGDD/xdpUm52CGzGkPtmxhRMCxQRmxpPYSWhda/gsdPzh1XNXUV5XwaYZgyctudkEAUzJsZ943B5iEvAMw008gJZ0OBfg0XmPMdJTzgpfpdvQAZua47YaCoN70Dn7jWvr9aiEBSJJ1DdYe5W56zC8xW1x+OFN6QVMPvCE7+3NQXglDkyqSe0w3arED2aSxuplVmDmIwSd7jZ7etnEo89Eg8Aw2LUp5HP2eTQAPo3PBOdKRvR+N4gBB2QPn60wDTvBGYA2IKrlRGyosTmu4iIIN7soPtlc7ZRnbGNxjv3aeduRpwGV5/bDISk0rFBpCn/adcEp63rkuHRF6NpKUKZA0a9eG1HLgvSuJwu4LUTsDww9ITVKCQqQvg8jWkwvb6w== ryan.brooks@digital.justice.gov.uk"
+    shell: /bin/bash
+    update_password: on_create
+
   - username: ciuser
     name: "ciuser"
     groups:
