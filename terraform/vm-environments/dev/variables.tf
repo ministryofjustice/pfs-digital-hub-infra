@@ -9,19 +9,17 @@ variable "env" {
 }
 
 variable "environment" {
-  type        = "string"
   description = "tag for env"
   default     = "dev"
 }
 
 variable "rg-name" {
-  type        = "string"
   description = "resource group name"
   default     = "pfs-dev-digital-hub-rg"
 }
 
+
 variable "vm_size" {
-  type        = "string"
   description = "size of the vm from t-shirts in Azure"
   default     = "Standard_DS2_v2"
 }
@@ -70,14 +68,19 @@ variable "publicipname" {
   default = "digital-hub-publicip"
 }
 
-variable "backup-rg" {
-  description = "the name of the backup resource group"
-  default     = "value"
+variable "recovery_vault_name" {
+  description = "recovery_vault_name"
+  default     = "pfs-hub-prod-recovery-vault"
 }
 
 variable "asg" {
+  type        = map(string)
   description = "The application security group this VM belongs to"
-  default     = "pfs-dev-asg"
+  default = {
+    "1" = "pfs-dev-asg"
+    "2" = "pfs-dev-asg"
+    "3" = "pfs-dev-asg"
+  }
 }
 
 variable "asg_rg" {
@@ -101,7 +104,7 @@ variable "usecase" {
 }
 
 
-variable "SKU" {
+variable "sku" {
   description = "The sku for the NIC"
   default     = "Basic"
 }
