@@ -4,6 +4,7 @@ hub_url: digital-hub-cw.prisoner.service.justice.gov.uk
 matomo_url: http://foo.bar
 pikwik_url: http://foo.bar
 #Used for compose override
+hub_backend_host: content.digital-hub-cw.prisoner.service.justice.gov.uk
 drupal_url: http://digital-hub-cw.prisoner.service.justice.gov.uk
 app_name: HMP Cookham Wood
 feature_switch: "false"
@@ -21,6 +22,7 @@ npr_stream: "http://185.14.84.101:8000/stream.ogg"
 npr_stream_endpoint: "/npr-stream"
 
 nginx_cert_needed: false
+nginx_server_names: digital-hub-cw.prisoner.service.justice.gov.uk
 nginx_config_crt: ""
 nginx_config_rsa: ""
 LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
@@ -30,3 +32,5 @@ ldap_username_attribute: "cn"
 feature_personalization: false
 
 services: "hub-db hub-be hub-node hub-elasticsearch cadvisor nginx"
+
+
