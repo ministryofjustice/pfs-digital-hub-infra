@@ -54,9 +54,7 @@ data "azurerm_azuread_service_principal" "pfs-backup" {
 
 
 
-data "azuread_group" "DSDT" {
-  name = "Digital Studio Dev Team - Digital Hub"
-}
+
 
 data "azurerm_client_config" "current" {}
 
@@ -71,76 +69,6 @@ resource "azurerm_key_vault" "vault" {
   enabled_for_disk_encryption = true
   enabled_for_deployment      = true
 
-  access_policy {
-    object_id = "${data.azuread_group.DSDT.id}"
-    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
-
-    key_permissions = [
-      "create",
-      "get",
-      "list",
-      "wrapKey",
-      "sign",
-      "verify",
-      "restore",
-      "unwrapKey",
-      "decrypt",
-      "encrypt",
-      "purge",
-      "update",
-      "import",
-      "delete",
-      "recover",
-      "backup"
-    ]
-
-    secret_permissions = [
-      "get",
-      "set",
-      "list",
-      "backup",
-      "restore",
-      "delete",
-      "Recover",
-      "Backup",
-      "Purge"
-    ]
-
-    storage_permissions = [
-      "backup",
-      "delete",
-      "deletesas",
-      "get",
-      "list",
-      "listsas",
-      "purge",
-      "recover",
-      "regeneratekey",
-      "restore",
-      "set",
-      "setsas",
-      "update"
-    ]
-
-    certificate_permissions = [
-      "backup",
-      "create",
-      "delete",
-      "deleteissuers",
-      "get",
-      "getissuers",
-      "import",
-      "list",
-      "listissuers",
-      "managecontacts",
-      "manageissuers",
-      "purge",
-      "recover",
-      "restore",
-      "setissuers",
-      "update"
-    ]
-  }
 
   access_policy {
     object_id = "${data.azurerm_azuread_service_principal.pfs-1.object_id}"
@@ -240,7 +168,6 @@ resource "azurerm_key_vault" "vault" {
       "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-app-sn",
       "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-data-sn",
       "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-management-sn",
-      "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-spare01-sn",
       "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-prod-core-rg/providers/microsoft.network/virtualnetworks/pfs-prod-core-vn/subnets/pfs-prod-web-sn",
       "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-stage-core-rg/providers/microsoft.network/virtualnetworks/pfs-stage-core-vn/subnets/pfs-stage-app-sn",
       "/subscriptions/340944f4-b60c-46ba-9377-5668bba83ecd/resourcegroups/pfs-stage-core-rg/providers/microsoft.network/virtualnetworks/pfs-stage-core-vn/subnets/pfs-stage-data-sn",
