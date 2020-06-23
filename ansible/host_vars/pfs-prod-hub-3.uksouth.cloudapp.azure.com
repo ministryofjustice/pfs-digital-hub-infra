@@ -1,8 +1,6 @@
 ---
 
 hub_url: digital-hub-cw.prisoner.service.justice.gov.uk
-matomo_url: http://foo.bar
-pikwik_url: http://foo.bar
 #Used for compose override
 hub_backend_host: content.digital-hub-cw.prisoner.service.justice.gov.uk
 drupal_url: http://digital-hub-cw.prisoner.service.justice.gov.uk

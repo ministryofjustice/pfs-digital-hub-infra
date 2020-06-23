@@ -1,8 +1,6 @@
 ---
 
 hub_url: digital-hub.wli.dpn.gov.uk
-matomo_url: analytics.digital-hub.wli.dpn.gov.uk
-pikwik_url: https://analytics.digital-hub.wli.dpn.gov.uk
 #Used for compose override
 drupal_url: https://digital-hub.wli.dpn.gov.uk
 hub_backend_host: content.digital-hub.wli.dpn.gov.uk

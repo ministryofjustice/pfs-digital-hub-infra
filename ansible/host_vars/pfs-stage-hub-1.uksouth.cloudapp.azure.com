@@ -1,9 +1,6 @@
 ---
 
 hub_url: pfs-digital-hub-stage.hmpps.dsd.io
-#matomo_url: analytics.pfs-digital-hub-stage.hmpps.dsd.io
-matomo_url: analytics.pfs-digital-hub-stage.hmpps.dsd.io
-pikwik_url: https://analytics.pfs-digital-hub-stage.hmpps.dsd.io
 #Used for compose override
 drupal_url: https://content.pfs-digital-hub-stage.hmpps.dsd.io
 hub_backend_host: content.pfs-digital-hub-stage.hmpps.dsd.io

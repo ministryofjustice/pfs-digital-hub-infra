@@ -90,9 +90,6 @@
   with_items:
     - MYSQL_ROOT_PASSWORD
     - MYSQL_PASSWORD
-    - HUB_MATOMO_MYSQL_ROOT_PASSWORD
-    - HUB_MATOMO_MYSQL_USER_USERNAME
-    - HUB_MATOMO_MYSQL_USER_PASSWORD
 
 - name: keep secrets relatively secret
   become: true
@@ -104,9 +101,6 @@
   with_items:
     - MYSQL_ROOT_PASSWORD
     - MYSQL_PASSWORD
-    - HUB_MATOMO_MYSQL_ROOT_PASSWORD
-    - HUB_MATOMO_MYSQL_USER_USERNAME
-    - HUB_MATOMO_MYSQL_USER_PASSWORD
 
 - name: setup secrets file for decomposed
   become: true
@@ -124,12 +118,7 @@
       export MYSQL_USER=hubdb_user
       export MYSQL_ROOT_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_ROOT_PASSWORD)
       export MYSQL_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_PASSWORD)
-      export HUB_MATOMO_MYSQL_ROOT_PASSWORD=$(cat /etc/docker-decomposed-secrets-HUB_MATOMO_MYSQL_ROOT_PASSWORD)
-      export HUB_MATOMO_MYSQL_USER_USERNAME=$(cat /etc/docker-decomposed-secrets-HUB_MATOMO_MYSQL_USER_USERNAME)
-      export HUB_MATOMO_MYSQL_USER_PASSWORD=$(cat /etc/docker-decomposed-secrets-HUB_MATOMO_MYSQL_USER_PASSWORD)
-      export PIWIK_URI=//{{ pikwik_url }}
       export DRUPAL_URL={{ drupal_url }}
-      export MATOMO_URL=//{{ matomo_url }}
       export APP_NAME="{{ app_name }}"
 
       {% if feature_personalization | bool %}
