@@ -24,7 +24,6 @@ services:
       APP_TIMEOUT: 60.0
       PORT: 3000
       APP_NAME: HMP Dev
-      MATOMO_URL: //hub-matomo/ # Leaving this as we do not know how the app will respond
       ELASTICSEARCH_ENDPOINT: http://hub-elasticsearch:9200
       BACKEND_URL: http://hub-be
 
