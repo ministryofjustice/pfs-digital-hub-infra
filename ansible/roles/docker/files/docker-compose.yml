@@ -14,7 +14,7 @@ services:
 
   hub-node:
     container_name: hub-node
-    image: "mojdigitalstudio/digital-hub-node:${IMAGE_VERSION}"
+    image: "mojdigitalstudio/prisoner-content-hub-frontend:${IMAGE_VERSION}"
     user: "node"
     working_dir: /home/node/app
     depends_on:

@@ -209,7 +209,7 @@
 
       {% endif %}
 
-      docker pull mojdigitalstudio/digital-hub-node:$IMAGE_VERSION
+      docker pull mojdigitalstudio/prisoner-content-hub-frontend:$IMAGE_VERSION
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml pull
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d {{ services }}
     dest: /etc/docker-decomposed-secrets.sh
