@@ -3,7 +3,7 @@
 DATE=`date +%m-%d-%Y`
 
 echo "Removing dangling images"
-sudo docker rmi $(docker images | grep 'mojdigitalstudio/digital-hub-node') -f 
+sudo docker rmi $(docker images | grep 'mojdigitalstudio/prisoner-content-hub-frontend') -f 
 
 echo "System Prune"
 sudo docker system prune -a -f 
