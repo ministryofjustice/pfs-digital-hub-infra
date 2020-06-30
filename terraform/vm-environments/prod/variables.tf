@@ -31,6 +31,8 @@ variable "nic" {
   default = "pfs-prod-hub-vnic"
 }
 
+##test
+
 variable "prefix" {
   default = "pfs-prod"
 }
