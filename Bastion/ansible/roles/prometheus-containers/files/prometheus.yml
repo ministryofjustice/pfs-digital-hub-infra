@@ -93,7 +93,6 @@ scrape_configs:
     - targets: ['wlisulws003.wli.dpn.gov.uk:9182']
     - targets: ['wlismssq002.wli.dpn.gov.uk:9182']
     - targets: ['wlisulns001.wli.dpn.gov.uk:9182']
-    - targets: ['wlispifs001.wli.dpn.gov.uk:9182']
     - targets: ['wliddccf001.wli.dpn.gov.uk:9182']
     - targets: ['wliddccf002.wli.dpn.gov.uk:9182']
     - targets: ['wlisdhcp001.wli.dpn.gov.uk:9182']
