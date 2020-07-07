@@ -27,7 +27,7 @@ LDAP_CERT_PATH: "/etc/ssl/certs/root-ca-base64.cer"
 LDAP_START_TLS: "true"
 ldap_username_attribute: "cn"
 
-feature_personalization: false
+feature_personalization: true
 
 services: "hub-db hub-be hub-node hub-elasticsearch cadvisor nginx"
 

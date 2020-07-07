@@ -187,6 +187,11 @@
       export PHONE_SALT="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$PHONE_SALT/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
       export PHONE_IV="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$PHONE_IV/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
 
+      export DRUPAL_HASH_SALT="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/DRUPAL-HASH-SALT-PROD/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
+      export DRUPAL_S3_ACCESS_KEY="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/DRUPAL-S3-ACCESS-KEY-PROD/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
+      export DRUPAL_S3_SECRET_KEY="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/DRUPAL-S3-SECRET-KEY-PROD/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
+      export DRUPAL_S3_BUCKET="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/DRUPAL-S3-BUCKET-PROD/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
+
       export NOMIS_API_KEY="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$KEY/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
       export LDAP_URL="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_URL/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
       export LDAP_ADMIN_DN="$(curl https://pfs-hub-prod-hub-kv.vault.azure.net/secrets/$LDAP_ADMIN_DN/?api-version=2016-10-01 -H "Authorization: Bearer $AZURE_AUTH_TOKEN" 2>/dev/null | jq -r '.value')"
@@ -210,6 +215,7 @@
       {% endif %}
 
       docker pull mojdigitalstudio/prisoner-content-hub-frontend:$IMAGE_VERSION
+      docker pull mojdigitalstudio/prisoner-content-hub-backend
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml pull
       docker-compose -f /etc/docker/docker-compose.yml -f /etc/docker/docker-compose-override.yml up -d {{ services }}
     dest: /etc/docker-decomposed-secrets.sh

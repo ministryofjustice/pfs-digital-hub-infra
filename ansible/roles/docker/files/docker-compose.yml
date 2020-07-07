@@ -20,16 +20,16 @@ services:
     depends_on:
       - hub-be
     environment:
-      HUB_API_ENDPOINT: http://hub-be
+      HUB_API_ENDPOINT: http://hub-be:8080
       APP_TIMEOUT: 60.0
       PORT: 3000
       APP_NAME: HMP Dev
       ELASTICSEARCH_ENDPOINT: http://hub-elasticsearch:9200
-      BACKEND_URL: http://hub-be
+      BACKEND_URL: http://hub-be:8080
 
   hub-be:
     container_name: hub-be
-    image: mojdigitalstudio/digital-hub-be
+    image: mojdigitalstudio/prisoner-content-hub-backend
     depends_on:
       - hub-db
     environment:
@@ -42,8 +42,14 @@ services:
       - PHP_UPLOAD_MAX_FILE_SIZE=500M
       - PHP_POST_MAX_SIZE=500M
       - XDEBUG_IP=127.0.0.1 # Replace with your machines IP: $ ipconfig getifaddr en0
+      - SERVER_PORT=8080
+      - HASH_SALT=${DRUPAL_HASH_SALT}
+      - FLYSYSTEM_S3_KEY=${DRUPAL_S3_ACCESS_KEY}
+      - FLYSYSTEM_S3_SECRET=${DRUPAL_S3_SECRET_KEY}
+      - FLYSYSTEM_S3_REGION=eu-west-1
+      - FLYSYSTEM_S3_BUCKET=${DRUPAL_S3_BUCKET}
     ports:
-      - 11001:80
+      - 11001:8080
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 15s

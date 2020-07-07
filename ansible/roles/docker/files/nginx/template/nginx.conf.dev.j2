@@ -37,7 +37,7 @@ http {
       proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
       proxy_cache_valid 200 302 10m;
       proxy_cache content_cache;
-      proxy_pass http://hub-be:80/sites/default/files/;
+      proxy_pass http://hub-be:8080/sites/default/files/;
 
     }
 
