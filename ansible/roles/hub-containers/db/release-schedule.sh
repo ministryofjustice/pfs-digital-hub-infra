@@ -54,3 +54,10 @@ release_content
 #find files older than 7 days and delete from live storage. These are retained for a futher 7 days in the snapshots in Azure.
 echo "Deleting old files"
 find /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files/databases/hub-db-backups/ -type f -name '*.sql' -mtime +7 -exec rm {} \;
+
+echo "Running the search index job"
+
+wget http://localhost:11001/cron/-WRiZfnRnakvqbPMcKriRWljH1H70RndNTcDrBD8WjGiUavq-FxJnEUHdbI_VLIMolLrKZx3Gw
+
+echo "call complete"
+
