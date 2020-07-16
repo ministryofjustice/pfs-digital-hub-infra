@@ -37,7 +37,6 @@ services:
       - HUB_DB_ENV_MYSQL_USER=hubdb_user
       - HUB_DB_ENV_MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - HUB_DB_PORT_3306_TCP_ADDR=hub-db
-      - HUB_EXT_FILE_URL=http://localhost:11001/sites/default/files
       - PHP_MEMORY_LIMIT=256M
       - PHP_UPLOAD_MAX_FILE_SIZE=500M
       - PHP_POST_MAX_SIZE=500M

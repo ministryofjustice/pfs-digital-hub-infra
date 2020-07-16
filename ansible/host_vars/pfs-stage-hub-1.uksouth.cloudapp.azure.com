@@ -2,7 +2,8 @@
 
 hub_url: pfs-digital-hub-stage.hmpps.dsd.io
 #Used for compose override
-drupal_url: https://content.pfs-digital-hub-stage.hmpps.dsd.io
+drupal_url: content.pfs-digital-hub-stage.hmpps.dsd.io
+drupal_protocol: https
 hub_backend_host: content.pfs-digital-hub-stage.hmpps.dsd.io
 
 app_name: HMP Berwyn

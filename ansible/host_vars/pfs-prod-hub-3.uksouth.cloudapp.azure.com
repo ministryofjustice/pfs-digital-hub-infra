@@ -3,7 +3,8 @@
 hub_url: digital-hub-cw.prisoner.service.justice.gov.uk
 #Used for compose override
 hub_backend_host: content.digital-hub-cw.prisoner.service.justice.gov.uk
-drupal_url: http://digital-hub-cw.prisoner.service.justice.gov.uk
+drupal_url: digital-hub-cw.prisoner.service.justice.gov.uk
+drupal_protocol: http
 app_name: HMP Cookham Wood
 feature_switch: "false"
 nginx_conf: ../docker/files/nginx/template/nginx.conf.http.j2
