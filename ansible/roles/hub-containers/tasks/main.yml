@@ -117,8 +117,7 @@
       export IMAGE_VERSION
       export MYSQL_USER=hubdb_user
       export MYSQL_ROOT_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_ROOT_PASSWORD)
-      export MYSQL_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_PASSWORD)
-      export DRUPAL_URL={{ drupal_url }}
+      export MYSQL_PASSWORD=$(cat /etc/docker-decomposed-secrets-MYSQL_PASSWORD)      
       export APP_NAME="{{ app_name }}"
 
       {% if feature_personalization | bool %}

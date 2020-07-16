@@ -2,7 +2,8 @@
 
 hub_url: digital-hub.bwi.dpn.gov.uk
 #Used for compose override
-drupal_url: https://digital-hub.bwi.dpn.gov.uk
+drupal_url: digital-hub.bwi.dpn.gov.uk
+drupal_protocol: https
 hub_backend_host: content.digital-hub.bwi.dpn.gov.uk
 private_rsa: ../docker/files/nginx/prod/Berwyn/san.digital-hub.rsa
 app_name: HMP Berwyn

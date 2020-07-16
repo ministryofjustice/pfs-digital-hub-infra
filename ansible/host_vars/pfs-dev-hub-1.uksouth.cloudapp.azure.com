@@ -2,7 +2,8 @@
 
 hub_url: pfs-dev-hub-1.uksouth.cloudapp.azure.com
 #Used for compose override
-drupal_url: http://pfs-dev-hub-1.uksouth.cloudapp.azure.com:11001
+drupal_url: pfs-dev-hub-1.uksouth.cloudapp.azure.com:11001
+drupal_protocol: http
 hub_backend_host: drupal.pfs-dev-hub-1.uksouth.cloudapp.azure.com
 public_crt: ../docker/files/nginx/Dev/Berwyn/san.digital-hub.crt
 private_rsa: ../docker/files/nginx/Dev/Berwyn/san.digital-hub.rsa

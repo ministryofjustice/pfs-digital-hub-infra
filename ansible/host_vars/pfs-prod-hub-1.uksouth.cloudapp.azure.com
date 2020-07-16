@@ -2,7 +2,8 @@
 
 hub_url: digital-hub.wli.dpn.gov.uk
 #Used for compose override
-drupal_url: https://digital-hub.wli.dpn.gov.uk
+drupal_url: digital-hub.wli.dpn.gov.uk
+drupal_protocol: https
 hub_backend_host: content.digital-hub.wli.dpn.gov.uk
 private_rsa: ../docker/files/nginx/prod/Wayland/wli.digital-hub.rsa
 app_name: HMP Wayland

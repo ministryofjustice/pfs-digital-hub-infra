@@ -3,8 +3,9 @@ version: "3"
 services:
   hub-be:
     restart: "always"
-    environment:
-      HUB_EXT_FILE_URL: {{ drupal_url }}/sites/default/files
+    environment:      
+      FLYSYSTEM_S3_CNAME: {{ drupal_url }}
+      FILE_PUBLIC_BASE_URL: {{ drupal_protocol }}://{{ drupal_url }}/sites/default/files
     volumes:
       - /mnt/pfs-prod-digital-hub-content-share/hub/sites/default/files:/var/www/html/sites/default/files
 
@@ -21,7 +22,7 @@ services:
       - "APP_NAME={{ app_name }}"
       - "ESTABLISHMENT_NAME={{ establishment_name }}"
       - "NODE_ENV=production"
-      - "DRUPAL_APP_URI={{ drupal_url }}/sites/default/files"
+      - "DRUPAL_APP_URI={{ drupal_protocol }}://{{ drupal_url }}/sites/default/files"
       - "ENABLE_PRISON_SWITCH={{ feature_switch }}"
       - "NOMIS_API_TOKEN=${NOMIS_API_KEY}"
       - "NOMIS_API_ENDPOINT={{ NOMIS_API_ENDPOINT }}"
