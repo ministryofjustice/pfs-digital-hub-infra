@@ -14,7 +14,6 @@ alerting:
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
     - ./rules/rules.yml
-    - ./rules/rules_dev.yml
     - ./rules/all_linux_nodes.yml
 
 # A scrape configuration containing exactly one endpoint to scrape:
@@ -33,13 +32,6 @@ scrape_configs:
 
     static_configs:
     - targets: ['alertmanager:9093']
-
-  - job_name: Hub-Dev
-
-    static_configs:
-    - targets: ['hub-dev.pfs-management.com:9100']
-    - targets: ['hub-dev.pfs-management.com:8080']
-
 
   - job_name: Hub-Stage
 
@@ -122,7 +114,6 @@ scrape_configs:
       module: [http_2xx]
     static_configs:
       - targets:
-        - https://hub-dev.pfs-management.com/health
         - https://pfs-digital-hub-stage.hmpps.dsd.io/health
         - https://digital-hub.wli.dpn.gov.uk/health
         - https://digital-hub.bwi.dpn.gov.uk/health
