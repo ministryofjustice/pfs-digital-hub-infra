@@ -114,10 +114,10 @@ scrape_configs:
       module: [http_2xx]
     static_configs:
       - targets:
-        - https://pfs-digital-hub-stage.hmpps.dsd.io/health
-        - https://digital-hub.wli.dpn.gov.uk/health
-        - https://digital-hub.bwi.dpn.gov.uk/health
-        - http://pfs-management-digital-hub-1.pfs-management.com/feedback/app/kibana#/home
+        - https://cookhamwood.content-hub.prisoner.service.justice.gov.uk/health/readiness
+        - https://berwyn.content-hub.prisoner.service.justice.gov.uk/health/readiness
+        - https://wayland.content-hub.prisoner.service.justice.gov.uk/health/readiness
+        - https://manage.content-hub.prisoner.service.justice.gov.uk/api/health
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
