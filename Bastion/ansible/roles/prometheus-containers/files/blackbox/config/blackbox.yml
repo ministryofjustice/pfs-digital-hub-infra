@@ -3,7 +3,7 @@ modules:
     prober: http
     timeout: 30s
     http:
-      valid_http_versions: ["HTTP/1.1", "HTTP/2"]
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
       valid_status_codes: []  # Defaults to 2xx
       method: GET
       no_follow_redirects: false
@@ -13,5 +13,5 @@ modules:
         - "Could not connect to database"
       tls_config:
         insecure_skip_verify: true
-      preferred_ip_protocol: "ip4" # defaults to "ip6"
+      preferred_ip_protocol: "ip4" # defaults to "ip6" - However Azure Firewall is translating this, so IPV4 is here actually IPV6 on the egress controller. If this ever breaks, change this to IPV6 at route level.
       ip_protocol_fallback: false  # no fallback to "ip6"
