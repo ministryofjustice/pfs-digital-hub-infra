@@ -43,7 +43,6 @@ scrape_configs:
     - targets: ['bwisulws003.bwi.dpn.gov.uk:9182']
     - targets: ['bwismssq002.bwi.dpn.gov.uk:9182']
     - targets: ['bwisulns001.bwi.dpn.gov.uk:9182']
-    - targets: ['bwispifs001.bwi.dpn.gov.uk:9182']
     - targets: ['bwisulap001.bwi.dpn.gov.uk:9182']
     - targets: ['bwiddccf001.bwi.dpn.gov.uk:9182']
     - targets: ['bwiddccf002.bwi.dpn.gov.uk:9182']
@@ -96,10 +95,6 @@ scrape_configs:
       module: [http_2xx]
     static_configs:
       - targets:
-        - https://cookhamwood.content-hub.prisoner.service.justice.gov.uk/health/readiness
-        - https://berwyn.content-hub.prisoner.service.justice.gov.uk/health/readiness
-        - https://wayland.content-hub.prisoner.service.justice.gov.uk/health/readiness
-        - https://manage.content-hub.prisoner.service.justice.gov.uk/api/health
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
